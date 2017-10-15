@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
 import java.awt.event.InputEvent;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
@@ -104,8 +105,13 @@ public class MainMenu {
 		JButton btnVypoiiaKnihu = new JButton("Vypo\u017Ei\u010Dia\u0165 knihu");
 		btnVypoiiaKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BookScanner bs = new BookScanner();
-				desktopPane.add(bs);
+				BorrowBook bb = new BorrowBook(desktopPane);
+				desktopPane.add(bb);
+				try {
+					bb.setSelected(true);
+				} catch (PropertyVetoException e1) {
+					e1.printStackTrace();
+				}
 				
 			}
 		});

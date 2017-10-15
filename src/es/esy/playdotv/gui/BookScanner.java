@@ -1,6 +1,8 @@
 package es.esy.playdotv.gui;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JInternalFrame;
 import net.miginfocom.swing.MigLayout;
@@ -9,13 +11,17 @@ import javax.swing.JTextField;
 
 import com.github.sarxos.webcam.Webcam;
 
-import es.esy.playdotv.datareader.Reader;
+import es.esy.playdotv.event.DDEventListener;
+import es.esy.playdotv.event.DataDialogEvent;
+import es.esy.playdotv.event.DataDialogEventOperation;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
+import javax.swing.JPanel;
 
 public class BookScanner extends JInternalFrame {
 	
@@ -24,10 +30,12 @@ public class BookScanner extends JInternalFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	volatile BufferedImage webcamImage;
-	private boolean isClosing = false;
+	private String[] data = {"", "", ""};
 	
-	boolean isClosing(){
-		return isClosing;
+	List<DDEventListener> listeners = new ArrayList<>();
+	
+	String[] getData(){
+		return data;
 	}
 	
 	public BookScanner() {
@@ -37,7 +45,7 @@ public class BookScanner extends JInternalFrame {
 		
 		setTitle("Nasn\u00EDma\u0165 knihu");
 		setBounds(100, 100, 450, 330);
-		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][]"));
+		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][grow][][]"));
 		
 		JLabel lblSkener = new JLabel("Skener:");
 		getContentPane().add(lblSkener, "cell 0 0,alignx trailing,aligny center");
@@ -46,7 +54,7 @@ public class BookScanner extends JInternalFrame {
 		lblInsertSkenerHere.setMaximumSize(new Dimension(200, 150));
 		getContentPane().add(lblInsertSkenerHere, "cell 1 0");
 		
-		JLabel lblsloKnihy = new JLabel("\u010C\u00EDslo knihy:");
+		JLabel lblsloKnihy = new JLabel("ID knihy:");
 		getContentPane().add(lblsloKnihy, "cell 0 1,alignx trailing,aligny center");
 		
 		textField = new JTextField();
@@ -67,97 +75,85 @@ public class BookScanner extends JInternalFrame {
 		getContentPane().add(textField_2, "cell 1 3,growx");
 		textField_2.setColumns(10);
 		
-		RefreshThread r = new RefreshThread(webcamImage, lblInsertSkenerHere, ic, webcam, textField, textField_1, textField_2);
+		RefreshImage r = new RefreshImage(webcamImage, lblInsertSkenerHere, ic, webcam, textField, textField_1, textField_2);
 		Thread t = new Thread(r);
 		t.start();
 		
+		JSeparator separator = new JSeparator();
+		getContentPane().add(separator, "cell 0 5 2 1,grow");
+		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, "cell 0 6 2 1,grow");
+		panel.setLayout(new MigLayout("", "[75px][75px]", "[25px]"));
+		
+		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
+		btnPotvrdi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try{
+					if(textField.getText().length() > 0 && textField_1.getText().length() > 0 && textField_2.getText().length() > 0){
+						data[0] = textField.getText();
+						data[1] = textField_1.getText();
+						data[2] = textField_2.getText();
+						dispatchDataDialogEvent(new DataDialogEvent(this, DataDialogEventOperation.EVENT_SUCCEEDED));
+					}else{
+						data[0] = "";
+						data[1] = "";
+						data[2] = "";
+						dispatchDataDialogEvent(new DataDialogEvent(this, DataDialogEventOperation.EVENT_FAILED));
+					}
+					
+					r.terminate();
+					t.join();
+					dispose();
+				}catch(InterruptedException e1){
+					e1.printStackTrace();
+					dispose();
+				}
+			}
+		});
+		panel.add(btnPotvrdi, "cell 0 0,alignx left,aligny top");
+		btnPotvrdi.setPreferredSize(new Dimension(75, 25));
+		btnPotvrdi.setMinimumSize(new Dimension(75, 25));
+		btnPotvrdi.setMaximumSize(new Dimension(75, 25));
+		
 		JButton btnZrui = new JButton("Zru\u0161i\u0165");
+		panel.add(btnZrui, "cell 1 0,alignx left,aligny top");
 		btnZrui.setPreferredSize(new Dimension(75, 25));
 		btnZrui.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					r.terminate();
 					t.join();
+					dispatchDataDialogEvent(new DataDialogEvent(this, DataDialogEventOperation.EVENT_CANCELLED));
 					dispose();
-					isClosing = true;
-				} catch (InterruptedException e1) {
+				} catch(InterruptedException e1) {
 					e1.printStackTrace();
 					dispose();
-					isClosing = true;
 				}
 			}
 		});
-		
-		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
-		btnPotvrdi.setPreferredSize(new Dimension(75, 25));
-		btnPotvrdi.setMinimumSize(new Dimension(75, 25));
-		btnPotvrdi.setMaximumSize(new Dimension(75, 25));
-		getContentPane().add(btnPotvrdi, "cell 0 5,growx,aligny center");
 		btnZrui.setMinimumSize(new Dimension(75, 25));
 		btnZrui.setMaximumSize(new Dimension(75, 25));
-		getContentPane().add(btnZrui, "cell 1 5,aligny center");
 		
 		setVisible(true);
 
 	}
-
-}
-
-class RefreshThread extends Thread{
 	
-	private volatile boolean running = true;
-	private volatile BufferedImage webcamImage;
-	private volatile JLabel lblObrzok;
-	private volatile ImageIcon ic;
-	private volatile Webcam webcam;
-	private volatile JTextField textField;
-	private volatile JTextField textField_1;
-	private volatile JTextField textField_2;
-	
-	RefreshThread(BufferedImage b, JLabel l, ImageIcon i, Webcam w, JTextField t1, JTextField t2, JTextField t3){
-		this.webcamImage = b;
-		this.lblObrzok = l;
-		this.ic = i;
-		this.webcam = w;
-		this.textField = t1;
-		this.textField_1 = t2;
-		this.textField_2 = t3;
-	}
-	
-	public void terminate(){
-		running = false;
-	}
-	
-	private void redrawImage(JLabel l, BufferedImage i, ImageIcon c){
-		c.setImage(i);
-		l.setIcon(c);
-		l.repaint();
-		
-	}
-	
-	@Override
-	public void run(){
-		String x;
-		
-		while(running){					
-			webcamImage = webcam.getImage();
-			redrawImage(lblObrzok, webcamImage, ic);
-			
-			x = Reader.readQR(webcamImage);
-			if(!(x == null)){
-				String[] splitText = x.split(";");
-				textField.setText(splitText[0]);
-				textField_1.setText(splitText[1]);
-				textField_2.setText(splitText[2]);
-			}
-			try {
-				Thread.sleep(42);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
+	public void addDataDialogListener(DDEventListener ddel){
+		if(!listeners.contains(ddel)){
+			listeners.add(ddel);
 		}
-		
 	}
 	
+	public void removeDataDialogListener(DDEventListener ddel){
+		listeners.remove(ddel);
+	}
+	
+	public void dispatchDataDialogEvent(DataDialogEvent evt){
+		for(DDEventListener ddl: listeners){
+			ddl.handleDataDialogEvent(evt);
+		}
+	}
+
 }
