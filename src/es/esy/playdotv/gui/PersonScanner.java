@@ -58,6 +58,7 @@ public class PersonScanner extends JInternalFrame {
 		getContentPane().add(lblsloKnihy, "cell 0 1,alignx trailing,aligny center");
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		getContentPane().add(textField, "cell 1 1,growx");
 		textField.setColumns(10);
 		
@@ -65,6 +66,7 @@ public class PersonScanner extends JInternalFrame {
 		getContentPane().add(lblNzovKnihy, "cell 0 2,alignx trailing,aligny center");
 		
 		textField_1 = new JTextField();
+		textField_1.setEditable(false);
 		getContentPane().add(textField_1, "cell 1 2,growx");
 		textField_1.setColumns(10);
 		
@@ -72,6 +74,7 @@ public class PersonScanner extends JInternalFrame {
 		getContentPane().add(lblAutorKnihy, "cell 0 3,alignx trailing,aligny center");
 		
 		textField_2 = new JTextField();
+		textField_2.setEditable(false);
 		getContentPane().add(textField_2, "cell 1 3,growx");
 		textField_2.setColumns(10);
 		

@@ -1,4 +1,4 @@
-package es.esy.playdotv.database;
+package es.esy.playdotv.objects;
 
 import java.io.Serializable;
 import java.util.ArrayList;

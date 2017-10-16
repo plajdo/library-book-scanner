@@ -44,6 +44,7 @@ public class BorrowBook extends JInternalFrame {
 		getContentPane().add(lblNzovKnihy, "cell 0 1,alignx trailing,aligny center");
 		
 		textField_1 = new JTextField();
+		textField_1.setEditable(false);
 		getContentPane().add(textField_1, "cell 1 1,growx,aligny center");
 		textField_1.setColumns(10);
 		
@@ -51,6 +52,7 @@ public class BorrowBook extends JInternalFrame {
 		getContentPane().add(lblAutorKnihy, "cell 0 2,alignx trailing,aligny center");
 		
 		textField_2 = new JTextField();
+		textField_2.setEditable(false);
 		getContentPane().add(textField_2, "cell 1 2,growx,aligny center");
 		textField_2.setColumns(10);
 		
@@ -68,6 +70,7 @@ public class BorrowBook extends JInternalFrame {
 		getContentPane().add(lblMeno, "cell 0 5,alignx trailing,aligny center");
 		
 		textField_4 = new JTextField();
+		textField_4.setEditable(false);
 		getContentPane().add(textField_4, "cell 1 5,growx,aligny center");
 		textField_4.setColumns(10);
 		
@@ -75,6 +78,7 @@ public class BorrowBook extends JInternalFrame {
 		getContentPane().add(lblTrieda, "cell 0 6,alignx trailing,aligny center");
 		
 		textField_5 = new JTextField();
+		textField_5.setEditable(false);
 		getContentPane().add(textField_5, "cell 1 6,growx,aligny center");
 		textField_5.setColumns(10);
 		
