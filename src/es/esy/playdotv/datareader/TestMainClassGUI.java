@@ -23,7 +23,7 @@ public class TestMainClassGUI {
 	volatile BufferedImage webcamImage;
 	private JTextField textField;
 	
-	public static void main(String[] args) {
+	public static void openScanner() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
