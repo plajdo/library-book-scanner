@@ -43,7 +43,7 @@ public class PersonScanner extends JInternalFrame {
 		webcam.open();
 		ImageIcon ic = new ImageIcon(webcam.getImage());
 		
-		setTitle("Nasn\u00EDma\u0165 knihu");
+		setTitle("Nasn\u00EDma\u0165 osobu");
 		setBounds(100, 100, 450, 330);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][grow][][]"));
 		
