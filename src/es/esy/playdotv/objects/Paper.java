@@ -1,9 +1,10 @@
 package es.esy.playdotv.objects;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public interface Paper {
-	public int getID();
+public interface Paper extends Serializable {
+	public String getID();
 	public String getTitle();
 	public String getAuthor();
 	public boolean isBorrowed();

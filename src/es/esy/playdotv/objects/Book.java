@@ -5,15 +5,19 @@ import java.util.GregorianCalendar;
 
 public class Book implements Paper{
 	
-	private int ID;
+	private String ID;
 	private String title;
 	private String author;
 	private boolean borrowed;
 	private Date borrowedDate;
 	private Date borrowedUntilDate;
+	
+	public Book(String strid) {
+		ID = strid;
+	}
 
 	@Override
-	public int getID(){
+	public String getID(){
 		return ID;
 	}
 
