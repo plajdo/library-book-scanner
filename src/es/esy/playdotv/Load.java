@@ -18,9 +18,5 @@ public class Load {
 		MainMenu.open();
 		
 	}
-	
-	public static final boolean isEvalCopy(){
-		return false;
-	}
 
 }
