@@ -23,7 +23,6 @@ public class TestLink
 			Map<String, Paper> papers = SebuLink.load("papers.ser");
 			papers.put("34", currentPaper);
 			SebuLink.save("papers.ser", papers);
-			// books = null; //deref -> not needed its not in scope
 		}
 		
 		{ // load bok
