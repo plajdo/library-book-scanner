@@ -2,10 +2,8 @@ package com.github.plasmoxy.database;
 //muhaha
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
-import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Paper;
 
 public class TestLink
