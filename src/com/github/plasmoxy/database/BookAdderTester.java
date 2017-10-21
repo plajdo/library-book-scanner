@@ -10,6 +10,7 @@ public class BookAdderTester
 		
 		System.out.println("- BOOK ADDER -");
 		
-		String name = 
+		System.out.print("");
+		String name = sc.nextLine();
 	}
 }
