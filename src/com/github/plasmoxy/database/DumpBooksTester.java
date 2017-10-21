@@ -15,7 +15,7 @@ public class DumpBooksTester
 		for (String key : papers.keySet())
 		{
 			Paper p = papers.get(key);
-			System.out.printf("%s : %s - %s", p.getID(), p.getAuthor(), p.getTitle());
+			System.out.printf("%s : %s - %s\n", p.getID(), p.getAuthor(), p.getTitle());
 			
 		}
 	}

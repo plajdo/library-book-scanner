@@ -61,7 +61,6 @@ public class Book implements Paper{
 		borrowedUntilDate.setTime(new GregorianCalendar(untilYear, untilMonth, untilDay).getTimeInMillis());
 	}
 	
-	
 
 	@Override
 	public Date getBorrowedUntilDate(){

@@ -15,20 +15,20 @@ public class TestLink
 	{
 		
 		{ // save bok
-			Paper currentPaper = new Book("34");
+			Paper currentPaper = new Book("36/1");
 			currentPaper.setTitle("XD");
-			currentPaper.setAuthor("Sebo");
+			currentPaper.setAuthor("Säbu");
 			currentPaper.setBorrowDate(3, 5, 2005, 3, 5, 2006);
 			
 			Map<String, Paper> papers = SebuLink.load("papers.ser");
-			papers.put("34", currentPaper);
+			papers.put("36/1", currentPaper);
 			SebuLink.save("papers.ser", papers);
 		}
 		
 		{ // load bok
 			
 			Map<String, Paper> papers = SebuLink.load("papers.ser");
-			Paper currentPaper = papers.get("34");
+			Paper currentPaper = papers.get("36/1");
 			System.out.println(currentPaper.getTitle());
 			System.out.println(currentPaper.getBorrowedUntilDate());
 		}
