@@ -141,6 +141,14 @@ public class MainMenu {
 		});
 		frmGymnziumLipany.getContentPane().add(btnZoznamKnh, "cell 0 0,growx,aligny center");
 		
+		JButton btnPridatKnihu = new JButton("Prida\u0165 knihu");
+		btnPridatKnihu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		frmGymnziumLipany.getContentPane().add(btnPridatKnihu, "cell 0 0,growx,aligny center");
+		
 	}
 
 }
