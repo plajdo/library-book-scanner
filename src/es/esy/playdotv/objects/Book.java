@@ -18,6 +18,15 @@ public class Book implements Paper{
 		borrowedUntilDate = new Date();
 		ID = strid;
 	}
+	
+	public Book(String id, String author, String title) {
+		borrowedDate = new Date();
+		borrowedUntilDate = new Date();
+		this.ID = id;
+		this.author = author;
+		this.title = title;
+		this.borrowed = false;
+	}
 
 	@Override
 	public String getID(){
