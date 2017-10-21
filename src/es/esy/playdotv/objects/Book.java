@@ -14,6 +14,8 @@ public class Book implements Paper{
 	private Date borrowedUntilDate;
 	
 	public Book(String strid) {
+		borrowedDate = new Date();
+		borrowedUntilDate = new Date();
 		ID = strid;
 	}
 
