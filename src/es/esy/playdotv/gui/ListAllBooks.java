@@ -34,22 +34,18 @@ public class ListAllBooks extends JInternalFrame {
 		
 		setVisible(true);
 		
-		Map<String, Paper> papers = null;
+		Map<String, Paper> papers;
 		try {
 			papers = SebuLink.load("papers.ser");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			for (String key : papers.keySet()){
+				Paper p = papers.get(key);
+				tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "?????"});
+
+			}
+		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
-		
-		for (String key : papers.keySet())
-		{
-			Paper p = papers.get(key);
-			tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "?????"});
-			
-		}
-		
+
 	}
 
 }
