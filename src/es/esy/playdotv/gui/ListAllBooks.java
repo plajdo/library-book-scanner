@@ -18,6 +18,7 @@ public class ListAllBooks extends JInternalFrame {
 	private JTable table;
 	
 	public ListAllBooks(){
+		setIconifiable(true);
 		setClosable(true);
 		setResizable(true);
 		setMaximizable(true);

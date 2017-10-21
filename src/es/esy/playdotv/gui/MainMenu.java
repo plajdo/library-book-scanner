@@ -132,7 +132,6 @@ public class MainMenu {
 				ListAllBooks lab = new ListAllBooks();
 				desktopPane.add(lab);
 				try{
-					lab.setMaximum(true); // looks better
 					lab.setSelected(true);
 				}catch(PropertyVetoException e1){
 					e1.printStackTrace();
