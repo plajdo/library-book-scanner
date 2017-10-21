@@ -46,7 +46,6 @@ public class ListAllBooks extends JInternalFrame {
 		for (String key : papers.keySet())
 		{
 			Paper p = papers.get(key);
-			System.out.printf("%s : %s - %s\n", p.getID(), p.getAuthor(), p.getTitle());
 			tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "?????"});
 			
 		}
