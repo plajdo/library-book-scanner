@@ -107,9 +107,9 @@ public class MainMenu {
 			public void actionPerformed(ActionEvent e) {
 				BorrowBook bb = new BorrowBook(desktopPane);
 				desktopPane.add(bb);
-				try {
+				try{
 					bb.setSelected(true);
-				} catch (PropertyVetoException e1) {
+				}catch(PropertyVetoException e1) {
 					e1.printStackTrace();
 				}
 				
@@ -127,6 +127,17 @@ public class MainMenu {
 		frmGymnziumLipany.getContentPane().add(btnZoznamUiteov, "cell 0 0,growx,aligny center");
 		
 		JButton btnZoznamKnh = new JButton("Zoznam kn\u00EDh");
+		btnZoznamKnh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ListAllBooks lab = new ListAllBooks();
+				desktopPane.add(lab);
+				try{
+					lab.setSelected(true);
+				}catch(PropertyVetoException e1){
+					e1.printStackTrace();
+				}
+			}
+		});
 		frmGymnziumLipany.getContentPane().add(btnZoznamKnh, "cell 0 0,growx,aligny center");
 		
 	}
