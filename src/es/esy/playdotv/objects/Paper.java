@@ -12,6 +12,6 @@ public interface Paper extends Serializable {
 	public void setAuthor(String author);
 	public void setBorrowed(boolean borrowed);
 	public void setBorrowDate(int day, int month, int year, int untilDay, int untilMonth, int untilYear);
-	public Date borrowedUntil();
-	
+	public Date getBorrowedDate();
+	public Date getBorrowedUntilDate();
 }

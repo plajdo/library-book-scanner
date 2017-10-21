@@ -14,20 +14,24 @@ public class TestLink
 	throws IOException, ClassNotFoundException
 	{
 		
-		Book b = new Book("34");
-		b.setTitle("XD");
-		b.setAuthor("Sebo");
-		b.setBorrowDate(3, 5, 2005, 3, 5, 2006);
-		/*
-		Map<String, Paper> map = new HashMap<String, Paper>();
-		map.put("34", b);
-		SebuLink.save("books.ser", map);
-		map = null; //deref
+		{ // save bok
+			Paper currentPaper = new Book("34");
+			currentPaper.setTitle("XD");
+			currentPaper.setAuthor("Sebo");
+			currentPaper.setBorrowDate(3, 5, 2005, 3, 5, 2006);
+			
+			Map<String, Paper> papers = new HashMap<String, Paper>();
+			papers.put("34", b);
+			SebuLink.save("papers.ser", papers);
+			// books = null; //deref -> not needed its not in scope
+		}
 		
-		
-		Map<String, Paper> books = SebuLink.load("books.ser");
-		Paper p = books.get("34");
-		System.out.println(p.getTitle());
-		*/
+		{ // load bok
+			
+			Map<String, Paper> papers = SebuLink.load("papers.ser");
+			Paper currentPaper = papers.get("34");
+			System.out.println(currentPaper.getTitle());
+			System.out.println(currentPaper.getBorrowedUntilDate());
+		}
 	}
 }
