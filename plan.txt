@@ -13,6 +13,7 @@ DATABAZA :
 		
 Person
 	[] -> potrebujem LinkedList<String> s idèkami, nesmie ma list s objektami iba s idèkami lebo objekty knih budu v pamäti iba jedne
+	// debilina šak referencie to ne objekty xDD
 
 Book
 	
