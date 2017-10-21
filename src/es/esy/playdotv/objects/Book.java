@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 
 public class Book implements Paper{
 	
+	private static final long serialVersionUID = 1L;
 	private String ID;
 	private String title;
 	private String author;

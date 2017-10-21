@@ -12,6 +12,7 @@ import es.esy.playdotv.objects.Paper;
 
 public class SebuLink
 {
+	@SuppressWarnings("unchecked")
 	public static Map<String, Paper> pop(String fileName)
 	throws IOException, ClassNotFoundException
 	{
