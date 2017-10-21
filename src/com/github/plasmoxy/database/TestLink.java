@@ -20,7 +20,7 @@ public class TestLink
 			currentPaper.setAuthor("Sebo");
 			currentPaper.setBorrowDate(3, 5, 2005, 3, 5, 2006);
 			
-			Map<String, Paper> papers = new HashMap<String, Paper>();
+			Map<String, Paper> papers = SebuLink.load("papers.ser");
 			papers.put("34", currentPaper);
 			SebuLink.save("papers.ser", papers);
 			// books = null; //deref -> not needed its not in scope
