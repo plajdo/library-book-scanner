@@ -3,12 +3,18 @@ package es.esy.playdotv.gui;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+
+import com.unaux.plasmoxy.libscan.database.SebuLink;
+
+import es.esy.playdotv.Load;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
+import java.io.IOException;
 
 public class MainMenu {
 	
@@ -50,6 +56,11 @@ public class MainMenu {
 		JMenuItem mntmUkoni = new JMenuItem("Ukon\u010Di\u0165");
 		mntmUkoni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					SebuLink.save("papers.ser", Load.papers);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				System.exit(0);
 			}
 		});
