@@ -63,8 +63,6 @@ public class AddBook extends JInternalFrame {
 				nb.setTitle(textField_1.getText());
 				nb.setAuthor(textField_2.getText());
 				Load.papers.put(textField.getText(), nb);
-				btnPotvrdiAPrida.setEnabled(false);
-				
 			}
 			
 		});
@@ -93,14 +91,14 @@ public class AddBook extends JInternalFrame {
 			
 		});
 		panel.add(btnUloiQrKd, "cell 1 0,growx");
-		
+
 		JButton btnDokoni = new JButton("OK");
 		btnDokoni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		panel.add(btnDokoni, "cell 2 0,growx");
+		panel.add(btnDokoni, "cell 3 0,growx");
 		
 		setVisible(true);
 
