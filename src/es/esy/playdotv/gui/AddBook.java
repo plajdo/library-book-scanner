@@ -1,23 +1,15 @@
 package es.esy.playdotv.gui;
 
-import javax.swing.JInternalFrame;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.filechooser.FileSystemView;
-
 import es.esy.playdotv.datareader.Generator;
+import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JSeparator;
-import javax.swing.JPanel;
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.awt.event.ActionEvent;
 
 public class AddBook extends JInternalFrame {
 	
@@ -32,20 +24,26 @@ public class AddBook extends JInternalFrame {
 		setTitle("Prida\u0165 knihu");
 		setBounds(100, 100, 450, 200);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][grow][pref!][]"));
-		
+
+		// ID KNIHY
+
 		JLabel lblIdKnihy = new JLabel("ID knihy:");
 		getContentPane().add(lblIdKnihy, "cell 0 0,alignx trailing");
 		
 		textField = new JTextField();
 		getContentPane().add(textField, "cell 1 0,growx");
 		textField.setColumns(10);
-		
+
+		// NAZOV KNIHY
+
 		JLabel lblNzovKnihy = new JLabel("N\u00E1zov knihy:");
 		getContentPane().add(lblNzovKnihy, "cell 0 1,alignx trailing");
 		
 		textField_1 = new JTextField();
 		getContentPane().add(textField_1, "cell 1 1,growx");
 		textField_1.setColumns(10);
+
+		// AUTOR KNIHY
 		
 		JLabel lblAutorKnihy = new JLabel("Autor knihy:");
 		getContentPane().add(lblAutorKnihy, "cell 0 2,alignx trailing");
@@ -53,6 +51,8 @@ public class AddBook extends JInternalFrame {
 		textField_2 = new JTextField();
 		getContentPane().add(textField_2, "cell 1 2,growx");
 		textField_2.setColumns(10);
+
+		// ---
 		
 		JSeparator separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 4 2 1,grow");
@@ -60,8 +60,16 @@ public class AddBook extends JInternalFrame {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, "cell 0 5 2 1,grow");
 		panel.setLayout(new MigLayout("", "[]", "[][]"));
-		
+
 		JButton btnPotvrdiAPrida = new JButton("Potvrdi\u0165 a prida\u0165 knihu do datab\u00E1zy");
+		btnPotvrdiAPrida.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				System.out.println("xd");
+			}
+		});
 		panel.add(btnPotvrdiAPrida, "cell 0 0");
 		
 		JButton btnUloiKd = new JButton("Ulo\u017Ei\u0165 k\u00F3d pre knihu");

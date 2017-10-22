@@ -1,23 +1,14 @@
 package es.esy.playdotv.gui;
 
-import java.awt.EventQueue;
+import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
-import java.awt.event.InputEvent;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JDesktopPane;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 
 public class MainMenu {
 	
@@ -154,7 +145,13 @@ public class MainMenu {
 		JButton btnPridatKnihu = new JButton("Prida\u0165 knihu");
 		btnPridatKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				AddBook ab = new AddBook();
+				desktopPane.add(ab);
+				try {
+					ab.setSelected(true);
+				} catch(PropertyVetoException e){
+					e.printStackTrace();
+				}
 			}
 		});
 		frmGymnziumLipany.getContentPane().add(btnPridatKnihu, "cell 0 0,growx,aligny center");
