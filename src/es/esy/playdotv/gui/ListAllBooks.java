@@ -23,7 +23,7 @@ public class ListAllBooks extends JInternalFrame {
 		getContentPane().add(new JScrollPane(table));
 		
 		DefaultTableModel tblModel = new DefaultTableModel(null, new String[]{
-				"ID knihy", "Názov knihy", "Autor knihy", "Vypožièaná?"
+				"ID knihy", "N\u00E1zov knihy", "Autor knihy", "Vypo\u017Ei\u010Dan\u00E1?"
 		});
 		table.setModel(tblModel);
 		
