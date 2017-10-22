@@ -1,13 +1,10 @@
 package es.esy.playdotv.gui;
 
+import com.unaux.plasmoxy.libscan.database.SebuLink;
+import es.esy.playdotv.Load;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-
-import com.unaux.plasmoxy.libscan.database.SebuLink;
-
-import es.esy.playdotv.Load;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
