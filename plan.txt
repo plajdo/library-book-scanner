@@ -16,4 +16,6 @@ Person
 	// debilina šak referencie to ne objekty xDD
 
 Book
-	
+
+
+	xd
