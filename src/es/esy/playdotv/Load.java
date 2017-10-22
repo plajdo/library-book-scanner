@@ -2,7 +2,6 @@ package es.esy.playdotv;
 
 import javax.swing.UIManager;
 import es.esy.playdotv.gui.MainMenu;
-import javax.swing.*;
 
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.jtattoo.plaf.fast.FastLookAndFeel;
