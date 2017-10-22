@@ -3,16 +3,16 @@ package es.esy.playdotv.objects;
 import java.util.ArrayList;
 
 public interface Person{
-	public int getID();
-	public String getName();
-	public String getGroup();
-	public int getSchoolYear();
-	public ArrayList<Paper> getPapers();
-	public boolean hasPaper(Paper p);
-	public void addPaper(Paper p);
-	public void removePaper(Paper p);
-	public void setName(String name);
-	public void setGroup(String group);
-	public void setSchoolYear(int schoolYear);
+	int getID();
+	String getName();
+	String getGroup();
+	int getSchoolYear();
+	ArrayList<Paper> getPapers();
+	boolean hasPaper(Paper p);
+	void addPaper(Paper p);
+	void removePaper(Paper p);
+	void setName(String name);
+	void setGroup(String group);
+	void setSchoolYear(int schoolYear);
 	
 }
