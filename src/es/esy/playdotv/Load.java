@@ -8,20 +8,47 @@ import es.esy.playdotv.objects.Paper;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Load{
 
+	public static final String DATABASE_PATH = "papers.ser";
+
 	// lololosdddskar
 	public static volatile Map<String, Paper> papers;
 
-	public static void main(String[] args){
-		try{
-			papers = SebuLink.load("papers.ser");
-		}catch(ClassNotFoundException | IOException e){
-			e.printStackTrace();
-			System.exit(1);
+	public static void resetDatabase()
+	{
+		int dialogResult = JOptionPane.showConfirmDialog (null, "Naozaj resetova\u0165 datab\u00E1zu ?","Reset datab\u00E1zy", JOptionPane.YES_NO_OPTION);
+		if (dialogResult == JOptionPane.YES_OPTION)
+		{
+			try
+			{
+				SebuLink.save(DATABASE_PATH, new HashMap<String, Paper>());
+			} catch (IOException e)
+			{
+				JOptionPane.showMessageDialog(null, "Chyba <IOException resetDatabase()>");
+				System.exit(-1);
+			}
+		} else {
+			System.exit(0);
 		}
+	}
+
+	public static void main(String[] args){
+
+
+		// LOAD DATABASE
+
+		try{
+			papers = SebuLink.load(DATABASE_PATH);
+		}catch(ClassNotFoundException | IOException e){
+			resetDatabase();
+		}
+
+
+		// THEME
 
 		try{
 			switch(args[0]){
@@ -53,6 +80,9 @@ public class Load{
 		}catch(ArrayIndexOutOfBoundsException e){
 			System.out.println("No argument supplied.\nLaF set to default (Metal).");
 		}
+
+
+		// LAUNCH MAIN SWING FRAME
 
 		MainMenu.open();
 		

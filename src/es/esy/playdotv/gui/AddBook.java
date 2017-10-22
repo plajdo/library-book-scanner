@@ -67,7 +67,7 @@ public class AddBook extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				System.out.println("xd");
+
 			}
 		});
 		panel.add(btnPotvrdiAPrida, "cell 0 0");
