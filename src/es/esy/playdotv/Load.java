@@ -11,16 +11,16 @@ import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.SebuLink;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 
-public class Load {
+public class Load{
 	
 	public static Map<String, Paper> papers;
 
 	public static void main(String[] args){
-		try {
+		try{
 			papers = SebuLink.load("papers.ser");
-		} catch (ClassNotFoundException | IOException e) {
+		}catch(ClassNotFoundException | IOException e){
 			e.printStackTrace();
-			return;
+			System.exit(1);
 		}
 
 		try{
