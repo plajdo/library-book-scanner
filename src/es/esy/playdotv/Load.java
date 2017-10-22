@@ -1,15 +1,12 @@
 package es.esy.playdotv;
 
-<<<<<<< HEAD
 import javax.swing.UIManager;
+import es.esy.playdotv.gui.MainMenu;
+import javax.swing.*;
+
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.jtattoo.plaf.fast.FastLookAndFeel;
-=======
->>>>>>> 8c726a053595b9594fbb763f53c45ca1ecb4a3de
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
-import es.esy.playdotv.gui.MainMenu;
-
-import javax.swing.*;
 
 public class Load {
 
