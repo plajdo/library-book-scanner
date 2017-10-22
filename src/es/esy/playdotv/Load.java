@@ -57,7 +57,5 @@ public class Load {
 		MainMenu.open();
 		
 	}
-	
-	
 
 }
