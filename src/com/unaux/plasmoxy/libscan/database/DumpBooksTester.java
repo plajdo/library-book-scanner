@@ -1,4 +1,4 @@
-package com.github.plasmoxy.database;
+package com.unaux.plasmoxy.libscan.database;
 
 import java.io.IOException;
 import java.util.Map;
