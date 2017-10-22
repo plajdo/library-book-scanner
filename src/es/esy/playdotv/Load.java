@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Load{
 
-	// lololosd
+	// lololosdd
 	public static volatile Map<String, Paper> papers;
 
 	public static void main(String[] args){
