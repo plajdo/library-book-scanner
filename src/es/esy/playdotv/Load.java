@@ -13,7 +13,7 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 
 public class Load{
 	
-	public static Map<String, Paper> papers;
+	public static volatile Map<String, Paper> papers;
 
 	public static void main(String[] args){
 		try{
