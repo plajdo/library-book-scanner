@@ -1,2 +1,4 @@
 /bin/
-.ser
+*.ser
+/.idea/
+*.iml
