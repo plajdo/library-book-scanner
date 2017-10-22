@@ -1,12 +1,28 @@
 package es.esy.playdotv;
 
+import java.io.IOException;
+import java.util.Map;
+
 import javax.swing.UIManager;
 import es.esy.playdotv.gui.MainMenu;
+import es.esy.playdotv.objects.Paper;
 
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import com.unaux.plasmoxy.libscan.database.SebuLink;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 
 public class Load {
+	
+	static Map<String, Paper> papers;
+	
+	static{
+		try {
+			papers = SebuLink.load("papers.ser");
+		} catch (ClassNotFoundException | IOException e) {
+			System.exit(1);
+		}
+		
+	}
 
 	public static void main(String[] args){
 		try{
@@ -43,5 +59,7 @@ public class Load {
 		MainMenu.open();
 		
 	}
+	
+	
 
 }
