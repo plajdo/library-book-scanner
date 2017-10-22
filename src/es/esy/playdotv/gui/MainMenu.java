@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class MainMenu {
 	
@@ -94,10 +96,14 @@ public class MainMenu {
 		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u017Eiaka");
 		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0));
 		mniak.add(mntmPridaiaka);
-		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[][grow]", "[grow]"));
+		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[][][grow]", "[grow]"));
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		frmGymnziumLipany.getContentPane().add(separator, "cell 1 0,grow");
 		
 		JDesktopPane desktopPane = new JDesktopPane();
-		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 1 0,grow");
+		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 2 0,grow");
 		
 		JButton btnVrtiKnihu = new JButton("Vr\u00E1ti\u0165 knihu");
 		frmGymnziumLipany.getContentPane().add(btnVrtiKnihu, "flowy,cell 0 0,growx,aligny center");
