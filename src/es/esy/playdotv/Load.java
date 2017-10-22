@@ -1,18 +1,18 @@
 package es.esy.playdotv;
 
-import java.io.IOException;
-import java.util.Map;
-
-import javax.swing.UIManager;
+import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
+import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import com.unaux.plasmoxy.libscan.database.SebuLink;
 import es.esy.playdotv.gui.MainMenu;
 import es.esy.playdotv.objects.Paper;
 
-import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
-import com.unaux.plasmoxy.libscan.database.SebuLink;
-import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
+import javax.swing.*;
+import java.io.IOException;
+import java.util.Map;
 
 public class Load{
-	
+
+	// lololo
 	public static volatile Map<String, Paper> papers;
 
 	public static void main(String[] args){
