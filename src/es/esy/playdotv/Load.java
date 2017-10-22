@@ -16,7 +16,6 @@ public class Load {
 	public static Map<String, Paper> papers;
 
 	public static void main(String[] args){
-
 		try {
 			papers = SebuLink.load("papers.ser");
 		} catch (ClassNotFoundException | IOException e) {
