@@ -1,14 +1,9 @@
 package es.esy.playdotv;
 
-import java.util.Properties;
-
 import javax.swing.UIManager;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-
 import es.esy.playdotv.gui.MainMenu;
 
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
-import com.jtattoo.plaf.fast.FastLookAndFeel;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 
 public class Load {

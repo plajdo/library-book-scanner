@@ -29,8 +29,6 @@ public class BorrowBook extends JInternalFrame {
 	private JTextField textField_5;
 	
 	public BorrowBook(JDesktopPane desktopPane) {
-		setIconifiable(true);
-		setClosable(true);
 		setTitle("Vypo\u017Ei\u010Dia\u0165 knihu");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][grow][]"));

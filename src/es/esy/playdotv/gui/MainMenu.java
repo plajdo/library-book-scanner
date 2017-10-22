@@ -46,6 +46,10 @@ public class MainMenu {
 		frmGymnziumLipany.setBounds(100, 100, 1280, 721);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[][][grow]", "[grow]"));
+		JDesktopPane desktopPane = new JDesktopPane();
+		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 2 0,grow");
+		
 		JMenuBar menuBar = new JMenuBar();
 		frmGymnziumLipany.setJMenuBar(menuBar);
 		
@@ -72,6 +76,12 @@ public class MainMenu {
 		mnKniha.add(mntmOdstrniKnihu);
 		
 		JMenuItem mntmPridaKnihu = new JMenuItem("Prida\u0165 knihu");
+		mntmPridaKnihu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AddBook ab = new AddBook();
+				desktopPane.add(ab);
+			}
+		});
 		mntmPridaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0));
 		mnKniha.add(mntmPridaKnihu);
 		
@@ -96,14 +106,9 @@ public class MainMenu {
 		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u017Eiaka");
 		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0));
 		mniak.add(mntmPridaiaka);
-		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[][][grow]", "[grow]"));
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		frmGymnziumLipany.getContentPane().add(separator, "cell 1 0,grow");
-		
-		JDesktopPane desktopPane = new JDesktopPane();
-		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 2 0,grow");
 		
 		JButton btnVrtiKnihu = new JButton("Vr\u00E1ti\u0165 knihu");
 		frmGymnziumLipany.getContentPane().add(btnVrtiKnihu, "flowy,cell 0 0,growx,aligny center");
