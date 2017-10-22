@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.github.plasmoxy.database.SebuLink;
+import com.unaux.plasmoxy.libscan.database.SebuLink;
 
 import es.esy.playdotv.objects.Paper;
 

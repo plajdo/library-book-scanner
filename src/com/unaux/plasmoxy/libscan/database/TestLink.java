@@ -1,8 +1,7 @@
-package com.github.plasmoxy.database;
+package com.unaux.plasmoxy.libscan.database;
 //muhaha
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import es.esy.playdotv.objects.Book;
