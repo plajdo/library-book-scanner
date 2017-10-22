@@ -75,7 +75,7 @@ public class AddBook extends JInternalFrame {
 				int r = chooser.showSaveDialog(null);
 				if(r == JFileChooser.APPROVE_OPTION){
 					try{
-						ImageIO.write(Generator.writeQRCode(textField.getText() + ";" + textField_1.getText() + ";" + textField_2 + ";"), "jpg", chooser.getSelectedFile());
+						ImageIO.write(Generator.writeQRCode(textField.getText() + ";" + textField_1.getText() + ";" + textField_2.getText() + ";"), "jpg", chooser.getSelectedFile());
 					}catch(IOException e){
 						e.printStackTrace();
 					}
