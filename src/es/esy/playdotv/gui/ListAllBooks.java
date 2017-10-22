@@ -1,16 +1,10 @@
 package es.esy.playdotv.gui;
 
-import java.io.IOException;
-import java.util.Map;
-
-import javax.swing.JInternalFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import com.unaux.plasmoxy.libscan.database.SebuLink;
-
+import es.esy.playdotv.Load;
 import es.esy.playdotv.objects.Paper;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class ListAllBooks extends JInternalFrame {
 	
@@ -34,17 +28,11 @@ public class ListAllBooks extends JInternalFrame {
 		table.setModel(tblModel);
 		
 		setVisible(true);
-		
-		Map<String, Paper> papers;
-		try {
-			papers = SebuLink.load("papers.ser");
-			for (String key : papers.keySet()){
-				Paper p = papers.get(key);
-				tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "?????"});
 
-			}
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+		for (String key : Load.papers.keySet()){
+			Paper p = Load.papers.get(key);
+			tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "?????"});
+
 		}
 
 	}
