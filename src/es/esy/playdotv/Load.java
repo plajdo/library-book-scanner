@@ -13,18 +13,17 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 
 public class Load {
 	
-	static Map<String, Paper> papers;
-	
-	static{
+	public static Map<String, Paper> papers;
+
+	public static void main(String[] args){
+
 		try {
 			papers = SebuLink.load("papers.ser");
 		} catch (ClassNotFoundException | IOException e) {
-			System.exit(1);
+			e.printStackTrace();
+			return;
 		}
-		
-	}
 
-	public static void main(String[] args){
 		try{
 			switch(args[0]){
 			case "McWin":
