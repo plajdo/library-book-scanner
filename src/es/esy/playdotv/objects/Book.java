@@ -20,8 +20,6 @@ public class Book implements Paper{
 	}
 	
 	public Book(String id, String author, String title) {
-		borrowedDate = new Date();
-		borrowedUntilDate = new Date();
 		this.ID = id;
 		this.author = author;
 		this.title = title;
@@ -66,6 +64,8 @@ public class Book implements Paper{
 	
 	@Override
 	public void setBorrowDate(int day, int month, int year, int untilDay, int untilMonth, int untilYear){
+		borrowedDate = new Date();
+		borrowedUntilDate = new Date();
 		borrowedDate.setTime(new GregorianCalendar(year, month, day).getTimeInMillis());
 		borrowedUntilDate.setTime(new GregorianCalendar(untilYear, untilMonth, untilDay).getTimeInMillis());
 	}

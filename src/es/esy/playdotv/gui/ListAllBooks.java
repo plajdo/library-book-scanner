@@ -3,6 +3,8 @@ package es.esy.playdotv.gui;
 import es.esy.playdotv.Load;
 import es.esy.playdotv.objects.Paper;
 
+import java.text.SimpleDateFormat;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,11 +30,18 @@ public class ListAllBooks extends JInternalFrame {
 		table.setModel(tblModel);
 		
 		setVisible(true);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("d.M.yyyy");
 
 		for (String key : Load.papers.keySet()){
 			Paper p = Load.papers.get(key);
-			tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "?????"});
-
+			
+			if(!p.isBorrowed()){
+				tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "Nie"});
+			}else{
+				tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "Do " + sdf.format(p.getBorrowedDate())});
+			}
+			
 		}
 
 	}

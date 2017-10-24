@@ -4,14 +4,19 @@ import java.util.ArrayList;
 
 public class Student implements Person{
 	
-	private int ID;
+	private static final long serialVersionUID = 1L;
+	private String ID;
 	private String name;
 	private String group;
 	private int schoolYear;
 	private ArrayList<Paper> papers;
+	
+	public Student(String id){
+		this.ID = id;
+	}
 
 	@Override
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
 

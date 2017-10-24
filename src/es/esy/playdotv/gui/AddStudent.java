@@ -2,8 +2,8 @@ package es.esy.playdotv.gui;
 
 import es.esy.playdotv.Load;
 import es.esy.playdotv.datareader.Generator;
-import es.esy.playdotv.objects.Book;
-import es.esy.playdotv.objects.Paper;
+import es.esy.playdotv.objects.Person;
+import es.esy.playdotv.objects.Student;
 import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
@@ -14,35 +14,35 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class AddBook extends JInternalFrame {
+public class AddStudent extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	
-	public AddBook() {
+	public AddStudent() {
 		setClosable(true);
 		setIconifiable(true);
-		setTitle("Prida\u0165 knihu");
+		setTitle("Prida\u0165 žiaka");
 		setBounds(100, 100, 500, 200);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][grow][pref!][]"));
 
-		JLabel lblIdKnihy = new JLabel("ID knihy:");
+		JLabel lblIdKnihy = new JLabel("ID žiaka:");
 		getContentPane().add(lblIdKnihy, "cell 0 0,alignx trailing");
 		
 		textField = new JTextField();
 		getContentPane().add(textField, "cell 1 0,growx");
 		textField.setColumns(10);
 
-		JLabel lblNzovKnihy = new JLabel("N\u00E1zov knihy:");
+		JLabel lblNzovKnihy = new JLabel("Meno:");
 		getContentPane().add(lblNzovKnihy, "cell 0 1,alignx trailing");
 		
 		textField_1 = new JTextField();
 		getContentPane().add(textField_1, "cell 1 1,growx");
 		textField_1.setColumns(10);
 		
-		JLabel lblAutorKnihy = new JLabel("Autor knihy:");
+		JLabel lblAutorKnihy = new JLabel("Trieda:");
 		getContentPane().add(lblAutorKnihy, "cell 0 2,alignx trailing");
 		
 		textField_2 = new JTextField();
@@ -56,14 +56,15 @@ public class AddBook extends JInternalFrame {
 		getContentPane().add(panel, "cell 0 5 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow]", "[]"));
 
-		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 knihu do datab\u00E1zy");
+		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u017Eiaka do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Paper nb = new Book(textField.getText());
-				nb.setTitle(textField_1.getText());
-				nb.setAuthor(textField_2.getText());
-				Load.papers.put(textField.getText(), nb);
+				Person np = new Student(textField.getText());
+				np.setName(textField_1.getText());
+				np.setGroup(textField_2.getText());
+				Load.students.put(textField.getText(), np);
 				btnPotvrdiAPrida.setEnabled(false);
+				
 			}
 			
 		});
@@ -80,7 +81,7 @@ public class AddBook extends JInternalFrame {
 				int r = chooser.showSaveDialog(null);
 				if(r == JFileChooser.APPROVE_OPTION){
 					try{
-						ImageIO.write(Generator.writeQRCode(textField.getText() + ";" + textField_1.getText() + ";" + textField_2.getText() + ";"), "jpg", chooser.getSelectedFile());
+						ImageIO.write(Generator.writeQRCode(textField.getText() + ";" + textField_1.getText() + ";" + textField_2.getText() + ";"), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
 					}catch(IOException e1){
 						e1.printStackTrace();
 					}

@@ -1,9 +1,10 @@
 package es.esy.playdotv.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface Person{
-	int getID();
+public interface Person extends Serializable{
+	String getID();
 	String getName();
 	String getGroup();
 	int getSchoolYear();
