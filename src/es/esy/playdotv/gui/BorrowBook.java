@@ -89,7 +89,7 @@ public class BorrowBook extends JInternalFrame {
 		getContentPane().add(panel, "cell 0 9 2 1,grow");
 		panel.setLayout(new MigLayout("", "[110.00][][110.00]", "[][]"));
 		
-		JButton btnSkenovaKnihu = new JButton("Skenova\u0165 knihu");
+		JButton btnSkenovaKnihu = new JButton("Nasn\u00EDma\u0165 knihu");
 		btnSkenovaKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BookScanner bs = new BookScanner();
@@ -128,7 +128,7 @@ public class BorrowBook extends JInternalFrame {
 		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
 		panel.add(btnPotvrdi, "cell 2 0,growx,aligny center");
 		
-		JButton btnSkenovaOsobu = new JButton("Skenova\u0165 osobu");
+		JButton btnSkenovaOsobu = new JButton("Nasn\u00EDma\u0165 osobu");
 		btnSkenovaOsobu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PersonScanner ps = new PersonScanner();
