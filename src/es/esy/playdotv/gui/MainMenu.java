@@ -6,14 +6,9 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
-import java.awt.event.KeyEvent;
-import java.awt.event.InputEvent;
 
 public class MainMenu {
 	
@@ -43,6 +38,11 @@ public class MainMenu {
 	
 	private void initialize() {
 
+		frmGymnziumLipany = new JFrame();
+		frmGymnziumLipany.setTitle("Gymn\u00E1zium Lipany - Kni\u017Enica");
+		frmGymnziumLipany.setBounds(100, 100, 1280, 721);
+		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
 		frmGymnziumLipany.addWindowListener(new WindowAdapter()
 		{
 			@Override
@@ -60,13 +60,6 @@ public class MainMenu {
 				}
 			}
 		});
-
-
-
-		frmGymnziumLipany = new JFrame();
-		frmGymnziumLipany.setTitle("Gymn\u00E1zium Lipany - Kni\u017Enica");
-		frmGymnziumLipany.setBounds(100, 100, 1280, 721);
-		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[][][grow]", "[grow]"));
 		JDesktopPane desktopPane = new JDesktopPane();
