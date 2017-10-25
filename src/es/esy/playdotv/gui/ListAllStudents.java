@@ -1,7 +1,10 @@
 package es.esy.playdotv.gui;
 
 import es.esy.playdotv.Load;
+import es.esy.playdotv.objects.Paper;
 import es.esy.playdotv.objects.Student;
+
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -29,11 +32,21 @@ public class ListAllStudents extends JInternalFrame {
 		
 		setVisible(true);
 
-		for (String key : Load.students.keySet()){
+		for(String key : Load.students.keySet()){
 			Student s = (Student)Load.students.get(key);
-			tblModel.addRow(new Object[]{s.getID(), s.getName(), s.getGroup(), s.getPapers()});
+			tblModel.addRow(new Object[]{s.getID(), s.getName(), s.getGroup(), getBookList(s.getPapers())});
 			
 		}
+		
+	}
+	
+	private String getBookList(ArrayList<Paper> a){
+		String x = "";
+		for(Paper index : a){
+			x = x.concat(index.getID() + ", ");
+			
+		}
+		return x;
 		
 	}
 

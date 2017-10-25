@@ -66,8 +66,8 @@ public class Book implements Paper{
 	public void setBorrowDate(int day, int month, int year, int untilDay, int untilMonth, int untilYear){
 		borrowedDate = new Date();
 		borrowedUntilDate = new Date();
-		borrowedDate.setTime(new GregorianCalendar(year, month, day).getTimeInMillis());
-		borrowedUntilDate.setTime(new GregorianCalendar(untilYear, untilMonth, untilDay).getTimeInMillis());
+		borrowedDate.setTime(new GregorianCalendar(year, month - 1, day).getTimeInMillis());
+		borrowedUntilDate.setTime(new GregorianCalendar(untilYear, untilMonth - 1, untilDay).getTimeInMillis());
 	}
 	
 

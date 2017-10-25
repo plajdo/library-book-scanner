@@ -95,6 +95,11 @@ public class MainMenu {
 			public void actionPerformed(ActionEvent arg0) {
 				AddBook ab = new AddBook();
 				desktopPane.add(ab);
+				try{
+					ab.setSelected(true);
+				}catch(PropertyVetoException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		mnKniha.add(mntmPridaKnihu);
@@ -123,6 +128,11 @@ public class MainMenu {
 			public void actionPerformed(ActionEvent e) {
 				AddStudent as = new AddStudent();
 				desktopPane.add(as);
+				try{
+					as.setSelected(true);
+				}catch(PropertyVetoException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		mniak.add(mntmPridaiaka);
@@ -156,6 +166,11 @@ public class MainMenu {
 			public void actionPerformed(ActionEvent e) {
 				ListAllStudents las = new ListAllStudents();
 				desktopPane.add(las);
+				try{
+					las.setSelected(true);
+				}catch(PropertyVetoException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		frmGymnziumLipany.getContentPane().add(btnZoznamiakov, "cell 0 0,growx,aligny center");

@@ -10,12 +10,16 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.SwingConstants;
 
+import es.esy.playdotv.Load;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
+import es.esy.playdotv.objects.Paper;
+import es.esy.playdotv.objects.Person;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 public class BorrowBook extends JInternalFrame {
@@ -128,7 +132,29 @@ public class BorrowBook extends JInternalFrame {
 		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
 		btnPotvrdi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Person st = Load.students.get(textField_3.getText());
+				Paper p = Load.papers.get(textField.getText());
 				
+				int day, month, year, untilDay, untilMonth, untilYear;
+				
+				/*
+				 * TEMPORARY WAY OF GETTING DATE UNTIL PROPER CALENDAR IS IMPLEMENTED
+				 */
+				try(Scanner scr = new Scanner(System.in)){
+					System.out.print("Od (DD-MM-YYYY): ");
+					day = scr.nextInt();
+					month = scr.nextInt();
+					year = scr.nextInt();
+					System.out.println("Do (DD-MM-YYYY): ");
+					untilDay = scr.nextInt();
+					untilMonth = scr.nextInt();
+					untilYear = scr.nextInt();
+				}
+				
+				p.setBorrowDate(day, month, year, untilDay, untilMonth, untilYear);
+				p.setBorrowed(true);
+				st.addPaper(p);
+				dispose();
 				
 			}
 		});

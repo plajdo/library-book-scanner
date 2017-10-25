@@ -39,7 +39,7 @@ public class ListAllBooks extends JInternalFrame {
 			if(!p.isBorrowed()){
 				tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "Nie"});
 			}else{
-				tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "Do " + sdf.format(p.getBorrowedDate())});
+				tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), "Do " + sdf.format(p.getBorrowedUntilDate())});
 			}
 			
 		}
