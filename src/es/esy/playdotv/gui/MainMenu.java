@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 public class MainMenu {
 	
@@ -69,9 +71,11 @@ public class MainMenu {
 		mnIn.add(mnKniha);
 		
 		JMenuItem mntmOdstrniKnihu = new JMenuItem("Odstr\u00E1ni\u0165 knihu");
+		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		mnKniha.add(mntmOdstrniKnihu);
 		
 		JMenuItem mntmPridaKnihu = new JMenuItem("Prida\u0165 knihu");
+		mntmPridaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
 		mntmPridaKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AddBook ab = new AddBook();
@@ -84,18 +88,22 @@ public class MainMenu {
 		mnIn.add(mnUite);
 		
 		JMenuItem mntmOdstrniUitea = new JMenuItem("Odstr\u00E1ni\u0165 u\u010Dite\u013Ea");
+		mntmOdstrniUitea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		mnUite.add(mntmOdstrniUitea);
 		
 		JMenuItem mntmPridaUitea = new JMenuItem("Prida\u0165 u\u010Dite\u013Ea");
+		mntmPridaUitea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		mnUite.add(mntmPridaUitea);
 		
 		JMenu mniak = new JMenu("\u017Diak");
 		mnIn.add(mniak);
 		
 		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 \u017Eiaka");
+		mntmOdstrniiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mniak.add(mntmOdstrniiaka);
 		
 		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u017Eiaka");
+		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmPridaiaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddStudent as = new AddStudent();
@@ -153,6 +161,14 @@ public class MainMenu {
 			}
 		});
 		frmGymnziumLipany.getContentPane().add(btnZoznamKnh, "cell 0 0,growx,aligny center");
+		
+		JButton btnPomoc = new JButton("Pomoc");
+		btnPomoc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Ctrl+Q = Odstr·niù knihu\nCtrl+W = Pridaù knihu\nCtrl+A = Odstr·niù ûiaka\nCtrl+S = Pridaù ûiaka\nCtrl+E = Odstr·niù uËiteæa\nCtrl+D = Pridaù uËiteæa", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
+			}
+		});
+		frmGymnziumLipany.getContentPane().add(btnPomoc, "cell 0 0,growx,aligny center");
 		
 	}
 
