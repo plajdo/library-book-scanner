@@ -126,6 +126,12 @@ public class BorrowBook extends JInternalFrame {
 		panel.add(separator_2, "cell 1 0 1 2,grow");
 		
 		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
+		btnPotvrdi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
 		panel.add(btnPotvrdi, "cell 2 0,growx,aligny center");
 		
 		JButton btnSkenovaOsobu = new JButton("Nasn\u00EDma\u0165 osobu");

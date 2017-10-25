@@ -6,8 +6,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 
@@ -31,12 +30,36 @@ public class MainMenu {
 	public MainMenu() {
 		initialize();
 	}
+
+	public void closeWindow()
+	{
+		frmGymnziumLipany.dispatchEvent(new WindowEvent(frmGymnziumLipany, WindowEvent.WINDOW_CLOSING));
+	}
 	
 	private void initialize() {
+
 		frmGymnziumLipany = new JFrame();
 		frmGymnziumLipany.setTitle("Gymn\u00E1zium Lipany - Kni\u017Enica");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 721);
-		frmGymnziumLipany.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+		frmGymnziumLipany.addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent event)
+			{
+				super.windowClosing(event);
+				try
+				{
+					SebuLink.save(Load.BOOK_DATABASE_PATH, Load.papers);
+					SebuLink.saveStudent(Load.STUDENT_DATABASE_PATH, Load.students);
+					System.exit(0);
+				} catch(IOException ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+		});
 		
 		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[][][grow]", "[grow]"));
 		JDesktopPane desktopPane = new JDesktopPane();
@@ -51,13 +74,7 @@ public class MainMenu {
 		JMenuItem mntmUkoni = new JMenuItem("Ukon\u010Di\u0165");
 		mntmUkoni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					SebuLink.save(Load.BOOK_DATABASE_PATH, Load.papers);
-					SebuLink.saveStudent(Load.STUDENT_DATABASE_PATH, Load.students);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				System.exit(0);
+				closeWindow();
 			}
 		});
 		mnSbor.add(mntmUkoni);
@@ -69,9 +86,11 @@ public class MainMenu {
 		mnIn.add(mnKniha);
 		
 		JMenuItem mntmOdstrniKnihu = new JMenuItem("Odstr\u00E1ni\u0165 knihu");
+		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		mnKniha.add(mntmOdstrniKnihu);
 		
 		JMenuItem mntmPridaKnihu = new JMenuItem("Prida\u0165 knihu");
+		mntmPridaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
 		mntmPridaKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AddBook ab = new AddBook();
@@ -84,18 +103,22 @@ public class MainMenu {
 		mnIn.add(mnUite);
 		
 		JMenuItem mntmOdstrniUitea = new JMenuItem("Odstr\u00E1ni\u0165 u\u010Dite\u013Ea");
+		mntmOdstrniUitea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		mnUite.add(mntmOdstrniUitea);
 		
 		JMenuItem mntmPridaUitea = new JMenuItem("Prida\u0165 u\u010Dite\u013Ea");
+		mntmPridaUitea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		mnUite.add(mntmPridaUitea);
 		
 		JMenu mniak = new JMenu("\u017Diak");
 		mnIn.add(mniak);
 		
 		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 \u017Eiaka");
+		mntmOdstrniiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mniak.add(mntmOdstrniiaka);
 		
 		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u017Eiaka");
+		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmPridaiaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddStudent as = new AddStudent();
@@ -153,6 +176,14 @@ public class MainMenu {
 			}
 		});
 		frmGymnziumLipany.getContentPane().add(btnZoznamKnh, "cell 0 0,growx,aligny center");
+		
+		JButton btnPomoc = new JButton("Pomoc");
+		btnPomoc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Ctrl+Q = Odstr·niù knihu\nCtrl+W = Pridaù knihu\nCtrl+A = Odstr·niù ûiaka\nCtrl+S = Pridaù ûiaka\nCtrl+E = Odstr·niù uËiteæa\nCtrl+D = Pridaù uËiteæa", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
+			}
+		});
+		frmGymnziumLipany.getContentPane().add(btnPomoc, "cell 0 0,growx,aligny center");
 		
 	}
 
