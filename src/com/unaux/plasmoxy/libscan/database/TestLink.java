@@ -17,7 +17,7 @@ public class TestLink
 			Paper currentPaper = new Book("36/1");
 			currentPaper.setTitle("XD");
 			currentPaper.setAuthor("Sébú");
-			currentPaper.setBorrowDate(3, 5, 2005, 3, 5, 2006);
+			//currentPaper.setBorrowDate(3, 5, 2005, 3, 5, 2006);
 			currentPaper.setBorrowed(true);
 			
 			Map<String, Paper> papers = SebuLink.load("papers.ser");
