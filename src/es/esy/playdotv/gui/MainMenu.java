@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.awt.event.KeyEvent;
@@ -33,12 +35,38 @@ public class MainMenu {
 	public MainMenu() {
 		initialize();
 	}
+
+	public void closeWindow()
+	{
+		frmGymnziumLipany.dispatchEvent(new WindowEvent(frmGymnziumLipany, WindowEvent.WINDOW_CLOSING));
+	}
 	
 	private void initialize() {
+
+		frmGymnziumLipany.addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent event)
+			{
+				super.windowClosing(event);
+				try
+				{
+					SebuLink.save(Load.BOOK_DATABASE_PATH, Load.papers);
+					SebuLink.saveStudent(Load.STUDENT_DATABASE_PATH, Load.students);
+					System.exit(0);
+				} catch(IOException ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+		});
+
+
+
 		frmGymnziumLipany = new JFrame();
 		frmGymnziumLipany.setTitle("Gymn\u00E1zium Lipany - Kni\u017Enica");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 721);
-		frmGymnziumLipany.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[][][grow]", "[grow]"));
 		JDesktopPane desktopPane = new JDesktopPane();
@@ -53,13 +81,7 @@ public class MainMenu {
 		JMenuItem mntmUkoni = new JMenuItem("Ukon\u010Di\u0165");
 		mntmUkoni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					SebuLink.save(Load.BOOK_DATABASE_PATH, Load.papers);
-					SebuLink.saveStudent(Load.STUDENT_DATABASE_PATH, Load.students);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				System.exit(0);
+				closeWindow();
 			}
 		});
 		mnSbor.add(mntmUkoni);
