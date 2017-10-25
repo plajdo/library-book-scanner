@@ -1,4 +1,5 @@
 /bin/
 *.ser
-.idea/**
+/.idea/**
 *.iml
+.idea/workspace.xml
