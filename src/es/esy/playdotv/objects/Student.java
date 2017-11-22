@@ -9,7 +9,7 @@ public class Student implements Person{
 	private String name;
 	private String group;
 	private int schoolYear;
-	private ArrayList<Paper> papers;
+	private ArrayList<Paper> papers = new ArrayList<Paper>();
 	
 	public Student(String id){
 		this.ID = id;

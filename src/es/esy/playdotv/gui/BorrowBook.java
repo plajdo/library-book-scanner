@@ -2,6 +2,10 @@ package es.esy.playdotv.gui;
 
 import javax.swing.JInternalFrame;
 import net.miginfocom.swing.MigLayout;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
@@ -10,12 +14,16 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.SwingConstants;
 
+import es.esy.playdotv.Load;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
+import es.esy.playdotv.objects.Paper;
+import es.esy.playdotv.objects.Person;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class BorrowBook extends JInternalFrame {
@@ -30,8 +38,8 @@ public class BorrowBook extends JInternalFrame {
 	
 	public BorrowBook(JDesktopPane desktopPane) {
 		setTitle("Vypo\u017Ei\u010Dia\u0165 knihu");
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][grow][]"));
+		setBounds(100, 100, 460, 300);
+		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][grow][]"));
 		
 		JLabel lblisloKnihy = new JLabel("ID knihy:");
 		getContentPane().add(lblisloKnihy, "cell 0 0,alignx trailing,aligny center");
@@ -82,11 +90,19 @@ public class BorrowBook extends JInternalFrame {
 		getContentPane().add(textField_5, "cell 1 6,growx,aligny center");
 		textField_5.setColumns(10);
 		
+		JLabel lblOd = new JLabel("Od:");
+		getContentPane().add(lblOd, "cell 0 7,alignx trailing");
+		
+		UtilDateModel m2 = new UtilDateModel();
+		JDatePanelImpl datePanel2 = new JDatePanelImpl(m2);
+		JDatePickerImpl datePicker2 = new JDatePickerImpl(datePanel2);
+		getContentPane().add(datePicker2, "flowx,cell 1 7,growx");
+		
 		JSeparator separator_1 = new JSeparator();
-		getContentPane().add(separator_1, "cell 0 7 2 1,grow");
+		getContentPane().add(separator_1, "cell 0 8 2 1,grow");
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, "cell 0 9 2 1,grow");
+		getContentPane().add(panel, "cell 0 10 2 1,grow");
 		panel.setLayout(new MigLayout("", "[110.00][][110.00]", "[][]"));
 		
 		JButton btnSkenovaKnihu = new JButton("Nasn\u00EDma\u0165 knihu");
@@ -125,10 +141,20 @@ public class BorrowBook extends JInternalFrame {
 		separator_2.setOrientation(SwingConstants.VERTICAL);
 		panel.add(separator_2, "cell 1 0 1 2,grow");
 		
+		UtilDateModel m1 = new UtilDateModel();
+		JDatePanelImpl datePanel1 = new JDatePanelImpl(m1);
+		JDatePickerImpl datePicker1 = new JDatePickerImpl(datePanel1);
+		getContentPane().add(datePicker1, "cell 1 7");
+		
 		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
 		btnPotvrdi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Person st = Load.students.get(textField_3.getText());
+				Paper p = Load.papers.get(textField.getText());
+				p.setBorrowDate((Date)datePicker2.getModel().getValue(), (Date)datePicker1.getModel().getValue());
+				p.setBorrowed(true);
+				st.addPaper(p);
+				dispose();
 				
 			}
 		});
@@ -173,6 +199,9 @@ public class BorrowBook extends JInternalFrame {
 			}
 		});
 		panel.add(btnZrui, "cell 2 1,growx,aligny center");
+		
+		JLabel lblDo = new JLabel("Do:");
+		getContentPane().add(lblDo, "cell 1 7");
 		
 		setVisible(true);
 

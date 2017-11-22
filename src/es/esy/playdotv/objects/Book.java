@@ -1,7 +1,6 @@
 package es.esy.playdotv.objects;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class Book implements Paper{
 	
@@ -13,13 +12,16 @@ public class Book implements Paper{
 	private Date borrowedDate;
 	private Date borrowedUntilDate;
 	
-	public Book(String strid) {
-		borrowedDate = new Date();
-		borrowedUntilDate = new Date();
-		ID = strid;
+	public Book(String id) {
+		this.borrowedDate = new Date();
+		this.borrowedUntilDate = new Date();
+		this.ID = id;
+		this.borrowed = false;
 	}
 	
 	public Book(String id, String author, String title) {
+		this.borrowedDate = new Date();
+		this.borrowedUntilDate = new Date();
 		this.ID = id;
 		this.author = author;
 		this.title = title;
@@ -63,11 +65,9 @@ public class Book implements Paper{
 
 	
 	@Override
-	public void setBorrowDate(int day, int month, int year, int untilDay, int untilMonth, int untilYear){
-		borrowedDate = new Date();
-		borrowedUntilDate = new Date();
-		borrowedDate.setTime(new GregorianCalendar(year, month, day).getTimeInMillis());
-		borrowedUntilDate.setTime(new GregorianCalendar(untilYear, untilMonth, untilDay).getTimeInMillis());
+	public void setBorrowDate(Date date, Date dateUntil){
+		borrowedDate = date;
+		borrowedUntilDate = dateUntil;
 	}
 	
 
