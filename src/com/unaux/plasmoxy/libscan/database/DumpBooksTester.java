@@ -7,7 +7,7 @@ import es.esy.playdotv.objects.Paper;
 
 public class DumpBooksTester
 {
-	public static void main(String[] args)
+	public static void printAllBooks()
 	throws ClassNotFoundException, IOException
 	{
 		Map<String, Paper> papers = SebuLink.load("papers.ser");

@@ -3,22 +3,30 @@ package es.esy.playdotv;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.SebuLink;
+
+import es.esy.playdotv.gui.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.MainMenu;
 import es.esy.playdotv.objects.Paper;
 import es.esy.playdotv.objects.Person;
 
 import javax.swing.*;
+
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class Load{
 
-	public static final String BOOK_DATABASE_PATH = "papers.ser";
-	public static final String STUDENT_DATABASE_PATH = "students.ser";
+	public static String BOOK_DATABASE_PATH = "papers.ser";
+	public static String STUDENT_DATABASE_PATH = "students.ser";
 	
 	public static volatile Map<String, Paper> papers;
 	public static volatile Map<String, Person> students;
+	
+	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.DEFAULT;
 	
 	public static void resetBookDatabase(){
 		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj resetova\u0165 datab\u00E1zu ?","Reset datab\u00E1zy", JOptionPane.YES_NO_OPTION);
@@ -27,10 +35,10 @@ public class Load{
 				SebuLink.save(BOOK_DATABASE_PATH, new HashMap<String, Paper>());
 			}catch (IOException e){
 				JOptionPane.showMessageDialog(null, "Chyba <IOException resetDatabase()>");
-				System.exit(-1);
+			}finally{
+				System.exit(0);
 			}
-		}else{
-			System.exit(0);
+			
 		}
 		
 	}
@@ -42,10 +50,10 @@ public class Load{
 				SebuLink.saveStudent(STUDENT_DATABASE_PATH, new HashMap<String, Person>());
 			}catch (IOException e){
 				JOptionPane.showMessageDialog(null, "Chyba <IOException resetDatabase()>");
-				System.exit(-1);
+			}finally{
+				System.exit(0);
 			}
-		}else{
-			System.exit(0);
+			
 		}
 		
 	}
@@ -73,6 +81,20 @@ public class Load{
 	}
 	
 	public static void main(String[] args){
+		
+		Properties prop = new Properties();
+		
+		try(InputStream input = new FileInputStream("config.properties")){
+			prop.load(input);
+			
+			BOOK_DATABASE_PATH = prop.getProperty("BDP") + "papers.ser";
+			STUDENT_DATABASE_PATH = prop.getProperty("SDP") + "students.ser";
+			LAF = LookAndFeelSettingsList.valueOf(prop.getProperty("LAF"));
+			
+		}catch(IOException | NullPointerException e){
+			System.err.println("Missing config.properties, using default database path.");
+		}
+		
 		try{
 			papers = SebuLink.load(BOOK_DATABASE_PATH);
 		}catch(ClassNotFoundException | IOException e){
@@ -85,35 +107,30 @@ public class Load{
 			createNewStudentDatabase();
 		}
 		
-		try{
-			switch(args[0]){
-			case "McWin":
-				try{
-					McWinLookAndFeel.setTheme("Modern", "", "");
-					UIManager.setLookAndFeel(new McWinLookAndFeel());
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-				System.out.println("Argument " + args[0] + " recongnised.\nLaF set to McWin Modern (JTattoo).");
-				break;
-
-			case "Graphite":
-				try{
-					GraphiteLookAndFeel.setTheme("Default", "", "");
-					UIManager.setLookAndFeel(new GraphiteLookAndFeel());
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-				System.out.println("Argument " + args[0] + " recognised.\nLaF set to Graphite (JTattoo).");
-				break;
-
-			default:
-				System.out.println("Invalid argument - " + args[0] + ".\nLaF set to default (Metal).");
-				break;
+		switch(LAF){
+		case MCWIN:
+			try{
+				McWinLookAndFeel.setTheme("Modern", "", "");
+				UIManager.setLookAndFeel(new McWinLookAndFeel());
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-
-		}catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("No argument supplied.\nLaF set to default (Metal).");
+			System.out.println("Using McWin theme.");
+			break;
+			
+		case GRAPHITE:
+			try{
+				GraphiteLookAndFeel.setTheme("Default", "", "");
+				UIManager.setLookAndFeel(new GraphiteLookAndFeel());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			System.out.println("Using Graphite theme.");
+			break;
+			
+		default:
+			System.out.println("Using Metal theme.");
+			break;
 		}
 		
 		MainMenu.open();
