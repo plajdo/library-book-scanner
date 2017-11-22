@@ -8,11 +8,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class MainMenu {
 	
 	private JFrame frmGymnziumLipany;
+	private JDesktopPane desktopPane;
 	
 	public static void open() {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,7 +66,7 @@ public class MainMenu {
 		});
 		
 		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
-		JDesktopPane desktopPane = new JDesktopPane();
+		desktopPane = new JDesktopPane();
 		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 0 0,grow");
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -88,13 +92,7 @@ public class MainMenu {
 		mntmPridaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
 		mntmPridaKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AddBook ab = new AddBook();
-				desktopPane.add(ab);
-				try{
-					ab.setSelected(true);
-				}catch(PropertyVetoException e1) {
-					e1.printStackTrace();
-				}
+				openAddBook();
 			}
 		});
 		
@@ -112,13 +110,7 @@ public class MainMenu {
 		JMenuItem mntmVypoiaKnihu = new JMenuItem("Vypo\u017Ei\u010Da\u0165 knihu");
 		mntmVypoiaKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BorrowBook bb = new BorrowBook(desktopPane);
-				desktopPane.add(bb);
-				try{
-					bb.setSelected(true);
-				}catch(PropertyVetoException e1) {
-					e1.printStackTrace();
-				}
+				openBorrowBook();
 			}
 		});
 		mntmVypoiaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
@@ -138,13 +130,7 @@ public class MainMenu {
 		JMenuItem mntmZoznamKnh = new JMenuItem("Zoznam kn\u00EDh");
 		mntmZoznamKnh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListAllBooks lab = new ListAllBooks();
-				desktopPane.add(lab);
-				try{
-					lab.setSelected(true);
-				}catch(PropertyVetoException e1){
-					e1.printStackTrace();
-				}
+				openListAllBooks();
 			}
 		});
 		mntmZoznamKnh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
@@ -153,13 +139,7 @@ public class MainMenu {
 		JMenuItem mntmKnihyNaVrtenie = new JMenuItem("Knihy na vr\u00E1tenie");
 		mntmKnihyNaVrtenie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BooksToReturn btr = new BooksToReturn();
-				desktopPane.add(btr);
-				try{
-					btr.setSelected(true);
-				}catch(PropertyVetoException e1){
-					e1.printStackTrace();
-				}
+				openBooksToReturn();
 			}
 		});
 		mntmKnihyNaVrtenie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, InputEvent.SHIFT_MASK));
@@ -173,14 +153,7 @@ public class MainMenu {
 		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmPridaiaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddStudent as = new AddStudent();
-				desktopPane.add(as);
-				try{
-					as.setSelected(true);
-				}catch(PropertyVetoException e1) {
-					e1.printStackTrace();
-				}
-				
+				openAddStudent();
 			}
 			
 		});
@@ -199,13 +172,7 @@ public class MainMenu {
 		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam \u0161tudentov");
 		mntmZoznamtudentov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListAllStudents las = new ListAllStudents();
-				desktopPane.add(las);
-				try{
-					las.setSelected(true);
-				}catch(PropertyVetoException e1) {
-					e1.printStackTrace();
-				}
+				openListAllStudents();
 			}
 		});
 		mntmZoznamtudentov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
@@ -263,7 +230,6 @@ public class MainMenu {
 		mntmPomoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Ctrl+W = Pridaù knihu\nCtrl+Q = Odstr·niù knihu\nCtrl+S = Pridaù ûiaka\nCtrl+A = Odstr·niù ûiaka\nCtrl+D = Pridaù uËiteæa\nCtrl+E = Odstr·niù uËiteæa\nF1 = VypoûiËaù knihu\nF2 = Vr·tiù knihu\nF3 = Zoznam knÌh\nShift+F3 = Knihy na vr·tenie\nF4 = Zoznam ötudentov\nShift+F4 = Zoznam uËiteæov\nF12 = Pomoc", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
-				
 			}
 		});
 		
@@ -295,5 +261,124 @@ public class MainMenu {
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		
+		try(InputStream input = new FileInputStream("config.properties")){
+			Properties prop = new Properties();
+			
+			prop.load(input);
+			openWindow(prop.getProperty("WO1"));
+			openWindow(prop.getProperty("WO2"));
+			openWindow(prop.getProperty("WO3"));
+			
+		}catch(IOException e){
+			
+		}
+		
 	}
+	
+	private void openWindow(String property){
+		try{
+			switch(property){
+			case "ADD_BOOK":
+				openAddBook();
+				break;
+				
+			case "ADD_STUDENT":
+				openAddStudent();
+				break;	
+				
+			case "BOOKS_TO_RETURN":
+				openBooksToReturn();
+				break;
+				
+			case "BORROW_BOOK":
+				openBorrowBook();
+				break;
+				
+			case "LIST_ALL_BOOKS":
+				openListAllBooks();
+				break;
+				
+			case "LIST_ALL_STUDENTS":
+				openListAllStudents();
+				break;
+				
+			case "NONE":
+				break;
+				
+			default:
+				break;
+			}
+			
+		}catch(NullPointerException e){
+			
+		}
+		
+	}
+	
+	private void openAddBook(){
+		AddBook ab = new AddBook();
+		desktopPane.add(ab);
+		try{
+			ab.setSelected(true);
+		}catch(PropertyVetoException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	private void openAddStudent(){
+		AddStudent as = new AddStudent();
+		desktopPane.add(as);
+		try{
+			as.setSelected(true);
+		}catch(PropertyVetoException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	private void openBooksToReturn(){
+		BooksToReturn btr = new BooksToReturn();
+		desktopPane.add(btr);
+		try{
+			btr.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	private void openBorrowBook(){
+		BorrowBook bb = new BorrowBook(desktopPane);
+		desktopPane.add(bb);
+		try{
+			bb.setSelected(true);
+		}catch(PropertyVetoException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	private void openListAllBooks(){
+		ListAllBooks lab = new ListAllBooks();
+		desktopPane.add(lab);
+		try{
+			lab.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	private void openListAllStudents(){
+		ListAllStudents las = new ListAllStudents();
+		desktopPane.add(las);
+		try{
+			las.setSelected(true);
+		}catch(PropertyVetoException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
 }
