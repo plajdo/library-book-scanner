@@ -159,6 +159,17 @@ public class MainMenu {
 		frmGymnziumLipany.getContentPane().add(btnVrtiKnihu, "cell 0 0,growx,aligny center");
 		
 		JButton btnKnihyNaVrtenie = new JButton("Knihy na vr\u00E1tenie");
+		btnKnihyNaVrtenie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BooksToReturn btr = new BooksToReturn();
+				desktopPane.add(btr);
+				try{
+					btr.setSelected(true);
+				}catch(PropertyVetoException e1){
+					e1.printStackTrace();
+				}
+			}
+		});
 		frmGymnziumLipany.getContentPane().add(btnKnihyNaVrtenie, "cell 0 0,growx,aligny center");
 		
 		JButton btnZoznamiakov = new JButton("Zoznam \u017Eiakov");
