@@ -1,7 +1,5 @@
 package es.esy.playdotv.gui.fx;
 
-import com.gluonhq.charm.glisten.visual.Theme;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
