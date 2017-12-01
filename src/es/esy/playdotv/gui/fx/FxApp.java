@@ -1,5 +1,7 @@
 package es.esy.playdotv.gui.fx;
 
+import com.gluonhq.charm.glisten.visual.Theme;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +12,8 @@ public class FxApp extends Application{
 
 	@Override
 	public void start(Stage stage) throws Exception{
+		setUserAgentStylesheet(null);
+		
 		Parent root = FXMLLoader.load(FxApp.class.getResource("menu.fxml"));
 		
 		Scene scene = new Scene(root, 300, 275);
