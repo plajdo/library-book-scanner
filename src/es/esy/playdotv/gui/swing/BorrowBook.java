@@ -1,4 +1,4 @@
-package es.esy.playdotv.gui;
+package es.esy.playdotv.gui.swing;
 
 import javax.swing.JInternalFrame;
 import net.miginfocom.swing.MigLayout;

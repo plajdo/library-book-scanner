@@ -1,4 +1,4 @@
-package es.esy.playdotv.gui;
+package es.esy.playdotv.gui.swing;
 
 public enum GuiWindowsList {
 	ADD_BOOK,

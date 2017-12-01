@@ -1,4 +1,4 @@
-package es.esy.playdotv.gui;
+package es.esy.playdotv.gui.swing;
 
 import com.github.sarxos.webcam.Webcam;
 import es.esy.playdotv.event.DDEventListener;
