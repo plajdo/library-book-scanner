@@ -1,4 +1,4 @@
-package es.esy.playdotv.gui;
+package es.esy.playdotv.gui.swing;
 
 import es.esy.playdotv.Load;
 import es.esy.playdotv.objects.Paper;

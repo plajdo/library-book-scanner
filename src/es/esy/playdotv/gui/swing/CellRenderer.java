@@ -1,4 +1,4 @@
-package es.esy.playdotv.gui;
+package es.esy.playdotv.gui.swing;
 
 import java.awt.Color;
 import java.awt.Component;

@@ -1,4 +1,4 @@
-package es.esy.playdotv.gui;
+package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.SebuLink;
 import es.esy.playdotv.Load;

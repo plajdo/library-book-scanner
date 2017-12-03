@@ -1,4 +1,4 @@
-package es.esy.playdotv.gui;
+package es.esy.playdotv.gui.swing;
 
 import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
@@ -20,17 +20,21 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-public class Settings {
+import com.unaux.plasmoxy.libscan.database.SebuLink;
+
+import es.esy.playdotv.Load;
+
+public class Settings{
 
 	private JFrame frmNastavenia;
 	private JTextField textField;
 	
-	public Settings() {
+	public Settings(){
 		initialize();
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void initialize() {
+	private void initialize(){
 		frmNastavenia = new JFrame();
 		frmNastavenia.setTitle("Nastavenia");
 		frmNastavenia.setBounds(100, 100, 450, 300);
@@ -53,12 +57,12 @@ public class Settings {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(GuiWindowsList.values()));
-		comboBox_1.setSelectedIndex(4);
+		comboBox_1.setSelectedIndex(6);
 		frmNastavenia.getContentPane().add(comboBox_1, "cell 1 2,growx");
 		
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setModel(new DefaultComboBoxModel(GuiWindowsList.values()));
-		comboBox_2.setSelectedIndex(5);
+		comboBox_2.setSelectedIndex(6);
 		frmNastavenia.getContentPane().add(comboBox_2, "cell 1 3,growx");
 		
 		JComboBox comboBox_3 = new JComboBox();
@@ -96,6 +100,8 @@ public class Settings {
 					prop.setProperty("WO2", comboBox_2.getSelectedItem().toString());
 					prop.setProperty("WO3", comboBox_3.getSelectedItem().toString());
 					prop.store(output, null);
+					SebuLink.save(Load.BOOK_DATABASE_PATH, Load.papers);
+					SebuLink.saveStudent(Load.STUDENT_DATABASE_PATH, Load.students);
 					JOptionPane.showMessageDialog(null, "Kliknite na OK a spustite program znovu.");
 					System.exit(0);
 				}catch(IOException e1){
