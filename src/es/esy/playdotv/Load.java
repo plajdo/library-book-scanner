@@ -3,12 +3,8 @@ package es.esy.playdotv;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.SebuLink;
-<<<<<<< HEAD
 
 import es.esy.playdotv.gui.fx.FXApp;
-=======
-import es.esy.playdotv.gui.fx.FxApp;
->>>>>>> 321c1876b3d9ed91d2eedcd53b52fe600a828177
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.objects.Paper;
 import es.esy.playdotv.objects.Person;
