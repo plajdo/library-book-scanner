@@ -4,8 +4,9 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.SebuLink;
 
-import es.esy.playdotv.gui.LookAndFeelSettingsList;
-import es.esy.playdotv.gui.MainMenu;
+import es.esy.playdotv.gui.fx.FxApp;
+import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
+import es.esy.playdotv.gui.swing.MainMenu;
 import es.esy.playdotv.objects.Paper;
 import es.esy.playdotv.objects.Person;
 
@@ -133,7 +134,8 @@ public class Load{
 			break;
 		}
 		
-		MainMenu.open();
+		//MainMenu.open();
+		FxApp.view();
 		
 	}
 	

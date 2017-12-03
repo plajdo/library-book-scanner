@@ -1,4 +1,4 @@
-package es.esy.playdotv.gui;
+package es.esy.playdotv.gui.swing;
 
 import javax.swing.JInternalFrame;
 import net.miginfocom.swing.MigLayout;
@@ -7,6 +7,7 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JPanel;
@@ -106,8 +107,8 @@ public class BorrowBook extends JInternalFrame {
 		panel.setLayout(new MigLayout("", "[110.00][][110.00]", "[][]"));
 		
 		JButton btnSkenovaKnihu = new JButton("Nasn\u00EDma\u0165 knihu");
-		btnSkenovaKnihu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnSkenovaKnihu.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
 				BookScanner bs = new BookScanner();
 				bs.addDataDialogListener(new DDEventListener(){
 					@Override
@@ -143,26 +144,36 @@ public class BorrowBook extends JInternalFrame {
 		
 		UtilDateModel m1 = new UtilDateModel();
 		JDatePanelImpl datePanel1 = new JDatePanelImpl(m1);
+		
+		JLabel lblDo = new JLabel("Do:");
+		getContentPane().add(lblDo, "cell 1 7");
 		JDatePickerImpl datePicker1 = new JDatePickerImpl(datePanel1);
 		getContentPane().add(datePicker1, "cell 1 7");
 		
 		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
-		btnPotvrdi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Person st = Load.students.get(textField_3.getText());
-				Paper p = Load.papers.get(textField.getText());
-				p.setBorrowDate((Date)datePicker2.getModel().getValue(), (Date)datePicker1.getModel().getValue());
-				p.setBorrowed(true);
-				st.addPaper(p);
-				dispose();
-				
+		btnPotvrdi.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				try{
+					if(textField.getText().length() > 0 && textField_3.getText().length() > 0 && datePicker1.getModel().getValue() != null && datePicker2.getModel().getValue() != null){
+						Person st = Load.students.get(textField_3.getText());
+						Paper p = Load.papers.get(textField.getText());
+						p.setBorrowDate((Date)datePicker2.getModel().getValue(), (Date)datePicker1.getModel().getValue());
+						p.setBorrowed(true);
+						st.addPaper(p);
+						dispose();
+					}else{
+						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID osoby a dátumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					}
+				}catch(NullPointerException e1){
+					
+				}
 			}
 		});
 		panel.add(btnPotvrdi, "cell 2 0,growx,aligny center");
 		
 		JButton btnSkenovaOsobu = new JButton("Nasn\u00EDma\u0165 osobu");
-		btnSkenovaOsobu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnSkenovaOsobu.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
 				PersonScanner ps = new PersonScanner();
 				ps.addDataDialogListener(new DDEventListener(){
 					@Override
@@ -199,9 +210,6 @@ public class BorrowBook extends JInternalFrame {
 			}
 		});
 		panel.add(btnZrui, "cell 2 1,growx,aligny center");
-		
-		JLabel lblDo = new JLabel("Do:");
-		getContentPane().add(lblDo, "cell 1 7");
 		
 		setVisible(true);
 
