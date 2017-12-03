@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.esy.playdotv.gui.fx.FxAppController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.esy.playdotv.gui.fx.FXAppController">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <FlowPane prefHeight="200.0" prefWidth="200.0">
          <children>
             <JFXTabPane prefHeight="480.0" prefWidth="800.0">
                <tabs>
@@ -17,18 +21,22 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="799.0" style="-fx-background-color: #646464;">
                            <children>
                               <JFXListView layoutX="14.0" layoutY="14.0" prefHeight="418.0" prefWidth="248.0" style="-fx-background-color: #808080;" />
+                              <JFXButton layoutX="388.0" layoutY="286.0" onAction="#startButtonAction" style="-fx-background-color: #808080;" text="Start webcam" />
+                              <ImageView fx:id="WebcamImage" fitHeight="150.0" fitWidth="200.0" layoutX="356.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label layoutX="356.0" layoutY="44.0" text="Webcam preview here:" />
+                              <JFXButton layoutX="494.0" layoutY="286.0" onAction="#stopButtonAction" style="-fx-background-color: #808080;" text="Stop webcam" />
                            </children>
                         </AnchorPane>
                     </content>
                   </Tab>
                   <Tab text="Používatelia">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #646464;" />
                     </content>
                   </Tab>
                </tabs>
             </JFXTabPane>
          </children>
-    </AnchorPane>
+      </FlowPane>
   </children>
 </VBox>
