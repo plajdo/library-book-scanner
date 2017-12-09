@@ -119,6 +119,7 @@ public class MainMenu {
 		JMenuItem mntmVrtiKnihu = new JMenuItem("Vr\u00E1ti\u0165 knihu");
 		mntmVrtiKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				openReturnBook();
 			}
 		});
 		mntmVrtiKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
@@ -379,6 +380,16 @@ public class MainMenu {
 			e1.printStackTrace();
 		}
 		
+	}
+	
+	private void openReturnBook(){
+		ReturnBook rb = new ReturnBook(desktopPane);
+		desktopPane.add(rb);
+		try{
+			rb.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
 	}
 	
 }
