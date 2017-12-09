@@ -1,6 +1,6 @@
 package es.esy.playdotv.gui.swing;
 
-import es.esy.playdotv.SebuLink;
+import com.unaux.plasmoxy.libscan.database.SebuLink;
 import es.esy.playdotv.Load;
 import net.miginfocom.swing.MigLayout;
 

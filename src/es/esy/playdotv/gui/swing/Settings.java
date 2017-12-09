@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import es.esy.playdotv.SebuLink;
+import com.unaux.plasmoxy.libscan.database.SebuLink;
 
 import es.esy.playdotv.Load;
 
