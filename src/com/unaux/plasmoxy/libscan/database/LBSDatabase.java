@@ -1,4 +1,4 @@
-package es.esy.playdotv;
+package com.unaux.plasmoxy.libscan.database;
 
 public class LBSDatabase
 {

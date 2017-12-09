@@ -1,4 +1,4 @@
-package es.esy.playdotv;
+package com.unaux.plasmoxy.libscan.database;
 
 import es.esy.playdotv.objects.Paper;
 import es.esy.playdotv.objects.Person;
