@@ -149,7 +149,7 @@ public class MainMenu {
 		JMenu mntudent = new JMenu("\u0160tudent");
 		menuBar.add(mntudent);
 		
-		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u0161tudenta");
+		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 u\u017Eivate\u013Ea");
 		mntudent.add(mntmPridaiaka);
 		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmPridaiaka.addActionListener(new ActionListener() {
@@ -159,7 +159,7 @@ public class MainMenu {
 			
 		});
 		
-		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 \u0161tudenta");
+		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 u\u017Eivate\u013Ea");
 		mntmOdstrniiaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -170,7 +170,7 @@ public class MainMenu {
 		JSeparator separator_3 = new JSeparator();
 		mntudent.add(separator_3);
 		
-		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam \u0161tudentov");
+		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam u\u017Eivate\u013Eov");
 		mntmZoznamtudentov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openListAllStudents();
@@ -178,36 +178,6 @@ public class MainMenu {
 		});
 		mntmZoznamtudentov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		mntudent.add(mntmZoznamtudentov);
-		
-		JMenu mnUite_1 = new JMenu("U\u010Dite\u013E");
-		menuBar.add(mnUite_1);
-		
-		JMenuItem mntmPridaUitea = new JMenuItem("Prida\u0165 u\u010Dite\u013Ea");
-		mntmPridaUitea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		mnUite_1.add(mntmPridaUitea);
-		mntmPridaUitea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
-		
-		JMenuItem mntmOdstrniUitea = new JMenuItem("Odstr\u00E1ni\u0165 u\u010Dite\u013Ea");
-		mntmOdstrniUitea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		mnUite_1.add(mntmOdstrniUitea);
-		mntmOdstrniUitea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
-		
-		JSeparator separator_4 = new JSeparator();
-		mnUite_1.add(separator_4);
-		
-		JMenuItem mntmZoznamUiteov = new JMenuItem("Zoznam u\u010Dite\u013Eov");
-		mntmZoznamUiteov.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		mntmZoznamUiteov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.SHIFT_MASK));
-		mnUite_1.add(mntmZoznamUiteov);
 		
 		JMenu mnIn = new JMenu("In\u00E9");
 		menuBar.add(mnIn);
@@ -218,11 +188,8 @@ public class MainMenu {
 		JMenuItem mntmVymazaZoznamKnh = new JMenuItem("Vymaza\u0165 zoznam kn\u00EDh");
 		mnVymaza.add(mntmVymazaZoznamKnh);
 		
-		JMenuItem mntmVymazaZoznamtudentov = new JMenuItem("Vymaza\u0165 zoznam \u0161tudentov");
+		JMenuItem mntmVymazaZoznamtudentov = new JMenuItem("Vymaza\u0165 zoznam u\u017Eivate\u013Eov");
 		mnVymaza.add(mntmVymazaZoznamtudentov);
-		
-		JMenuItem mntmVymazaZoznamUiteov = new JMenuItem("Vymaza\u0165 zoznam u\u010Dite\u013Eov");
-		mnVymaza.add(mntmVymazaZoznamUiteov);
 		
 		JSeparator separator_5 = new JSeparator();
 		mnIn.add(separator_5);
@@ -244,10 +211,6 @@ public class MainMenu {
 		mnIn.add(mntmNastavenia);
 		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
 		mnIn.add(mntmPomoc);
-		mntmVymazaZoznamUiteov.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		mntmVymazaZoznamtudentov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Load.resetStudentDatabase();
