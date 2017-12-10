@@ -1,9 +1,7 @@
 package es.esy.playdotv.gui.swing;
 
-import es.esy.playdotv.Load;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.datareader.Generator;
-import es.esy.playdotv.objects.Person;
-import es.esy.playdotv.objects.Student;
 import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
@@ -14,14 +12,16 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class AddStudent extends JInternalFrame {
+public class AddPerson extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	
-	public AddStudent() {
+	private LBSDatabase db = LBSDatabase.getInstance();
+	
+	public AddPerson() {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Prida\u0165 žiaka");
@@ -59,11 +59,16 @@ public class AddStudent extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u017Eiaka do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Person np = new Student(textField.getText());
+				
+				/*
+				Person np = new Person(textField.getText());
 				np.setName(textField_1.getText());
 				np.setGroup(textField_2.getText());
 				Load.students.put(textField.getText(), np);
 				btnPotvrdiAPrida.setEnabled(false);
+				*/
+				
+				
 				
 			}
 			

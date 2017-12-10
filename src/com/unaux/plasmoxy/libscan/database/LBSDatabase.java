@@ -104,7 +104,7 @@ public class LBSDatabase
 			el_books.appendChild(el_b);
 			
 			el_b.setAttribute("name", b.getName());
-			el_b.setAttribute("id", b.getId());
+			el_b.setAttribute("id", b.getID());
 			el_b.setAttribute("author", b.getAuthor());
 			el_b.setAttribute("takerid", b.getTaker().getID());
 			el_b.setAttribute("borrowedTime", Long.toString(b.getBorrowedTime()));

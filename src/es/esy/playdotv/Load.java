@@ -25,8 +25,8 @@ public class Load{
 	public static String BOOK_DATABASE_PATH = "papers.ser";
 	public static String STUDENT_DATABASE_PATH = "students.ser";
 	
-	public static volatile Map<String, Book> books;
-	public static volatile Map<String, Person> persons;
+	//public static volatile Map<String, Book> books;
+	//public static volatile Map<String, Person> persons;
 	
 	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.DEFAULT;
 	

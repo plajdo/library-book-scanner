@@ -10,7 +10,7 @@ public class Person {
 	
 	public Person(String id){
 		this.ID = id;
-	}
+	} // basic person constructor, uniqueness represented by id
 
 	// accessors
 	public String getName() {

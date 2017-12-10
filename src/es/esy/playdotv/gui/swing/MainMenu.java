@@ -291,7 +291,7 @@ public class MainMenu {
 	}
 	
 	private void openAddStudent(){
-		AddStudent as = new AddStudent();
+		AddPerson as = new AddPerson();
 		desktopPane.add(as);
 		try{
 			as.setSelected(true);

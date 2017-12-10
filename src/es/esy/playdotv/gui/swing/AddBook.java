@@ -1,9 +1,8 @@
 package es.esy.playdotv.gui.swing;
 
-import es.esy.playdotv.Load;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.datareader.Generator;
 import es.esy.playdotv.objects.Book;
-import es.esy.playdotv.objects.Paper;
 import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
@@ -20,6 +19,8 @@ public class AddBook extends JInternalFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	
+	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	public AddBook() {
 		setClosable(true);
@@ -59,11 +60,14 @@ public class AddBook extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 knihu do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Paper nb = new Book(textField.getText());
-				nb.setTitle(textField_1.getText());
+				
+				Book nb = new Book(textField.getText());
+				nb.setName(textField_1.getText());
 				nb.setAuthor(textField_2.getText());
-				Load.papers.put(textField.getText(), nb);
+				db.books.put(textField.getText(), nb);
 				btnPotvrdiAPrida.setEnabled(false);
+				
+				
 			}
 			
 		});

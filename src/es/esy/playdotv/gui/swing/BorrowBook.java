@@ -1,31 +1,21 @@
 package es.esy.playdotv.gui.swing;
 
-import javax.swing.JInternalFrame;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
+import es.esy.playdotv.event.DDEventListener;
+import es.esy.playdotv.event.DataDialogEvent;
+import es.esy.playdotv.event.DataDialogEventOperation;
+import es.esy.playdotv.objects.Book;
+import es.esy.playdotv.objects.Person;
 import net.miginfocom.swing.MigLayout;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JDesktopPane;
-import javax.swing.SwingConstants;
-
-import es.esy.playdotv.Load;
-import es.esy.playdotv.event.DDEventListener;
-import es.esy.playdotv.event.DataDialogEvent;
-import es.esy.playdotv.event.DataDialogEventOperation;
-import es.esy.playdotv.objects.Paper;
-import es.esy.playdotv.objects.Person;
-
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.Date;
-import java.awt.event.ActionEvent;
 
 public class BorrowBook extends JInternalFrame {
 	
@@ -37,7 +27,10 @@ public class BorrowBook extends JInternalFrame {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	
+	private LBSDatabase db = LBSDatabase.getInstance();
+	
 	public BorrowBook(JDesktopPane desktopPane) {
+		
 		setTitle("Vypo\u017Ei\u010Dia\u0165 knihu");
 		setBounds(100, 100, 460, 315);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][grow][]"));
@@ -155,12 +148,23 @@ public class BorrowBook extends JInternalFrame {
 			public void actionPerformed(ActionEvent e){
 				try{
 					if(textField.getText().length() > 0 && textField_3.getText().length() > 0 && datePicker1.getModel().getValue() != null && datePicker2.getModel().getValue() != null){
-						Person st = Load.students.get(textField_3.getText());
-						Paper p = Load.papers.get(textField.getText());
-						p.setBorrowDate((Date)datePicker2.getModel().getValue(), (Date)datePicker1.getModel().getValue());
-						p.setBorrowed(true);
-						st.addPaper(p);
+						
+						Person per = db.persons.get(textField_3.getText()); // taker of the book
+						Book b = db.books.get(textField.getText()); // book to be taken
+						
+						b.setBorrowedTime( ((Date)datePicker2.getModel().getValue()).getTime() );
+						b.setBorrowedUntilTime( ((Date)datePicker1.getModel().getValue()).getTime() );
+						
+						if ( !per.getBorrowedIDs().contains(b.getID()) ) // just pass if already borrowed in arraylist
+						{
+							b.setTaker(per.getID());
+							per.getBorrowedIDs().add(b.getID());
+						} else {
+							JOptionPane.showMessageDialog(null, "Kniha je už vypožièaná osobou s ID = " + per.getID(), "Chyba", JOptionPane.ERROR_MESSAGE);
+						}
+						
 						dispose();
+						
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID osoby a dátumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}

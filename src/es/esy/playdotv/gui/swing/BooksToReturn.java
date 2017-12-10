@@ -1,17 +1,18 @@
 package es.esy.playdotv.gui.swing;
 
-import es.esy.playdotv.Load;
-import es.esy.playdotv.objects.Paper;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
+import es.esy.playdotv.objects.Book;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.Date;
 
 public class BooksToReturn extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	
+	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	public BooksToReturn(){
 		setIconifiable(true);
@@ -33,11 +34,11 @@ public class BooksToReturn extends JInternalFrame{
 		
 		setVisible(true);
 
-		for (String key : Load.papers.keySet()){
-			Paper p = Load.papers.get(key);
+		for (String key : db.books.keySet()){
+			Book b = db.books.get(key);
 			
-			if(p.isBorrowed()){
-				tblModel.addRow(new Object[]{p.getID(), p.getTitle(), p.getAuthor(), p.getBorrowedUntilDate()});
+			if( !b.getTaker().equals("") ){ // if is borowed
+				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 			}
 			
 		}
