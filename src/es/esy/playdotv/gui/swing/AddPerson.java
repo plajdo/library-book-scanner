@@ -2,6 +2,7 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.datareader.Generator;
+import es.esy.playdotv.objects.Person;
 import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
@@ -60,15 +61,12 @@ public class AddPerson extends JInternalFrame {
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
-				/*
+				
 				Person np = new Person(textField.getText());
 				np.setName(textField_1.getText());
 				np.setGroup(textField_2.getText());
-				Load.students.put(textField.getText(), np);
+				db.persons.put(textField.getText(), np);
 				btnPotvrdiAPrida.setEnabled(false);
-				*/
-				
-				
 				
 			}
 			
