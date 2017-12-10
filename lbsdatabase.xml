@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <database>
   <books>
-    <book author="Ján Kollar" borrowedTime="0" borrowedUntilTime="0" id="slavydcera" name="Slávy Dcéra" takerID=""/>
-    <book author="Samo Chalúpka" borrowedTime="0" borrowedUntilTime="0" id="morho" name="Mor ho !" takerID=""/>
+    <book author="Ján Kollar" borrowedTime="1512424067655" borrowedUntilTime="1512510467659" id="slavydcera" name="Slávy Dcéra" takerID="sebu"/>
+    <book author="Samo Chalúpka" borrowedTime="1512510372950" borrowedUntilTime="1513719972953" id="morho" name="Mor ho !" takerID="sebu"/>
   </books>
-  <persons/>
+  <persons>
+    <person group="sexta" id="sebu" name="Sebb"/>
+  </persons>
 </database>
