@@ -206,8 +206,8 @@ public class MainMenu {
 		JMenuItem mntmNastavenia = new JMenuItem("Nastavenia");
 		mntmNastavenia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					@SuppressWarnings("unused")
-					Settings s = new Settings();
+					//TODO: @SuppressWarnings("unused")
+					//TODO: Settings s = new Settings();
 			}
 		});
 		

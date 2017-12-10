@@ -40,36 +40,6 @@ public class Load
 	}
 	
 	public static void main(String[] args){
-		/*
-		Properties prop = new Properties();
-		
-		try(InputStream input = new FileInputStream("config.properties")){
-			prop.load(input);
-			
-			DATABASE_PATH = prop.getProperty("DATABASE_FILE_PATH");
-			LAF = LookAndFeelSettingsList.valueOf(prop.getProperty("LAF"));
-			
-		}catch(IOException | NullPointerException e){
-			System.err.println("Missing config.properties, using default database path.");
-		}
-		*/
-		/*
-		
-		try{
-			papers = SebuLink.load(BOOK_DATABASE_PATH);
-		}catch(ClassNotFoundException | IOException e){
-			createNewBookDatabase();
-		}
-		
-		try{
-			students = SebuLink.loadStudent(STUDENT_DATABASE_PATH);
-		}catch(ClassNotFoundException | IOException e){
-			createNewStudentDatabase();
-		}
-		
-		*/
-		
-		// TODO : nechat databazu nech sa resetuje kebyze dostane nejaky error pri subore, ak error pri parsovani nech zhodi program ( teda vymazanie suboru / opravenie databazy to opravi )
 		
 		db.load(DATABASE_PATH);
 		
