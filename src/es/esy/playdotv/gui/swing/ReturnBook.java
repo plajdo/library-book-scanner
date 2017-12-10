@@ -99,7 +99,7 @@ public class ReturnBook extends JInternalFrame{
 				try{
 					if(textField.getText().length() > 0){
 						/*
-						 * Kód na vrátenie knihy
+						 * TODO: Kód na vrátenie knihy
 						 */
 						dispose();
 					}else{
