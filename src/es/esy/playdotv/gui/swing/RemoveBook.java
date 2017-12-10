@@ -33,34 +33,20 @@ public class RemoveBook extends JInternalFrame {
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, "cell 0 3 2 1,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow]", "[]"));
+		panel.setLayout(new MigLayout("", "[grow]", "[]"));
 
 		JButton btnPotvrdiAPrida = new JButton("Odstr\u00E1ni\u0165 knihu z datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
 				/*
-				Person np = new Person(textField.getText());
-				np.setName(textField_1.getText());
-				np.setGroup(textField_2.getText());
-				Load.students.put(textField.getText(), np);
-				btnPotvrdiAPrida.setEnabled(false);
-				*/
-				
-				
+				 * TODO: KÛd na odstr·nenie knÌh z datab·zy
+				 */
 				
 			}
 			
 		});
 		panel.add(btnPotvrdiAPrida, "flowy,cell 0 0,growx");
-
-		JButton btnDokoni = new JButton("DokonËiù");
-		btnDokoni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		panel.add(btnDokoni, "cell 1 0,growx");
 		
 		setVisible(true);
 

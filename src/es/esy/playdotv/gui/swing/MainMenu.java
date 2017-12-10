@@ -45,11 +45,7 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
-<<<<<<< HEAD
-		frmGymnziumLipany.setTitle("CHANGE NAME HERE");
-=======
 		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
->>>>>>> cb6bcac78d750712b68994c3618a6d0776dde220
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
@@ -105,7 +101,9 @@ public class MainMenu {
 		JMenuItem mntmOdstrniKnihu = new JMenuItem("Odstr\u00E1ni\u0165 knihu");
 		mntmOdstrniKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				openRemoveBook();
 			}
+			
 		});
 		mnKniha_1.add(mntmOdstrniKnihu);
 		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
@@ -168,6 +166,7 @@ public class MainMenu {
 		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 \u010Ditate\u013Ea");
 		mntmOdstrniiaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				openRemovePerson();
 			}
 		});
 		mntudent.add(mntmOdstrniiaka);
