@@ -187,7 +187,7 @@ public class MainMenu {
 		JMenu mnVymaza = new JMenu("Vymaza\u0165");
 		mnIn.add(mnVymaza);
 		
-		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 zoznam \u010Ditate\u013Eov");
+		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 datab\u00E1zu");
 		mnVymaza.add(mntmVymazatDatabazu);
 		
 		JSeparator separator_5 = new JSeparator();
