@@ -8,6 +8,7 @@ import com.unaux.plasmoxy.libscan.database.SebuLink;
 import es.esy.playdotv.gui.fx.FXApp;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 //import es.esy.playdotv.gui.swing.MainMenu;
+import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Paper;
 import es.esy.playdotv.objects.Person;
 
@@ -24,8 +25,8 @@ public class Load{
 	public static String BOOK_DATABASE_PATH = "papers.ser";
 	public static String STUDENT_DATABASE_PATH = "students.ser";
 	
-	public static volatile Map<String, Paper> papers;
-	public static volatile Map<String, Person> students;
+	public static volatile Map<String, Book> books;
+	public static volatile Map<String, Person> persons;
 	
 	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.DEFAULT;
 	
