@@ -32,7 +32,7 @@ public class LBSDatabase
 	private Transformer transformer;
 
 	// THE MAIN DATABASE MAP OBJECTS, TO BE USED EVERYWHERE WHERE DATABASE IS NEEDED
-	public volatile Map<String, Book> books; 
+	public volatile Map<String, Book> books;
 	public volatile Map<String, Person> persons;
 	
 	// singleton pattern CONSTRUCTOR
@@ -106,7 +106,7 @@ public class LBSDatabase
 			el_b.setAttribute("name", b.getName());
 			el_b.setAttribute("id", b.getID());
 			el_b.setAttribute("author", b.getAuthor());
-			el_b.setAttribute("takerid", b.getTaker().getID());
+			el_b.setAttribute("takerid", b.getTakerID());
 			el_b.setAttribute("borrowedTime", Long.toString(b.getBorrowedTime()));
 			el_b.setAttribute("borrowedTimeUntil", Long.toString(b.getBorrowedUntilTime()));
 		}
@@ -134,7 +134,7 @@ public class LBSDatabase
 			transformer.transform(src, result);
 		}
 		catch (TransformerException e) {
-			System.out.println("SAVE PARSE ERROR");
+			System.out.println("SAVE PARSE ERROR"); // TODO - ked neje subor
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -144,6 +144,7 @@ public class LBSDatabase
     public void reset()
     {
         books = new HashMap<>();
+		persons = new HashMap<>();
     }
 
 

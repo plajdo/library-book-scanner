@@ -1,25 +1,25 @@
 package es.esy.playdotv.gui.swing;
 
-import es.esy.playdotv.Load;
-import es.esy.playdotv.objects.Paper;
-import es.esy.playdotv.objects.Student;
-
-import java.util.ArrayList;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
+import es.esy.playdotv.objects.Person;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
-public class ListAllStudents extends JInternalFrame {
+public class ListAllPersons extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	
-	public ListAllStudents(){
+	private LBSDatabase db = LBSDatabase.getInstance();
+	
+	public ListAllPersons(){
 		setIconifiable(true);
 		setClosable(true);
 		setResizable(true);
 		setMaximizable(true);
-		setTitle("Zoznam v\u0161etk\u00FDch žiakov");
+		setTitle("Zoznam v\u0161etk\u00FDch osôb");
 		setBounds(100, 100, 450, 300);
 		
 		table = new JTable();
@@ -32,22 +32,21 @@ public class ListAllStudents extends JInternalFrame {
 		
 		setVisible(true);
 
-		for(String key : Load.students.keySet()){
-			Student s = (Student)Load.students.get(key);
-			tblModel.addRow(new Object[]{s.getID(), s.getName(), s.getGroup(), getBookList(s.getPapers())});
+		for(String key : db.persons.keySet()){
+			Person p = db.persons.get(key);
+			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), getBookIDList(p.getBorrowedIDs())  });
 			
 		}
 		
 	}
 	
-	private String getBookList(ArrayList<Paper> a){
+	private String getBookIDList(List<String> list){
 		String x = "";
-		for(Paper index : a){
-			x = x.concat(index.getID() + ", ");
-			
+		for(String id : list) 
+		{
+			x = x.concat(id + ", ");
 		}
 		return x;
-		
 	}
 
 }

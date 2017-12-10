@@ -2,82 +2,40 @@ package es.esy.playdotv;
 
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
-
-import com.unaux.plasmoxy.libscan.database.SebuLink;
-
-import es.esy.playdotv.gui.fx.FXApp;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
-//import es.esy.playdotv.gui.swing.MainMenu;
-import es.esy.playdotv.objects.Book;
-import es.esy.playdotv.objects.Paper;
-import es.esy.playdotv.objects.Person;
+import es.esy.playdotv.gui.swing.MainMenu;
 
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
-public class Load{
+//import es.esy.playdotv.gui.swing.MainMenu;
 
-	public static String BOOK_DATABASE_PATH = "papers.ser";
-	public static String STUDENT_DATABASE_PATH = "students.ser";
-	
-	//public static volatile Map<String, Book> books;
-	//public static volatile Map<String, Person> persons;
+public class Load
+{
+	public static String DATABASE_PATH = "lbsdatabase.xml";
+	private static LBSDatabase db = LBSDatabase.getInstance();
 	
 	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.DEFAULT;
 	
-	public static void resetBookDatabase(){
+	public static void resetDatabase(){
 		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj resetova\u0165 datab\u00E1zu ?","Reset datab\u00E1zy", JOptionPane.YES_NO_OPTION);
 		if (dialogResult == JOptionPane.YES_OPTION){
 			try{
-				SebuLink.save(BOOK_DATABASE_PATH, new HashMap<String, Paper>());
-			}catch (IOException e){
-				JOptionPane.showMessageDialog(null, "Chyba <IOException resetDatabase()>");
+				
+				db.reset();
+				db.save(DATABASE_PATH);
+				
+			}catch (Exception e){
+				JOptionPane.showMessageDialog(null, "Chyba pri resetovaní databázy.");
+				e.printStackTrace();
 			}finally{
 				System.exit(0);
 			}
 			
-		}
-		
-	}
-	
-	public static void resetStudentDatabase(){
-		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj resetova\u0165 datab\u00E1zu ?","Reset datab\u00E1zy", JOptionPane.YES_NO_OPTION);
-		if (dialogResult == JOptionPane.YES_OPTION){
-			try{
-				SebuLink.saveStudent(STUDENT_DATABASE_PATH, new HashMap<String, Person>());
-			}catch (IOException e){
-				JOptionPane.showMessageDialog(null, "Chyba <IOException resetDatabase()>");
-			}finally{
-				System.exit(0);
-			}
-			
-		}
-		
-	}
-	
-	public static void createNewBookDatabase(){
-		try{
-			SebuLink.save(BOOK_DATABASE_PATH, new HashMap<String, Paper>());
-			papers = SebuLink.load(BOOK_DATABASE_PATH);
-		}catch (IOException | ClassNotFoundException e){
-			e.printStackTrace();
-			System.exit(-1);
-		}
-		
-	}
-	
-	public static void createNewStudentDatabase(){
-		try{
-			SebuLink.saveStudent(STUDENT_DATABASE_PATH, new HashMap<String, Person>());
-			students = SebuLink.loadStudent(STUDENT_DATABASE_PATH);
-		}catch (IOException | ClassNotFoundException e){
-			e.printStackTrace();
-			System.exit(-1);
 		}
 		
 	}
@@ -89,13 +47,14 @@ public class Load{
 		try(InputStream input = new FileInputStream("config.properties")){
 			prop.load(input);
 			
-			BOOK_DATABASE_PATH = prop.getProperty("BDP") + "papers.ser";
-			STUDENT_DATABASE_PATH = prop.getProperty("SDP") + "students.ser";
+			DATABASE_PATH = prop.getProperty("DATABASE_FILE_PATH");
 			LAF = LookAndFeelSettingsList.valueOf(prop.getProperty("LAF"));
 			
 		}catch(IOException | NullPointerException e){
 			System.err.println("Missing config.properties, using default database path.");
 		}
+		
+		/*
 		
 		try{
 			papers = SebuLink.load(BOOK_DATABASE_PATH);
@@ -108,6 +67,12 @@ public class Load{
 		}catch(ClassNotFoundException | IOException e){
 			createNewStudentDatabase();
 		}
+		
+		*/
+		
+		// TODO : nechat databazu nech sa resetuje kebyze dostane nejaky error pri subore, ak error pri parsovani nech zhodi program ( teda vymazanie suboru / opravenie databazy to opravi )
+		
+		db.load(DATABASE_PATH);
 		
 		switch(LAF){
 		case MCWIN:
@@ -135,8 +100,8 @@ public class Load{
 			break;
 		}
 		
-		//MainMenu.open();
-		FXApp.view();
+		MainMenu.open();
+		//FXApp.view();
 		
 	}
 	

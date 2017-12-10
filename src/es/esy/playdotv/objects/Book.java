@@ -21,8 +21,8 @@ public class Book {
 	public void setName(String name) { this.name = name; }
 	public String getAuthor() { return author; }
 	public void setAuthor(String author) { this.author = author; }
-	public String getTaker() { return takerID; }
-	public void setTaker(String taker) { this.takerID = taker; }
+	public String getTakerID() { return takerID; }
+	public void setTakerID(String taker) { this.takerID = taker; }
 	public long getBorrowedTime() { return borrowedTime; }
 	public void setBorrowedTime(long borrowedTime) { this.borrowedTime = borrowedTime; }
 	public long getBorrowedUntilTime() { return borrowedUntilTime; }

@@ -335,7 +335,7 @@ public class MainMenu {
 	}
 	
 	private void openListAllStudents(){
-		ListAllStudents las = new ListAllStudents();
+		ListAllPersons las = new ListAllPersons();
 		desktopPane.add(las);
 		try{
 			las.setSelected(true);

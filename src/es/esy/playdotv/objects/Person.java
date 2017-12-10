@@ -26,6 +26,7 @@ public class Person {
 		this.group = group;
 	}
 	public String getID() { return ID; }
+	public void setID(String id) { ID = id; }
 	public List<String> getBorrowedIDs() { return borrowedIDs; }
 	
 	
