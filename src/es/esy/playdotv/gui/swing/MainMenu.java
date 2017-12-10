@@ -45,7 +45,11 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
+<<<<<<< HEAD
 		frmGymnziumLipany.setTitle("CHANGE NAME HERE");
+=======
+		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
+>>>>>>> cb6bcac78d750712b68994c3618a6d0776dde220
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
