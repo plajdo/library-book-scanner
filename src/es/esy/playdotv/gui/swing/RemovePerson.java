@@ -39,9 +39,8 @@ public class RemovePerson extends JInternalFrame {
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
-				/*
-				 * TODO: Kód na vymazanie týpeèkov z databázy
-				 */
+				db.persons.remove(textField.getText());
+				dispose();
 				
 			}
 			

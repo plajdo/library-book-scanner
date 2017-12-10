@@ -39,9 +39,8 @@ public class RemoveBook extends JInternalFrame {
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
-				/*
-				 * TODO: Kód na odstránenie kníh z databázy
-				 */
+				db.books.remove(textField.getText());
+				dispose();
 				
 			}
 			
