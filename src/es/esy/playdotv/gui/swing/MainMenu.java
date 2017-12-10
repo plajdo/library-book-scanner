@@ -170,7 +170,7 @@ public class MainMenu {
 		JSeparator separator_3 = new JSeparator();
 		mntudent.add(separator_3);
 		
-		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam \u010Ditate\u013E");
+		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam \u010Ditate\u013Eov");
 		mntmZoznamtudentov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openListAllStudents();
