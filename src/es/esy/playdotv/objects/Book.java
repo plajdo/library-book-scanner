@@ -1,84 +1,39 @@
 package es.esy.playdotv.objects;
 
-import java.util.Date;
+public class Book {
+	
+	// FIELDS
+	
+	private String id, name, author;
+	private Person taker; // reference to person object which has the book
+	private long borrowedTime = 0, borrowedUntilTime = 0; // milisecond date times, to be used with java date classes externally
 
-public class Book implements Paper{
-	
-	private static final long serialVersionUID = 1L;
-	private String ID;
-	private String title;
-	private String author;
-	private boolean borrowed;
-	private Date borrowedDate;
-	private Date borrowedUntilDate;
-	
-	public Book(String id) {
-		this.borrowedDate = new Date();
-		this.borrowedUntilDate = new Date();
-		this.ID = id;
-		this.borrowed = false;
-	}
-	
-	public Book(String id, String author, String title) {
-		this.borrowedDate = new Date();
-		this.borrowedUntilDate = new Date();
-		this.ID = id;
+	// CONSTRUCTORS
+	public Book(String id, String author, String name) // basic book constructor
+	{
+		this.id = id;
 		this.author = author;
-		this.title = title;
-		this.borrowed = false;
-	}
-
-	@Override
-	public String getID(){
-		return ID;
-	}
-
-	@Override
-	public String getTitle(){
-		return title;
-	}
-
-	@Override
-	public String getAuthor(){
-		return author;
-	}
-
-	@Override
-	public boolean isBorrowed(){
-		return borrowed;
-	}
-
-	@Override
-	public void setTitle(String title){
-		this.title = title;
-	}
-
-	@Override
-	public void setAuthor(String author){
-		this.author = author;
-	}
-
-	@Override
-	public void setBorrowed(boolean borrowed){
-		this.borrowed = borrowed;
-	}
-
-	
-	@Override
-	public void setBorrowDate(Date date, Date dateUntil){
-		borrowedDate = date;
-		borrowedUntilDate = dateUntil;
+		this.name = name;
 	}
 	
-
-	@Override
-	public Date getBorrowedUntilDate(){
-		return borrowedUntilDate;
-	}
+	// ACCESSORS
+	public String getId() {return id;}
+	public void setId(String id) { this.id = id; }
+	public String getName() { return name; }
+	public void setName(String name) { this.name = name; }
+	public String getAuthor() { return author; }
+	public void setAuthor(String author) { this.author = author; }
+	public Person getTaker() { return taker; }
+	public void setTaker(Person taker) { this.taker = taker; }
+	public long getBorrowedTime() { return borrowedTime; }
+	public void setBorrowedTime(long borrowedTime) { this.borrowedTime = borrowedTime; }
+	public long getBorrowedUntilTime() { return borrowedUntilTime; }
+	public void setBorrowedUntilTime(long borrowedUntilTime) { this.borrowedUntilTime = borrowedUntilTime; }
 	
-	@Override
-	public Date getBorrowedDate() {
-		return borrowedDate;
-	}
+	// METHODS
+	
+	
+
+	
 
 }
