@@ -10,7 +10,6 @@ import javax.swing.JSeparator;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
-import javax.swing.SwingConstants;
 
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
@@ -104,7 +103,7 @@ public class ReturnBook extends JInternalFrame{
 						 */
 						dispose();
 					}else{
-						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID osoby a dátumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Zadajte ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}catch(NullPointerException e1){
 					

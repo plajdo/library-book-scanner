@@ -45,7 +45,7 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
-		frmGymnziumLipany.setTitle("Gymn\u00E1zium Lipany - Kni\u017Enica");
+		frmGymnziumLipany.setTitle("CHANGE NAME HERE");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
@@ -346,6 +346,26 @@ public class MainMenu {
 	
 	private void openReturnBook(){
 		ReturnBook rb = new ReturnBook(desktopPane);
+		desktopPane.add(rb);
+		try{
+			rb.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
+	
+	private void openRemovePerson(){
+		RemovePerson rp = new RemovePerson();
+		desktopPane.add(rp);
+		try{
+			rp.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
+	
+	private void openRemoveBook(){
+		RemoveBook rb = new RemoveBook();
 		desktopPane.add(rb);
 		try{
 			rb.setSelected(true);
