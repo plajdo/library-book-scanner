@@ -26,14 +26,11 @@ public class ReturnBook extends JInternalFrame{
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
 	
 	public ReturnBook(JDesktopPane desktopPane){
 		setTitle("Vr\u00E1ti\u0165 knihu");
-		setBounds(100, 100, 460, 290);
-		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][25.00,grow][]"));
+		setBounds(100, 100, 460, 158);
+		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][]"));
 		
 		JLabel lblisloKnihy = new JLabel("ID knihy:");
 		getContentPane().add(lblisloKnihy, "cell 0 0,alignx trailing,aligny center");
@@ -61,35 +58,9 @@ public class ReturnBook extends JInternalFrame{
 		JSeparator separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 3 2 1,grow");
 		
-		JLabel lblIdiaka = new JLabel("ID osoby:");
-		getContentPane().add(lblIdiaka, "cell 0 4,alignx trailing,aligny center");
-		
-		textField_3 = new JTextField();
-		getContentPane().add(textField_3, "cell 1 4,growx,aligny center");
-		textField_3.setColumns(10);
-		
-		JLabel lblMeno = new JLabel("Meno:");
-		getContentPane().add(lblMeno, "cell 0 5,alignx trailing,aligny center");
-		
-		textField_4 = new JTextField();
-		textField_4.setEditable(false);
-		getContentPane().add(textField_4, "cell 1 5,growx,aligny center");
-		textField_4.setColumns(10);
-		
-		JLabel lblTrieda = new JLabel("Trieda:");
-		getContentPane().add(lblTrieda, "cell 0 6,alignx trailing,aligny center");
-		
-		textField_5 = new JTextField();
-		textField_5.setEditable(false);
-		getContentPane().add(textField_5, "cell 1 6,growx,aligny center");
-		textField_5.setColumns(10);
-		
-		JSeparator separator_1 = new JSeparator();
-		getContentPane().add(separator_1, "cell 0 7 2 1,grow");
-		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, "cell 0 8 2 1,grow");
-		panel.setLayout(new MigLayout("", "[110.00][][110.00]", "[][]"));
+		getContentPane().add(panel, "cell 0 4 2 1,grow");
+		panel.setLayout(new MigLayout("", "[110.00,grow][110.00,grow][grow]", "[]"));
 		
 		JButton btnSkenovaKnihu = new JButton("Nasn\u00EDma\u0165 knihu");
 		btnSkenovaKnihu.addActionListener(new ActionListener(){
@@ -123,15 +94,11 @@ public class ReturnBook extends JInternalFrame{
 		});
 		panel.add(btnSkenovaKnihu, "cell 0 0,growx,aligny center");
 		
-		JSeparator separator_2 = new JSeparator();
-		separator_2.setOrientation(SwingConstants.VERTICAL);
-		panel.add(separator_2, "cell 1 0 1 2,grow");
-		
 		JButton btnPotvrdi = new JButton("Vr\u00E1ti\u0165");
 		btnPotvrdi.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				try{
-					if(textField.getText().length() > 0 && textField_3.getText().length() > 0){
+					if(textField.getText().length() > 0){
 						/*
 						 * Kód na vrátenie knihy
 						 */
@@ -144,39 +111,7 @@ public class ReturnBook extends JInternalFrame{
 				}
 			}
 		});
-		panel.add(btnPotvrdi, "cell 2 0,growx,aligny center");
-		
-		JButton btnSkenovaOsobu = new JButton("Nasn\u00EDma\u0165 osobu");
-		btnSkenovaOsobu.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				PersonScanner ps = new PersonScanner();
-				ps.addDataDialogListener(new DDEventListener(){
-					@Override
-					public void handleDataDialogEvent(DataDialogEvent evt){
-						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							textField_3.setText(ps.getData()[0]);
-							textField_4.setText(ps.getData()[1]);
-							textField_5.setText(ps.getData()[2]);
-						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
-							textField_3.setText("Chyba");
-							textField_4.setText("Chyba");
-							textField_5.setText("Chyba");
-						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField_3.setText("Zrušené");
-							textField_4.setText("Zrušené");
-							textField_5.setText("Zrušené");
-						}
-					}
-				});
-				desktopPane.add(ps);
-				try{
-					ps.setSelected(true);
-				}catch (PropertyVetoException e1){
-					e1.printStackTrace();
-				}
-			}
-		});
-		panel.add(btnSkenovaOsobu, "cell 0 1,growx,aligny center");
+		panel.add(btnPotvrdi, "cell 1 0,growx,aligny center");
 		
 		JButton btnZrui = new JButton("Zru\u0161i\u0165");
 		btnZrui.addActionListener(new ActionListener() {
@@ -184,7 +119,7 @@ public class ReturnBook extends JInternalFrame{
 				dispose();
 			}
 		});
-		panel.add(btnZrui, "cell 2 1,growx,aligny center");
+		panel.add(btnZrui, "cell 2 0,growx,aligny center");
 		
 		setVisible(true);
 
