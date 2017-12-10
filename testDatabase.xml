@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database>
+  <books>
+    <book author="AUTHOR_1" borrowedTime="0" borrowedTimeUntil="0" id="1" name="BOOKNAME_1" takerid=""/>
+    <book author="AUTHOR_2" borrowedTime="0" borrowedTimeUntil="0" id="2" name="BOOKNAME_2" takerid=""/>
+    <book author="AUTHOR_3" borrowedTime="0" borrowedTimeUntil="0" id="3" name="BOOKNAME_3" takerid=""/>
+  </books>
+  <persons>
+    <person group="studenti" id="1" name="PERSONNAME_1"/>
+    <person group="studenti" id="2" name="PERSONNAME_2"/>
+    <person group="studenti" id="3" name="PERSONNAME_3"/>
+  </persons>
+</database>

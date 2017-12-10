@@ -157,7 +157,7 @@ public class BorrowBook extends JInternalFrame {
 						
 						if ( !per.getBorrowedIDs().contains(b.getID()) ) // just pass if already borrowed in arraylist
 						{
-							b.setTaker(per.getID());
+							b.setTakerID(per.getID());
 							per.getBorrowedIDs().add(b.getID());
 						} else {
 							JOptionPane.showMessageDialog(null, "Kniha je už vypožièaná osobou s ID = " + per.getID(), "Chyba", JOptionPane.ERROR_MESSAGE);

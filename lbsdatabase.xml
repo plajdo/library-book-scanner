@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database>
+  <books>
+    <book author="Ján Kollar" borrowedTime="0" borrowedUntilTime="0" id="slavydcera" name="Slávy Dcéra" takerID=""/>
+    <book author="Samo Chalúpka" borrowedTime="0" borrowedUntilTime="0" id="morho" name="Mor ho !" takerID=""/>
+  </books>
+  <persons/>
+</database>

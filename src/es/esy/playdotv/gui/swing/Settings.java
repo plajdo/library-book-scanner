@@ -1,33 +1,21 @@
 package es.esy.playdotv.gui.swing;
 
-import javax.swing.JFrame;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JSeparator;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Properties;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
-
-import com.unaux.plasmoxy.libscan.database.SebuLink;
-
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.Properties;
 
 public class Settings{
 
 	private JFrame frmNastavenia;
 	private JTextField textField;
+	
+	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	public Settings(){
 		initialize();
@@ -100,8 +88,11 @@ public class Settings{
 					prop.setProperty("WO2", comboBox_2.getSelectedItem().toString());
 					prop.setProperty("WO3", comboBox_3.getSelectedItem().toString());
 					prop.store(output, null);
-					SebuLink.save(Load.BOOK_DATABASE_PATH, Load.papers);
-					SebuLink.saveStudent(Load.STUDENT_DATABASE_PATH, Load.students);
+					
+					
+					// TODO : savni databazu
+					db.save(Load.DATABASE_PATH);
+					
 					JOptionPane.showMessageDialog(null, "Kliknite na OK a spustite program znovu.");
 					System.exit(0);
 				}catch(IOException e1){

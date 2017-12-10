@@ -7,10 +7,6 @@ import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
 
 import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 //import es.esy.playdotv.gui.swing.MainMenu;
 
@@ -41,7 +37,7 @@ public class Load
 	}
 	
 	public static void main(String[] args){
-		
+		/*
 		Properties prop = new Properties();
 		
 		try(InputStream input = new FileInputStream("config.properties")){
@@ -53,7 +49,7 @@ public class Load
 		}catch(IOException | NullPointerException e){
 			System.err.println("Missing config.properties, using default database path.");
 		}
-		
+		*/
 		/*
 		
 		try{

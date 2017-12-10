@@ -1,6 +1,6 @@
 package es.esy.playdotv.gui.swing;
 
-import com.unaux.plasmoxy.libscan.database.SebuLink;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
 import net.miginfocom.swing.MigLayout;
 
@@ -17,6 +17,8 @@ public class MainMenu {
 	
 	private JFrame frmGymnziumLipany;
 	private JDesktopPane desktopPane;
+	
+	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	public static void open() {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,8 +46,10 @@ public class MainMenu {
 
 		frmGymnziumLipany = new JFrame();
 		frmGymnziumLipany.setTitle("Gymn\u00E1zium Lipany - Kni\u017Enica");
-		frmGymnziumLipany.setBounds(100, 100, 1280, 721);
+		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		// ---------EXIT--------
 
 		frmGymnziumLipany.addWindowListener(new WindowAdapter()
 		{
@@ -53,17 +57,15 @@ public class MainMenu {
 			public void windowClosing(WindowEvent event)
 			{
 				super.windowClosing(event);
-				try
-				{
-					SebuLink.save(Load.BOOK_DATABASE_PATH, Load.papers);
-					SebuLink.saveStudent(Load.STUDENT_DATABASE_PATH, Load.students);
-					System.exit(0);
-				} catch(IOException ex)
-				{
-					ex.printStackTrace();
-				}
+				
+				db.save(Load.DATABASE_PATH);
+				
+				System.exit(0);
+					
 			}
 		});
+		
+		//-----------------
 		
 		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
 		desktopPane = new JDesktopPane();
@@ -185,11 +187,8 @@ public class MainMenu {
 		JMenu mnVymaza = new JMenu("Vymaza\u0165");
 		mnIn.add(mnVymaza);
 		
-		JMenuItem mntmVymazaZoznamKnh = new JMenuItem("Vymaza\u0165 zoznam kn\u00EDh");
-		mnVymaza.add(mntmVymazaZoznamKnh);
-		
-		JMenuItem mntmVymazaZoznamtudentov = new JMenuItem("Vymaza\u0165 zoznam \u010Ditate\u013Eov");
-		mnVymaza.add(mntmVymazaZoznamtudentov);
+		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 zoznam \u010Ditate\u013Eov");
+		mnVymaza.add(mntmVymazatDatabazu);
 		
 		JSeparator separator_5 = new JSeparator();
 		mnIn.add(separator_5);
@@ -208,19 +207,19 @@ public class MainMenu {
 					Settings s = new Settings();
 			}
 		});
+		
+		//---------------RESET +save---------------
+		
 		mnIn.add(mntmNastavenia);
 		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
 		mnIn.add(mntmPomoc);
-		mntmVymazaZoznamtudentov.addActionListener(new ActionListener() {
+		mntmVymazatDatabazu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Load.resetStudentDatabase();
+				db.reset();
 			}
 		});
-		mntmVymazaZoznamKnh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Load.resetBookDatabase();
-			}
-		});
+		
+		// ---------------------------
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);

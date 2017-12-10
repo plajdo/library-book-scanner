@@ -37,7 +37,7 @@ public class BooksToReturn extends JInternalFrame{
 		for (String key : db.books.keySet()){
 			Book b = db.books.get(key);
 			
-			if( !b.getTaker().equals("") ){ // if is borowed
+			if( !b.getTakerID().equals("") ){ // if is borowed
 				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 			}
 			
