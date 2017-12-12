@@ -10,7 +10,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 public class ListAllBooks extends JInternalFrame{
 	
@@ -30,10 +31,9 @@ public class ListAllBooks extends JInternalFrame{
 		setBounds(100, 100, 450, 300);
 		
 		table = new JTable();
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		scrollPane = new JScrollPane(table);
 		
-		scrollPane.setPreferredSize(table.getPreferredScrollableViewportSize());
+		resizeTable();
 		
 		getContentPane().add(scrollPane, BorderLayout.NORTH);
 		
@@ -51,6 +51,25 @@ public class ListAllBooks extends JInternalFrame{
 				
 			}
 			
+		});
+		this.addComponentListener(new ComponentListener(){
+			
+			@Override
+			public void componentResized(ComponentEvent e){
+				resizeTable();
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent arg0) {
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+			}
+
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+			}
 		});
 		
 		refreshTable();
@@ -82,6 +101,12 @@ public class ListAllBooks extends JInternalFrame{
 	private void refreshTable(){
 		clearStuffFromTable();
 		addStuffToTable();
+	}
+	
+	private void resizeTable(){
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setPreferredSize(getContentPane().getSize());
 	}
 	
 }
