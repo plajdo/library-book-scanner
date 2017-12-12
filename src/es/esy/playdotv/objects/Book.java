@@ -5,7 +5,7 @@ public class Book {
 	// FIELDS
 	
 	private String ID, name, author;
-	private String takerID; // reference to person object which has the book, PRIMARY linker, HAS TO BE STORED IN DATABASE
+	private String takerID=""; // reference to person object which has the book, PRIMARY linker, HAS TO BE STORED IN DATABASE
 	private long borrowedTime = 0, borrowedUntilTime = 0; // milisecond date times, to be used with java date classes externally
 
 	// CONSTRUCTORS
