@@ -1,16 +1,23 @@
 package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
+
+import es.esy.playdotv.event.TableRefreshEvent;
+import es.esy.playdotv.event.TableRefreshEventListener;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RemoveBook extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
+	
+	List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	
@@ -49,6 +56,22 @@ public class RemoveBook extends JInternalFrame {
 		
 		setVisible(true);
 
+	}
+	
+	public void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+	
+	public void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+	
+	public void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+		}
 	}
 	
 }

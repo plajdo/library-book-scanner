@@ -2,6 +2,8 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.datareader.Generator;
+import es.esy.playdotv.event.TableRefreshEvent;
+import es.esy.playdotv.event.TableRefreshEventListener;
 import es.esy.playdotv.objects.Book;
 import net.miginfocom.swing.MigLayout;
 
@@ -12,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddBook extends JInternalFrame {
 	
@@ -19,6 +23,8 @@ public class AddBook extends JInternalFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	
+	List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	
@@ -64,6 +70,7 @@ public class AddBook extends JInternalFrame {
 				Book nb = new Book(textField.getText());
 				nb.setName(textField_1.getText());
 				nb.setAuthor(textField_2.getText());
+				nb.setTakerID("");
 				db.books.put(textField.getText(), nb);
 				btnPotvrdiAPrida.setEnabled(false);
 				
@@ -107,6 +114,22 @@ public class AddBook extends JInternalFrame {
 		
 		setVisible(true);
 
+	}
+	
+	public void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+	
+	public void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+	
+	public void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+		}
 	}
 	
 }

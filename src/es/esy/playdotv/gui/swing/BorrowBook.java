@@ -155,15 +155,15 @@ public class BorrowBook extends JInternalFrame {
 						b.setBorrowedTime( ((Date)datePicker2.getModel().getValue()).getTime() );
 						b.setBorrowedUntilTime( ((Date)datePicker1.getModel().getValue()).getTime() );
 						
-						if ( !per.getBorrowedIDs().contains(b.getID()) ) // just pass if already borrowed in arraylist
+						if (!per.getBorrowedIDs().contains(b.getID()))
 						{
 							b.setTakerID(per.getID());
 							per.getBorrowedIDs().add(b.getID());
+							dispose();
+							
 						} else {
 							JOptionPane.showMessageDialog(null, "Kniha je už vypožièaná osobou s ID = " + per.getID(), "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
-						
-						dispose();
 						
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID osoby a dátumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
