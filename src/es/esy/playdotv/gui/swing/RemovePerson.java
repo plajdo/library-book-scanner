@@ -1,11 +1,17 @@
 package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
+
+import es.esy.playdotv.event.TableRefreshEvent;
+import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.event.TableRefreshEventOperation;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RemovePerson extends JInternalFrame {
 	
@@ -13,6 +19,8 @@ public class RemovePerson extends JInternalFrame {
 	private JTextField textField;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
+	
+	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
 	public RemovePerson() {
 		setClosable(true);
@@ -40,6 +48,7 @@ public class RemovePerson extends JInternalFrame {
 			public void actionPerformed(ActionEvent e){
 				
 				db.persons.remove(textField.getText());
+				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 				dispose();
 				
 			}
@@ -49,6 +58,22 @@ public class RemovePerson extends JInternalFrame {
 		
 		setVisible(true);
 
+	}
+	
+	public static void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+	
+	public static void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+	
+	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+		}
 	}
 	
 }

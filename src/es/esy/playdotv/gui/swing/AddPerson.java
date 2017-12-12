@@ -2,6 +2,9 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.datareader.Generator;
+import es.esy.playdotv.event.TableRefreshEvent;
+import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.event.TableRefreshEventOperation;
 import es.esy.playdotv.objects.Person;
 import net.miginfocom.swing.MigLayout;
 
@@ -12,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddPerson extends JInternalFrame {
 	
@@ -21,6 +26,8 @@ public class AddPerson extends JInternalFrame {
 	private JTextField textField_2;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
+	
+	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
 	public AddPerson() {
 		setClosable(true);
@@ -61,12 +68,17 @@ public class AddPerson extends JInternalFrame {
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
-				
-				Person np = new Person(textField.getText());
-				np.setName(textField_1.getText());
-				np.setGroup(textField_2.getText());
-				db.persons.put(textField.getText(), np);
-				btnPotvrdiAPrida.setEnabled(false);
+				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(textField_2.getText().isEmpty())){
+					Person np = new Person(textField.getText());
+					np.setName(textField_1.getText());
+					np.setGroup(textField_2.getText());
+					db.persons.put(textField.getText(), np);
+					btnPotvrdiAPrida.setEnabled(false);
+					
+					dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+				}else{
+					JOptionPane.showMessageDialog(null, "Vyplòte všetky údaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
+				}
 				
 			}
 			
@@ -107,6 +119,22 @@ public class AddPerson extends JInternalFrame {
 		
 		setVisible(true);
 
+	}
+	
+	public static void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+	
+	public static void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+	
+	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+		}
 	}
 	
 }
