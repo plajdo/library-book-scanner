@@ -28,7 +28,7 @@ public class BooksToReturn extends JInternalFrame{
 		setIconifiable(true);
 		setClosable(true);
 		setResizable(true);
-		setMaximizable(true);
+		setMaximizable(false);
 		setTitle("Knihy na vr\u00E1tenie");
 		setBounds(100, 100, 450, 300);
 		
@@ -49,6 +49,24 @@ public class BooksToReturn extends JInternalFrame{
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		
 		AddBook.addDataDialogListener(new TableRefreshEventListener(){
+
+			@Override
+			public void handleTableRefreshEvent(TableRefreshEvent evt) {
+				refreshTable();
+				
+			}
+			
+		});
+		RemoveBook.addDataDialogListener(new TableRefreshEventListener(){
+
+			@Override
+			public void handleTableRefreshEvent(TableRefreshEvent evt) {
+				refreshTable();
+				
+			}
+			
+		});
+		BorrowBook.addDataDialogListener(new TableRefreshEventListener(){
 
 			@Override
 			public void handleTableRefreshEvent(TableRefreshEvent evt) {

@@ -4,6 +4,9 @@ import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
+import es.esy.playdotv.event.TableRefreshEvent;
+import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.event.TableRefreshEventOperation;
 import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Person;
 import net.miginfocom.swing.MigLayout;
@@ -15,7 +18,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BorrowBook extends JInternalFrame {
 	
@@ -28,6 +33,8 @@ public class BorrowBook extends JInternalFrame {
 	private JTextField textField_5;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
+	
+	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
 	public BorrowBook(JDesktopPane desktopPane) {
 		
@@ -159,6 +166,7 @@ public class BorrowBook extends JInternalFrame {
 						{
 							b.setTakerID(per.getID());
 							per.getBorrowedIDs().add(b.getID());
+							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 							dispose();
 							
 						} else {
@@ -217,6 +225,22 @@ public class BorrowBook extends JInternalFrame {
 		
 		setVisible(true);
 
+	}
+	
+	public static void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+	
+	public static void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+	
+	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+		}
 	}
 
 }

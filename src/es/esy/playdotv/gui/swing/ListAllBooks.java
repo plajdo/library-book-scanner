@@ -27,7 +27,7 @@ public class ListAllBooks extends JInternalFrame{
 		setIconifiable(true);
 		setClosable(true);
 		setResizable(true);
-		setMaximizable(true);
+		setMaximizable(false);
 		setTitle("Zoznam v\u0161etk\u00FDch kn\u00EDh");
 		setBounds(100, 100, 450, 300);
 		
@@ -47,6 +47,24 @@ public class ListAllBooks extends JInternalFrame{
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		
 		AddBook.addDataDialogListener(new TableRefreshEventListener(){
+
+			@Override
+			public void handleTableRefreshEvent(TableRefreshEvent evt) {
+				refreshTable();
+				
+			}
+			
+		});
+		RemoveBook.addDataDialogListener(new TableRefreshEventListener(){
+
+			@Override
+			public void handleTableRefreshEvent(TableRefreshEvent evt) {
+				refreshTable();
+				
+			}
+			
+		});
+		BorrowBook.addDataDialogListener(new TableRefreshEventListener(){
 
 			@Override
 			public void handleTableRefreshEvent(TableRefreshEvent evt) {

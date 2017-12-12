@@ -4,6 +4,7 @@ import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 
 import es.esy.playdotv.event.TableRefreshEvent;
 import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.event.TableRefreshEventOperation;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class RemoveBook extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	
-	List<TableRefreshEventListener> listeners = new ArrayList<>();
+	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	
@@ -47,6 +48,7 @@ public class RemoveBook extends JInternalFrame {
 			public void actionPerformed(ActionEvent e){
 				
 				db.books.remove(textField.getText());
+				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 				dispose();
 				
 			}
@@ -58,17 +60,17 @@ public class RemoveBook extends JInternalFrame {
 
 	}
 	
-	public void addDataDialogListener(TableRefreshEventListener trel){
+	public static void addDataDialogListener(TableRefreshEventListener trel){
 		if(!listeners.contains(trel)){
 			listeners.add(trel);
 		}
 	}
 	
-	public void removeDataDialogListener(TableRefreshEventListener trel){
+	public static void removeDataDialogListener(TableRefreshEventListener trel){
 		listeners.remove(trel);
 	}
 	
-	public void dispatchTableRefreshEvent(TableRefreshEvent evt){
+	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
 		for(TableRefreshEventListener trel: listeners){
 			trel.handleTableRefreshEvent(evt);
 		}
