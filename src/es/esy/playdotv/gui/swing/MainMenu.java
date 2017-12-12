@@ -218,7 +218,8 @@ public class MainMenu {
 		mnIn.add(mntmPomoc);
 		mntmVymazatDatabazu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				db.reset();
+				//db.reset();
+				Load.resetDatabase();
 			}
 		});
 		
