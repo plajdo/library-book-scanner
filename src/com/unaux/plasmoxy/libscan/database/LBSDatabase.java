@@ -27,7 +27,7 @@ import java.util.TreeMap;
 public class LBSDatabase
 {
 
-	// ! Everything will be parsed when needed, wont keep common document or anything, this is pure converter from xml to HashMap
+	// ! Everything will be parsed when needed, wont keep common document or anything, this is pure converter from xml to Map
 
 
 	// FIELDS
@@ -36,7 +36,7 @@ public class LBSDatabase
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	private Transformer transformer;
 
-	// THE MAIN DATABASE MAP OBJECTS, TO BE USED EVERYWHERE WHERE DATABASE IS NEEDED
+	// THE MAIN DATABASE MAP OBJECT REFERENCES, TO BE USED EVERYWHERE WHERE DATABASE IS NEEDED
 	public volatile Map<String, Book> books;
 	public volatile Map<String, Person> persons;
 	
