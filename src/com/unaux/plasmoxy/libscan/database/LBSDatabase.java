@@ -19,8 +19,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /* Simple database for libary-book-scanner*/
 
@@ -207,8 +207,8 @@ public class LBSDatabase
     
     public void reset()
     {
-        books = new HashMap<>();
-		persons = new HashMap<>();
+        books = new TreeMap<>();
+		persons = new TreeMap<>();
     }
 
 
