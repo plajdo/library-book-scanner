@@ -10,11 +10,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
-public class ListAllBooks extends JInternalFrame implements TableRefreshEventListener{
+public class ListAllBooks extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private JScrollPane scrollPane;
 	private DefaultTableModel tblModel;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
@@ -28,14 +30,28 @@ public class ListAllBooks extends JInternalFrame implements TableRefreshEventLis
 		setBounds(100, 100, 450, 300);
 		
 		table = new JTable();
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		scrollPane = new JScrollPane(table);
 		
-		getContentPane().add(new JScrollPane(table), BorderLayout.NORTH);
+		scrollPane.setPreferredSize(table.getPreferredScrollableViewportSize());
+		
+		getContentPane().add(scrollPane, BorderLayout.NORTH);
 		
 		tblModel = new DefaultTableModel(null, new String[]{
 				"ID knihy", "N\u00E1zov knihy", "Autor knihy", "Vypo\u017Ei\u010Dan\u00E1?"
 		});
 		table.setModel(tblModel);
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
+		
+		AddBook.addDataDialogListener(new TableRefreshEventListener(){
+
+			@Override
+			public void handleTableRefreshEvent(TableRefreshEvent evt) {
+				refreshTable();
+				
+			}
+			
+		});
 		
 		refreshTable();
 		
@@ -54,7 +70,6 @@ public class ListAllBooks extends JInternalFrame implements TableRefreshEventLis
 				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 			}
 			
-			
 		}
 		
 	}
@@ -67,12 +82,6 @@ public class ListAllBooks extends JInternalFrame implements TableRefreshEventLis
 	private void refreshTable(){
 		clearStuffFromTable();
 		addStuffToTable();
-	}
-
-	@Override
-	public void handleTableRefreshEvent(TableRefreshEvent evt) {
-		System.out.println("BLYAAAAAAAAAAT");
-		
 	}
 	
 }
