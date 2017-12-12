@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -33,7 +34,9 @@ public class ListAllBooks extends JInternalFrame{
 		table = new JTable();
 		scrollPane = new JScrollPane(table);
 		
-		resizeTable();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setPreferredSize(new Dimension(getWidth(), getHeight() - 30));
 		
 		getContentPane().add(scrollPane, BorderLayout.NORTH);
 		
@@ -104,8 +107,6 @@ public class ListAllBooks extends JInternalFrame{
 	}
 	
 	private void resizeTable(){
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(getContentPane().getSize());
 	}
 	
