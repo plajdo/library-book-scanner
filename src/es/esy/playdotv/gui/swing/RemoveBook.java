@@ -53,7 +53,7 @@ public class RemoveBook extends JInternalFrame {
 							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 							dispose();
 						}else{
-							JOptionPane.showMessageDialog(null, "Kniha je vypožièaná osobou" + db.books.get(textField.getText()).getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Kniha je vypožièaná osobou " + db.books.get(textField.getText()).getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
 						JOptionPane.showMessageDialog(null, "Kniha neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);

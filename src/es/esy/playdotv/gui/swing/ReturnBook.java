@@ -106,8 +106,10 @@ public class ReturnBook extends JInternalFrame{
 								b.setTakerID("");
 								b.setBorrowedTime(0);
 								b.setBorrowedUntilTime(0);
-								dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 								
+								db.persons.get(b.getTakerID()).subtractBookCount();
+								
+								dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 								dispose();
 							}else{
 								JOptionPane.showMessageDialog(null, "Kniha nie je vypožièaná.", "Chyba", JOptionPane.ERROR_MESSAGE);

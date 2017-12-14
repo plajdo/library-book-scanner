@@ -167,6 +167,7 @@ public class BorrowBook extends JInternalFrame {
 								if(b.getBorrowedTime() < b.getBorrowedUntilTime()){
 									if(b.getTakerID().isEmpty()){
 										b.setTakerID(per.getID());
+										per.addBookCount();
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
 									}else{
