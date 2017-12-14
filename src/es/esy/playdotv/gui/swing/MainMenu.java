@@ -199,7 +199,7 @@ public class MainMenu {
 		JMenuItem mntmPomoc = new JMenuItem("Pomoc");
 		mntmPomoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Ctrl+W = Pridaù knihu\nCtrl+Q = Odstr·niù knihu\nCtrl+S = Pridaù ûiaka\nCtrl+A = Odstr·niù ûiaka\nCtrl+D = Pridaù uËiteæa\nCtrl+E = Odstr·niù uËiteæa\nF1 = VypoûiËaù knihu\nF2 = Vr·tiù knihu\nF3 = Zoznam knÌh\nShift+F3 = Knihy na vr·tenie\nF4 = Zoznam ötudentov\nShift+F4 = Zoznam uËiteæov\nF12 = Pomoc", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
+				JOptionPane.showMessageDialog(null, "Ctrl+W = Pridaù knihu\nCtrl+Q = Odstr·niù knihu\nCtrl+S = Pridaù osobu\nCtrl+A = Odstr·niù osobu\nF1 = VypoûiËaù knihu\nF2 = Vr·tiù knihu\nF3 = Zoznam knÌh\nShift+F3 = Knihy na vr·tenie\nF4 = Zoznam ötudentov\nF12 = Pomoooc", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
 			}
 		});
 		
@@ -210,10 +210,10 @@ public class MainMenu {
 					//TODO: Settings s = new Settings();
 			}
 		});
+		//mnIn.add(mntmNastavenia);
 		
 		//---------------RESET +save---------------
 		
-		mnIn.add(mntmNastavenia);
 		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
 		mnIn.add(mntmPomoc);
 		mntmVymazatDatabazu.addActionListener(new ActionListener() {
