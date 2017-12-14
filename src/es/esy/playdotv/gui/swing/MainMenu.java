@@ -65,10 +65,13 @@ public class MainMenu {
 			}
 		});
 		
+		
 		//-----------------
 		
 		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
-		desktopPane = new JDesktopPane();
+		
+		desktopPane = new TheDesktopPane(); // polymorph
+		
 		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 0 0,grow");
 		
 		JMenuBar menuBar = new JMenuBar();
