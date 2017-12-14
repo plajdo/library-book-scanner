@@ -39,8 +39,8 @@ public class BorrowBook extends JInternalFrame {
 	public BorrowBook(JDesktopPane desktopPane) {
 
 		setTitle("Vypo\u017Ei\u010Dia\u0165 knihu");
-		setBounds(100, 100, 460, 315);
-		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][grow][]"));
+		setBounds(100, 100, 460, 285);
+		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][]"));
 
 		JLabel lblisloKnihy = new JLabel("ID knihy:");
 		getContentPane().add(lblisloKnihy, "cell 0 0,alignx trailing,aligny center");
@@ -103,7 +103,7 @@ public class BorrowBook extends JInternalFrame {
 		getContentPane().add(separator_1, "cell 0 8 2 1,grow");
 
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, "cell 0 10 2 1,grow");
+		getContentPane().add(panel, "cell 0 9 2 1,grow");
 		panel.setLayout(new MigLayout("", "[110.00][][110.00]", "[][]"));
 
 		JButton btnSkenovaKnihu = new JButton("Nasn\u00EDma\u0165 knihu");

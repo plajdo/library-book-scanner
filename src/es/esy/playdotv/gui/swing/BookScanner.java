@@ -36,8 +36,8 @@ public class BookScanner extends JInternalFrame {
 		ImageIcon ic = new ImageIcon(webcam.getImage());
 		
 		setTitle("Nasn\u00EDma\u0165 knihu");
-		setBounds(100, 100, 450, 330);
-		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][grow][][]"));
+		setBounds(100, 100, 450, 260);
+		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][grow][][]"));
 		
 		JLabel lblSkener = new JLabel("Skener:");
 		getContentPane().add(lblSkener, "cell 0 0,alignx trailing,aligny center");
@@ -60,10 +60,10 @@ public class BookScanner extends JInternalFrame {
 		t.start();
 		
 		JSeparator separator = new JSeparator();
-		getContentPane().add(separator, "cell 0 5 2 1,grow");
+		getContentPane().add(separator, "cell 0 3 2 1,grow");
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, "cell 0 6 2 1,grow");
+		getContentPane().add(panel, "cell 0 4 2 1,grow");
 		panel.setLayout(new MigLayout("", "[75px][75px]", "[25px]"));
 		
 		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
