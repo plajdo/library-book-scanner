@@ -3,7 +3,7 @@ package es.esy.playdotv.objects;
 public class Person {
 	
 	private String ID, name, group; // group is for example class or teachers or sum shit
-	//private ArrayList<String> borrowedIDs = new ArrayList<>(); // secondary linker, NOT SAVED IN DATABASE, has to be relinked in parser
+	private int bookCount;
 	
 	public Person(String id){
 		this.ID = id;
@@ -22,10 +22,29 @@ public class Person {
 	public void setGroup(String group) {
 		this.group = group;
 	}
+	public void addBookCount(){
+		bookCount++;
+	}
+	public void subtractBookCount(){
+		bookCount--;
+	}
+	public String getBookCount(){
+		return String.valueOf(bookCount);
+	}
+	public int getNumBookCount(){
+		return bookCount;
+	}
+	public void setBookCount(String bookCount){
+		try{
+			this.bookCount = Integer.parseInt(bookCount);
+		}catch(NumberFormatException e){
+			System.err.println("Invalid string - not a number.");
+		}
+	}
+	public void setBookCount(int bookCount){
+		this.bookCount = bookCount;
+	}
 	public String getID() { return ID; }
 	public void setID(String id) { ID = id; }
-	//public List<String> getBorrowedIDs() { return borrowedIDs; }
-	
-	
 	
 }

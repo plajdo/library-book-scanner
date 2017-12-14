@@ -46,11 +46,21 @@ public class RemoveBook extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Odstr\u00E1ni\u0165 knihu z datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
-				db.books.remove(textField.getText());
-				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
-				dispose();
-				
+				if(textField.getText().length() > 0){
+					if(db.books.containsKey(textField.getText())){
+						if(db.books.get(textField.getText()).getTakerID().isEmpty()){
+							db.books.remove(textField.getText());
+							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+							dispose();
+						}else{
+							JOptionPane.showMessageDialog(null, "Kniha je vypožièaná osobou" + db.books.get(textField.getText()).getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
+						}
+					}else{
+						JOptionPane.showMessageDialog(null, "Kniha neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Zadajte ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			
 		});

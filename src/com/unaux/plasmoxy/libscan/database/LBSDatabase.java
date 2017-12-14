@@ -60,7 +60,7 @@ public class LBSDatabase
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 		}
 		catch (Exception e) {
-			System.out.println("PROBLEM BUILDING FACTORIES");
+			System.err.println("PROBLEM BUILDING FACTORIES");
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -141,6 +141,7 @@ public class LBSDatabase
 			p.setID(personid);
 			p.setGroup(e.getAttribute("group"));
 			p.setName(e.getAttribute("name"));
+			p.setBookCount(e.getAttribute("books"));
 			
 			persons.put(personid, p); // pass ref to map
 		}
@@ -188,6 +189,7 @@ public class LBSDatabase
 			el_p.setAttribute("id", p.getID());
 			el_p.setAttribute("name", p.getName());
 			el_p.setAttribute("group", p.getGroup());
+			el_p.setAttribute("books", p.getBookCount());
 		}
 		
 		DOMSource src = new DOMSource(doc);

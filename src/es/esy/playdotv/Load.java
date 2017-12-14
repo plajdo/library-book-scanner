@@ -8,8 +8,6 @@ import es.esy.playdotv.gui.swing.MainMenu;
 
 import javax.swing.*;
 
-//import es.esy.playdotv.gui.swing.MainMenu;
-
 public class Load
 {
 	

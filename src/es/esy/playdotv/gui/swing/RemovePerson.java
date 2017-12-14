@@ -46,11 +46,21 @@ public class RemovePerson extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Odstr\u00E1ni\u0165 osobu z datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
-				db.persons.remove(textField.getText());
-				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
-				dispose();
-				
+				if(textField.getText().length() > 0){
+					if(db.persons.containsKey(textField.getText())){
+						if(db.persons.get(textField.getText()).getNumBookCount() == 0){
+							db.persons.remove(textField.getText());
+							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+							dispose();
+						}else{
+							JOptionPane.showMessageDialog(null, "Osoba má vypožièané knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						}
+					}else{
+						JOptionPane.showMessageDialog(null, "Osoba neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Zadajte ID osoby.", "Chyba", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			
 		});

@@ -73,6 +73,15 @@ public class ListAllBooks extends JInternalFrame{
 			}
 			
 		});
+		ReturnBook.addDataDialogListener(new TableRefreshEventListener(){
+
+			@Override
+			public void handleTableRefreshEvent(TableRefreshEvent evt) {
+				refreshTable();
+				
+			}
+			
+		});
 		this.addComponentListener(new ComponentListener(){
 			
 			@Override

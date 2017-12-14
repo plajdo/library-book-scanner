@@ -4,6 +4,9 @@ import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
+import es.esy.playdotv.event.TableRefreshEvent;
+import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.event.TableRefreshEventOperation;
 import es.esy.playdotv.objects.Book;
 import net.miginfocom.swing.MigLayout;
 
@@ -11,6 +14,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReturnBook extends JInternalFrame{
 	
@@ -20,6 +25,8 @@ public class ReturnBook extends JInternalFrame{
 	private JTextField textField_2;
 
 	private LBSDatabase db = LBSDatabase.getInstance();
+	
+	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
 	public ReturnBook(JDesktopPane desktopPane){
 		setTitle("Vr\u00E1ti\u0165 knihu");
@@ -93,14 +100,21 @@ public class ReturnBook extends JInternalFrame{
 			public void actionPerformed(ActionEvent e){
 				try{
 					if(textField.getText().length() > 0){
-						/*
-						 * TODO: Kód na vrátenie knihy
-						 */
-						
-						Book b = db.books.get(textField.getText()); // book to be returned
-						
-						
-						dispose();
+						if(db.books.containsKey(textField.getText())){
+							Book b = db.books.get(textField.getText());
+							if(!b.getTakerID().isEmpty() && !(b.getBorrowedTime() == 0) && !(b.getBorrowedUntilTime() == 0)){
+								b.setTakerID("");
+								b.setBorrowedTime(0);
+								b.setBorrowedUntilTime(0);
+								dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+								
+								dispose();
+							}else{
+								JOptionPane.showMessageDialog(null, "Kniha nie je vypožièaná.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							}
+						}else{
+							JOptionPane.showMessageDialog(null, "Kniha neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						}
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
@@ -121,6 +135,22 @@ public class ReturnBook extends JInternalFrame{
 		
 		setVisible(true);
 
+	}
+	
+	public static void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+
+	public static void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+
+	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+		}
 	}
 
 }
