@@ -1,40 +1,29 @@
 package es.esy.playdotv.gui.swing;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JInternalFrame;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import com.github.sarxos.webcam.Webcam;
-
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
+import net.miginfocom.swing.MigLayout;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import javax.swing.JSeparator;
-import javax.swing.JPanel;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonScanner extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	volatile BufferedImage webcamImage;
-	private String[] data = {"", "", ""};
+	private String data = "";
 	
 	List<DDEventListener> listeners = new ArrayList<>();
 	
-	String[] getData(){
+	String getData(){
 		return data;
 	}
 	
@@ -62,23 +51,8 @@ public class PersonScanner extends JInternalFrame {
 		getContentPane().add(textField, "cell 1 1,growx");
 		textField.setColumns(10);
 		
-		JLabel lblNzovKnihy = new JLabel("Meno:");
-		getContentPane().add(lblNzovKnihy, "cell 0 2,alignx trailing,aligny center");
 		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		getContentPane().add(textField_1, "cell 1 2,growx");
-		textField_1.setColumns(10);
-		
-		JLabel lblAutorKnihy = new JLabel("Trieda:");
-		getContentPane().add(lblAutorKnihy, "cell 0 3,alignx trailing,aligny center");
-		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		getContentPane().add(textField_2, "cell 1 3,growx");
-		textField_2.setColumns(10);
-		
-		RefreshImage r = new RefreshImage(webcamImage, lblInsertSkenerHere, ic, webcam, textField, textField_1, textField_2);
+		RefreshImage r = new RefreshImage(webcamImage, lblInsertSkenerHere, ic, webcam, textField);
 		Thread t = new Thread(r);
 		t.start();
 		
@@ -94,15 +68,11 @@ public class PersonScanner extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(textField.getText().length() > 0 && textField_1.getText().length() > 0 && textField_2.getText().length() > 0){
-						data[0] = textField.getText();
-						data[1] = textField_1.getText();
-						data[2] = textField_2.getText();
+					if(textField.getText().length() > 0){
+						data = textField.getText();
 						dispatchDataDialogEvent(new DataDialogEvent(this, DataDialogEventOperation.EVENT_SUCCEEDED));
 					}else{
-						data[0] = "";
-						data[1] = "";
-						data[2] = "";
+						data = "";
 						dispatchDataDialogEvent(new DataDialogEvent(this, DataDialogEventOperation.EVENT_FAILED));
 					}
 					r.terminate();

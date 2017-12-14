@@ -96,7 +96,7 @@ public class AddPerson extends JInternalFrame {
 				int r = chooser.showSaveDialog(null);
 				if(r == JFileChooser.APPROVE_OPTION){
 					try{
-						ImageIO.write(Generator.writeQRCode(textField.getText() + ";" + textField_1.getText() + ";" + textField_2.getText() + ";"), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
+						ImageIO.write(Generator.writeQRCode(textField.getText()), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
 					}catch(IOException e1){
 						e1.printStackTrace();
 					}

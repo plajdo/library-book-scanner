@@ -1,14 +1,10 @@
 package es.esy.playdotv.gui.swing;
 
-import java.awt.image.BufferedImage;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import com.github.sarxos.webcam.Webcam;
-
 import es.esy.playdotv.datareader.Reader;
+
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 
 class RefreshImage extends Thread{
 	
@@ -18,17 +14,13 @@ class RefreshImage extends Thread{
 	private volatile ImageIcon ic;
 	private volatile Webcam webcam;
 	private volatile JTextField textField;
-	private volatile JTextField textField_1;
-	private volatile JTextField textField_2;
 	
-	RefreshImage(BufferedImage b, JLabel l, ImageIcon i, Webcam w, JTextField t1, JTextField t2, JTextField t3){
+	RefreshImage(BufferedImage b, JLabel l, ImageIcon i, Webcam w, JTextField t1){
 		this.webcamImage = b;
 		this.lblObrzok = l;
 		this.ic = i;
 		this.webcam = w;
 		this.textField = t1;
-		this.textField_1 = t2;
-		this.textField_2 = t3;
 	}
 	
 	public void terminate(){
@@ -52,10 +44,10 @@ class RefreshImage extends Thread{
 			
 			x = Reader.readQR(webcamImage);
 			if(!(x == null)){
-				String[] splitText = x.split(";");
-				textField.setText(splitText[0]);
-				textField_1.setText(splitText[1]);
-				textField_2.setText(splitText[2]);
+				//String[] splitText = x.split(";");
+				textField.setText(x);
+				//textField_1.setText(splitText[1]);
+				//textField_2.setText(splitText[2]);
 			}
 			try {
 				Thread.sleep(42);

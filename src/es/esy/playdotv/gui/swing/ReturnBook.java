@@ -71,9 +71,11 @@ public class ReturnBook extends JInternalFrame{
 					@Override
 					public void handleDataDialogEvent(DataDialogEvent evt){
 						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							textField.setText(bs.getData()[0]);
-							textField_1.setText(bs.getData()[1]);
-							textField_2.setText(bs.getData()[2]);
+							String tempid = bs.getData();
+							Book tempbook = db.books.get(tempid);
+							textField.setText(tempid);
+							textField_1.setText(tempbook.getAuthor()); // TODO : neviem ci take poradie
+							textField_2.setText(tempbook.getName());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
 							textField_1.setText("Chyba");

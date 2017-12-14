@@ -114,9 +114,11 @@ public class BorrowBook extends JInternalFrame {
 					@Override
 					public void handleDataDialogEvent(DataDialogEvent evt){
 						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							textField.setText(bs.getData()[0]);
-							textField_1.setText(bs.getData()[1]);
-							textField_2.setText(bs.getData()[2]);
+							String tempid = bs.getData();
+							Book tempbook = db.books.get(tempid);
+							textField.setText(tempid);
+							textField_1.setText(tempbook.getAuthor()); // TODO : neviem ci take poradie
+							textField_2.setText(tempbook.getName());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
 							textField_1.setText("Chyba");
@@ -171,7 +173,7 @@ public class BorrowBook extends JInternalFrame {
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
 									}else{
-										JOptionPane.showMessageDialog(null, "Kniha je už vypožièaná osobou s ID " + per.getID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
+										JOptionPane.showMessageDialog(null, "Kniha je už vypožièaná osobou s ID " + b.getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
 									}
 								}else{
 									JOptionPane.showMessageDialog(null, "Neplatný dátum.", "Chyba", JOptionPane.ERROR_MESSAGE);
@@ -200,9 +202,11 @@ public class BorrowBook extends JInternalFrame {
 					@Override
 					public void handleDataDialogEvent(DataDialogEvent evt){
 						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							textField_3.setText(ps.getData()[0]);
-							textField_4.setText(ps.getData()[1]);
-							textField_5.setText(ps.getData()[2]);
+							String tempid = ps.getData();
+							Person tempperson = db.persons.get(tempid);
+							textField_3.setText(tempid);
+							textField_4.setText(tempperson.getName()); // TODO : neviem ci take poradie v2
+							textField_5.setText(tempperson.getGroup());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField_3.setText("Chyba");
 							textField_4.setText("Chyba");
