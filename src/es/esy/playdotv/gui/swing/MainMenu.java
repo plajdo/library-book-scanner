@@ -48,7 +48,7 @@ public class MainMenu {
 		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365));
+		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365)); // minsize
 		
 		// ---------EXIT--------
 

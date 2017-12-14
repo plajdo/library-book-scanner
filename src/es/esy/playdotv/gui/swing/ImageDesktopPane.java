@@ -2,12 +2,8 @@ package es.esy.playdotv.gui.swing;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import es.esy.playdotv.Load;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class ImageDesktopPane extends JDesktopPane
@@ -18,7 +14,7 @@ public class ImageDesktopPane extends JDesktopPane
     public ImageDesktopPane()
     {
         try {
-            backgroundImage = ImageIO.read(getClass().getResourceAsStream("/res/cyka.png"));
+            backgroundImage = ImageIO.read(getClass().getResourceAsStream("/res/background.jpg"));
         } catch(IOException|IllegalArgumentException e)
         {
             System.err.println("Couldn't load background.");
