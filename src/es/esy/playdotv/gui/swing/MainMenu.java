@@ -70,7 +70,7 @@ public class MainMenu {
 		
 		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
-		desktopPane = new TheDesktopPane(); // polymorph
+		desktopPane = new ImageDesktopPane();
 		
 		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 0 0,grow");
 		
