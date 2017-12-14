@@ -103,13 +103,17 @@ public class ReturnBook extends JInternalFrame{
 						if(db.books.containsKey(textField.getText())){
 							Book b = db.books.get(textField.getText());
 							if(!b.getTakerID().isEmpty() && !(b.getBorrowedTime() == 0) && !(b.getBorrowedUntilTime() == 0)){
-								b.setTakerID("");
-								b.setBorrowedTime(0);
-								b.setBorrowedUntilTime(0);
 								
 								db.persons.get(b.getTakerID()).subtractBookCount();
 								
+								b.setTakerID("");
+								b.setBorrowedTime(0);
+								b.setBorrowedUntilTime(0);
+								//System.out.println("SUBB sT-ract");
+								
+								//System.out.println("DISC PATCH ENVENT");
 								dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+								//System.out.println("KLOSS");
 								dispose();
 							}else{
 								JOptionPane.showMessageDialog(null, "Kniha nie je vypožièaná.", "Chyba", JOptionPane.ERROR_MESSAGE);
