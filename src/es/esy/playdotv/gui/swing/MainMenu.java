@@ -25,6 +25,7 @@ public class MainMenu {
 			public void run() {
 				try {
 					MainMenu window = new MainMenu();
+					window.frmGymnziumLipany.setLocationRelativeTo(null);
 					window.frmGymnziumLipany.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
