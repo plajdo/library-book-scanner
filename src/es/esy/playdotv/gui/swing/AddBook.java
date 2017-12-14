@@ -1,9 +1,11 @@
 package es.esy.playdotv.gui.swing;
 
-import es.esy.playdotv.Load;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.datareader.Generator;
+import es.esy.playdotv.event.TableRefreshEvent;
+import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.event.TableRefreshEventOperation;
 import es.esy.playdotv.objects.Book;
-import es.esy.playdotv.objects.Paper;
 import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
@@ -13,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddBook extends JInternalFrame {
 	
@@ -20,6 +24,10 @@ public class AddBook extends JInternalFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	
+	static List<TableRefreshEventListener> listeners = new ArrayList<>();
+	
+	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	public AddBook() {
 		setClosable(true);
@@ -59,11 +67,16 @@ public class AddBook extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 knihu do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Paper nb = new Book(textField.getText());
-				nb.setTitle(textField_1.getText());
+				
+				Book nb = new Book(textField.getText());
+				nb.setName(textField_1.getText());
 				nb.setAuthor(textField_2.getText());
-				Load.papers.put(textField.getText(), nb);
+				nb.setTakerID("");
+				db.books.put(textField.getText(), nb);
 				btnPotvrdiAPrida.setEnabled(false);
+				
+				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+				
 			}
 			
 		});
@@ -80,7 +93,7 @@ public class AddBook extends JInternalFrame {
 				int r = chooser.showSaveDialog(null);
 				if(r == JFileChooser.APPROVE_OPTION){
 					try{
-						ImageIO.write(Generator.writeQRCode(textField.getText() + ";" + textField_1.getText() + ";" + textField_2.getText() + ";"), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
+						ImageIO.write(Generator.writeQRCode(textField.getText()), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
 					}catch(IOException e1){
 						e1.printStackTrace();
 					}
@@ -103,6 +116,22 @@ public class AddBook extends JInternalFrame {
 		
 		setVisible(true);
 
+	}
+	
+	public static void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+	
+	public static void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+	
+	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+		}
 	}
 	
 }

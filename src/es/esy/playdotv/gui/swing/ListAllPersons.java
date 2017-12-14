@@ -1,21 +1,20 @@
 package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
-
 import es.esy.playdotv.event.TableRefreshEvent;
 import es.esy.playdotv.event.TableRefreshEventListener;
 import es.esy.playdotv.objects.Book;
+import es.esy.playdotv.objects.Person;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BooksToReturn extends JInternalFrame{
+public class ListAllPersons extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTable table;
@@ -24,12 +23,12 @@ public class BooksToReturn extends JInternalFrame{
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	
-	public BooksToReturn(){
+	public ListAllPersons(){
 		setIconifiable(true);
 		setClosable(true);
 		setResizable(true);
 		setMaximizable(false);
-		setTitle("Knihy na vr\u00E1tenie");
+		setTitle("Zoznam v\u0161etk\u00FDch osôb");
 		setBounds(100, 100, 450, 300);
 		
 		table = new JTable();
@@ -42,11 +41,9 @@ public class BooksToReturn extends JInternalFrame{
 		getContentPane().add(scrollPane, BorderLayout.NORTH);
 		
 		tblModel = new DefaultTableModel(null, new String[]{
-				"ID knihy", "N\u00E1zov knihy", "Autor knihy", "Vr\u00E1ti\u0165 do"
+				"ID žiaka", "Meno", "Trieda", "Knihy"
 		});
-		
 		table.setModel(tblModel);
-		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		
 		AddBook.addDataDialogListener(new TableRefreshEventListener(){
 
@@ -67,6 +64,24 @@ public class BooksToReturn extends JInternalFrame{
 			
 		});
 		BorrowBook.addDataDialogListener(new TableRefreshEventListener(){
+
+			@Override
+			public void handleTableRefreshEvent(TableRefreshEvent evt) {
+				refreshTable();
+				
+			}
+			
+		});
+		RemovePerson.addDataDialogListener(new TableRefreshEventListener(){
+
+			@Override
+			public void handleTableRefreshEvent(TableRefreshEvent evt) {
+				refreshTable();
+				
+			}
+			
+		});
+		AddPerson.addDataDialogListener(new TableRefreshEventListener(){
 
 			@Override
 			public void handleTableRefreshEvent(TableRefreshEvent evt) {
@@ -107,16 +122,33 @@ public class BooksToReturn extends JInternalFrame{
 		refreshTable();
 		
 		setVisible(true);
-
+		
+	}
+	
+	private String getBookIDList(List<String> list){
+		StringBuilder x = new StringBuilder();
+		
+		for( int i = 0; i<list.size(); i++ ) 
+		{
+			x.append(list.get(i));
+			x.append((i<list.size()-1) ? ", " : "");
+		}
+		
+		return x.toString();
 	}
 	
 	private void addStuffToTable(){
-		for (String key : db.books.keySet()){
-			Book b = db.books.get(key);
+		for(String key : db.persons.keySet()){
+			Person p = db.persons.get(key);
+			List<String> borrowed = new ArrayList<>();
 			
-			if( !b.getTakerID().equals("") ){ // if is borowed
-				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
+			for (String key2 : db.books.keySet())
+			{
+				Book temp = db.books.get(key2);
+				if (temp.getTakerID().equals(p.getID())) borrowed.add(temp.getID());
 			}
+				
+			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), getBookIDList(borrowed)  });
 			
 		}
 		

@@ -1,6 +1,7 @@
 package es.esy.playdotv.gui.swing;
 
 import com.github.sarxos.webcam.Webcam;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
@@ -18,14 +19,14 @@ public class BookScanner extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	volatile BufferedImage webcamImage;
-	private String[] data = {"", "", ""};
+	private String data = "";
+	
+	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	List<DDEventListener> listeners = new ArrayList<>();
 	
-	String[] getData(){
+	String getData(){
 		return data;
 	}
 	
@@ -35,8 +36,8 @@ public class BookScanner extends JInternalFrame {
 		ImageIcon ic = new ImageIcon(webcam.getImage());
 		
 		setTitle("Nasn\u00EDma\u0165 knihu");
-		setBounds(100, 100, 450, 330);
-		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][grow][][]"));
+		setBounds(100, 100, 450, 260);
+		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][grow][][]"));
 		
 		JLabel lblSkener = new JLabel("Skener:");
 		getContentPane().add(lblSkener, "cell 0 0,alignx trailing,aligny center");
@@ -53,31 +54,16 @@ public class BookScanner extends JInternalFrame {
 		getContentPane().add(textField, "cell 1 1,growx");
 		textField.setColumns(10);
 		
-		JLabel lblNzovKnihy = new JLabel("N\u00E1zov knihy:");
-		getContentPane().add(lblNzovKnihy, "cell 0 2,alignx trailing,aligny center");
 		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		getContentPane().add(textField_1, "cell 1 2,growx");
-		textField_1.setColumns(10);
-		
-		JLabel lblAutorKnihy = new JLabel("Autor knihy:");
-		getContentPane().add(lblAutorKnihy, "cell 0 3,alignx trailing,aligny center");
-		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		getContentPane().add(textField_2, "cell 1 3,growx");
-		textField_2.setColumns(10);
-		
-		RefreshImage r = new RefreshImage(webcamImage, lblInsertSkenerHere, ic, webcam, textField, textField_1, textField_2);
+		RefreshImage r = new RefreshImage(webcamImage, lblInsertSkenerHere, ic, webcam, textField);
 		Thread t = new Thread(r);
 		t.start();
 		
 		JSeparator separator = new JSeparator();
-		getContentPane().add(separator, "cell 0 5 2 1,grow");
+		getContentPane().add(separator, "cell 0 3 2 1,grow");
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, "cell 0 6 2 1,grow");
+		getContentPane().add(panel, "cell 0 4 2 1,grow");
 		panel.setLayout(new MigLayout("", "[75px][75px]", "[25px]"));
 		
 		JButton btnPotvrdi = new JButton("Potvrdi\u0165");
@@ -85,15 +71,11 @@ public class BookScanner extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					if(textField.getText().length() > 0 && textField_1.getText().length() > 0 && textField_2.getText().length() > 0){
-						data[0] = textField.getText();
-						data[1] = textField_1.getText();
-						data[2] = textField_2.getText();
+					if(textField.getText().length() > 0){
+						data = textField.getText();
 						dispatchDataDialogEvent(new DataDialogEvent(this, DataDialogEventOperation.EVENT_SUCCEEDED));
 					}else{
-						data[0] = "";
-						data[1] = "";
-						data[2] = "";
+						data = "";
 						dispatchDataDialogEvent(new DataDialogEvent(this, DataDialogEventOperation.EVENT_FAILED));
 					}
 					

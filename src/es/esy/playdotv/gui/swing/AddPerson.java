@@ -1,9 +1,11 @@
 package es.esy.playdotv.gui.swing;
 
-import es.esy.playdotv.Load;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.datareader.Generator;
+import es.esy.playdotv.event.TableRefreshEvent;
+import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.event.TableRefreshEventOperation;
 import es.esy.playdotv.objects.Person;
-import es.esy.playdotv.objects.Student;
 import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
@@ -13,15 +15,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AddStudent extends JInternalFrame {
+public class AddPerson extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	
-	public AddStudent() {
+	private LBSDatabase db = LBSDatabase.getInstance();
+	
+	static List<TableRefreshEventListener> listeners = new ArrayList<>();
+	
+	public AddPerson() {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Prida\u0165 žiaka");
@@ -59,11 +67,18 @@ public class AddStudent extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u017Eiaka do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Person np = new Student(textField.getText());
-				np.setName(textField_1.getText());
-				np.setGroup(textField_2.getText());
-				Load.students.put(textField.getText(), np);
-				btnPotvrdiAPrida.setEnabled(false);
+				
+				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(textField_2.getText().isEmpty())){
+					Person np = new Person(textField.getText());
+					np.setName(textField_1.getText());
+					np.setGroup(textField_2.getText());
+					db.persons.put(textField.getText(), np);
+					btnPotvrdiAPrida.setEnabled(false);
+					
+					dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+				}else{
+					JOptionPane.showMessageDialog(null, "Vyplòte všetky údaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
+				}
 				
 			}
 			
@@ -81,7 +96,7 @@ public class AddStudent extends JInternalFrame {
 				int r = chooser.showSaveDialog(null);
 				if(r == JFileChooser.APPROVE_OPTION){
 					try{
-						ImageIO.write(Generator.writeQRCode(textField.getText() + ";" + textField_1.getText() + ";" + textField_2.getText() + ";"), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
+						ImageIO.write(Generator.writeQRCode(textField.getText()), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
 					}catch(IOException e1){
 						e1.printStackTrace();
 					}
@@ -104,6 +119,22 @@ public class AddStudent extends JInternalFrame {
 		
 		setVisible(true);
 
+	}
+	
+	public static void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+	
+	public static void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+	
+	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+		}
 	}
 	
 }

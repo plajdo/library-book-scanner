@@ -1,6 +1,6 @@
 package es.esy.playdotv.gui.swing;
 
-import com.unaux.plasmoxy.libscan.database.SebuLink;
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
 import net.miginfocom.swing.MigLayout;
 
@@ -18,11 +18,14 @@ public class MainMenu {
 	private JFrame frmGymnziumLipany;
 	private JDesktopPane desktopPane;
 	
+	private LBSDatabase db = LBSDatabase.getInstance();
+	
 	public static void open() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					MainMenu window = new MainMenu();
+					window.frmGymnziumLipany.setLocationRelativeTo(null);
 					window.frmGymnziumLipany.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,9 +46,12 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
-		frmGymnziumLipany.setTitle("Gymn\u00E1zium Lipany - Kni\u017Enica");
-		frmGymnziumLipany.setBounds(100, 100, 1280, 721);
+		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
+		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365)); // minsize
+		
+		// ---------EXIT--------
 
 		frmGymnziumLipany.addWindowListener(new WindowAdapter()
 		{
@@ -53,20 +59,21 @@ public class MainMenu {
 			public void windowClosing(WindowEvent event)
 			{
 				super.windowClosing(event);
-				try
-				{
-					SebuLink.save(Load.BOOK_DATABASE_PATH, Load.papers);
-					SebuLink.saveStudent(Load.STUDENT_DATABASE_PATH, Load.students);
-					System.exit(0);
-				} catch(IOException ex)
-				{
-					ex.printStackTrace();
-				}
+				
+				db.save(Load.DATABASE_PATH);
+				
+				System.exit(0);
+					
 			}
 		});
 		
+		
+		//-----------------
+		
 		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
-		desktopPane = new JDesktopPane();
+		
+		desktopPane = new ImageDesktopPane();
+		
 		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 0 0,grow");
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -99,7 +106,9 @@ public class MainMenu {
 		JMenuItem mntmOdstrniKnihu = new JMenuItem("Odstr\u00E1ni\u0165 knihu");
 		mntmOdstrniKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				openRemoveBook();
 			}
+			
 		});
 		mnKniha_1.add(mntmOdstrniKnihu);
 		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
@@ -119,6 +128,7 @@ public class MainMenu {
 		JMenuItem mntmVrtiKnihu = new JMenuItem("Vr\u00E1ti\u0165 knihu");
 		mntmVrtiKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				openReturnBook();
 			}
 		});
 		mntmVrtiKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
@@ -145,10 +155,10 @@ public class MainMenu {
 		mntmKnihyNaVrtenie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, InputEvent.SHIFT_MASK));
 		mnKniha_1.add(mntmKnihyNaVrtenie);
 		
-		JMenu mntudent = new JMenu("\u0160tudent");
+		JMenu mntudent = new JMenu("\u010Citate\u013E");
 		menuBar.add(mntudent);
 		
-		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u0161tudenta");
+		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u010Ditate\u013Ea");
 		mntudent.add(mntmPridaiaka);
 		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmPridaiaka.addActionListener(new ActionListener() {
@@ -158,9 +168,10 @@ public class MainMenu {
 			
 		});
 		
-		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 \u0161tudenta");
+		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 \u010Ditate\u013Ea");
 		mntmOdstrniiaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				openRemovePerson();
 			}
 		});
 		mntudent.add(mntmOdstrniiaka);
@@ -169,7 +180,7 @@ public class MainMenu {
 		JSeparator separator_3 = new JSeparator();
 		mntudent.add(separator_3);
 		
-		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam \u0161tudentov");
+		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam \u010Ditate\u013Eov");
 		mntmZoznamtudentov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openListAllStudents();
@@ -178,50 +189,14 @@ public class MainMenu {
 		mntmZoznamtudentov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		mntudent.add(mntmZoznamtudentov);
 		
-		JMenu mnUite_1 = new JMenu("U\u010Dite\u013E");
-		menuBar.add(mnUite_1);
-		
-		JMenuItem mntmPridaUitea = new JMenuItem("Prida\u0165 u\u010Dite\u013Ea");
-		mntmPridaUitea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		mnUite_1.add(mntmPridaUitea);
-		mntmPridaUitea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
-		
-		JMenuItem mntmOdstrniUitea = new JMenuItem("Odstr\u00E1ni\u0165 u\u010Dite\u013Ea");
-		mntmOdstrniUitea.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		mnUite_1.add(mntmOdstrniUitea);
-		mntmOdstrniUitea.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
-		
-		JSeparator separator_4 = new JSeparator();
-		mnUite_1.add(separator_4);
-		
-		JMenuItem mntmZoznamUiteov = new JMenuItem("Zoznam u\u010Dite\u013Eov");
-		mntmZoznamUiteov.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		mntmZoznamUiteov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.SHIFT_MASK));
-		mnUite_1.add(mntmZoznamUiteov);
-		
 		JMenu mnIn = new JMenu("In\u00E9");
 		menuBar.add(mnIn);
 		
 		JMenu mnVymaza = new JMenu("Vymaza\u0165");
 		mnIn.add(mnVymaza);
 		
-		JMenuItem mntmVymazaZoznamKnh = new JMenuItem("Vymaza\u0165 zoznam kn\u00EDh");
-		mnVymaza.add(mntmVymazaZoznamKnh);
-		
-		JMenuItem mntmVymazaZoznamtudentov = new JMenuItem("Vymaza\u0165 zoznam \u0161tudentov");
-		mnVymaza.add(mntmVymazaZoznamtudentov);
-		
-		JMenuItem mntmVymazaZoznamUiteov = new JMenuItem("Vymaza\u0165 zoznam u\u010Dite\u013Eov");
-		mnVymaza.add(mntmVymazaZoznamUiteov);
+		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 datab\u00E1zu");
+		mnVymaza.add(mntmVymazatDatabazu);
 		
 		JSeparator separator_5 = new JSeparator();
 		mnIn.add(separator_5);
@@ -229,34 +204,31 @@ public class MainMenu {
 		JMenuItem mntmPomoc = new JMenuItem("Pomoc");
 		mntmPomoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Ctrl+W = Pridaù knihu\nCtrl+Q = Odstr·niù knihu\nCtrl+S = Pridaù ûiaka\nCtrl+A = Odstr·niù ûiaka\nCtrl+D = Pridaù uËiteæa\nCtrl+E = Odstr·niù uËiteæa\nF1 = VypoûiËaù knihu\nF2 = Vr·tiù knihu\nF3 = Zoznam knÌh\nShift+F3 = Knihy na vr·tenie\nF4 = Zoznam ötudentov\nShift+F4 = Zoznam uËiteæov\nF12 = Pomoc", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
+				JOptionPane.showMessageDialog(null, "Ctrl+W = Pridaù knihu\nCtrl+Q = Odstr·niù knihu\nCtrl+S = Pridaù osobu\nCtrl+A = Odstr·niù osobu\nF1 = VypoûiËaù knihu\nF2 = Vr·tiù knihu\nF3 = Zoznam knÌh\nShift+F3 = Knihy na vr·tenie\nF4 = Zoznam ötudentov\nF12 = Pomoooc", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
 			}
 		});
 		
 		JMenuItem mntmNastavenia = new JMenuItem("Nastavenia");
 		mntmNastavenia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					@SuppressWarnings("unused")
-					Settings s = new Settings();
+					//TODO: @SuppressWarnings("unused")
+					//TODO: Settings s = new Settings();
 			}
 		});
-		mnIn.add(mntmNastavenia);
+		//mnIn.add(mntmNastavenia);
+		
+		//---------------RESET +save---------------
+		
 		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
 		mnIn.add(mntmPomoc);
-		mntmVymazaZoznamUiteov.addActionListener(new ActionListener() {
+		mntmVymazatDatabazu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//db.reset();
+				Load.resetDatabase();
 			}
 		});
-		mntmVymazaZoznamtudentov.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Load.resetStudentDatabase();
-			}
-		});
-		mntmVymazaZoznamKnh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Load.resetBookDatabase();
-			}
-		});
+		
+		// ---------------------------
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -327,7 +299,7 @@ public class MainMenu {
 	}
 	
 	private void openAddStudent(){
-		AddStudent as = new AddStudent();
+		AddPerson as = new AddPerson();
 		desktopPane.add(as);
 		try{
 			as.setSelected(true);
@@ -371,7 +343,7 @@ public class MainMenu {
 	}
 	
 	private void openListAllStudents(){
-		ListAllStudents las = new ListAllStudents();
+		ListAllPersons las = new ListAllPersons();
 		desktopPane.add(las);
 		try{
 			las.setSelected(true);
@@ -379,6 +351,36 @@ public class MainMenu {
 			e1.printStackTrace();
 		}
 		
+	}
+	
+	private void openReturnBook(){
+		ReturnBook rb = new ReturnBook(desktopPane);
+		desktopPane.add(rb);
+		try{
+			rb.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
+	
+	private void openRemovePerson(){
+		RemovePerson rp = new RemovePerson();
+		desktopPane.add(rp);
+		try{
+			rp.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
+	
+	private void openRemoveBook(){
+		RemoveBook rb = new RemoveBook();
+		desktopPane.add(rb);
+		try{
+			rb.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
 	}
 	
 }
