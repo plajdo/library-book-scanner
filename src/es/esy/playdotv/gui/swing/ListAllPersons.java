@@ -1,18 +1,17 @@
 package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
-
 import es.esy.playdotv.event.TableRefreshEvent;
 import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Person;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListAllPersons extends JInternalFrame {
@@ -118,18 +117,29 @@ public class ListAllPersons extends JInternalFrame {
 	}
 	
 	private String getBookIDList(List<String> list){
-		String x = "";
-		for(String id : list) 
+		StringBuilder x = new StringBuilder();
+		
+		for( int i = 0; i<list.size(); i++ ) 
 		{
-			x = x.concat(id + ", ");
+			x.append(list.get(i));
+			x.append((i<list.size()-1) ? ", " : "");
 		}
-		return x;
+		
+		return x.toString();
 	}
 	
 	private void addStuffToTable(){
 		for(String key : db.persons.keySet()){
 			Person p = db.persons.get(key);
-			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), getBookIDList(p.getBorrowedIDs())  });
+			List<String> borrowed = new ArrayList<>();
+			
+			for (String key2 : db.books.keySet())
+			{
+				Book temp = db.books.get(key2);
+				if (temp.getTakerID().equals(p.getID())) borrowed.add(temp.getID());
+			}
+				
+			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), getBookIDList(borrowed)  });
 			
 		}
 		

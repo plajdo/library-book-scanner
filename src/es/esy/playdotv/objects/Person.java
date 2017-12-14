@@ -1,12 +1,9 @@
 package es.esy.playdotv.objects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Person {
 	
 	private String ID, name, group; // group is for example class or teachers or sum shit
-	private ArrayList<String> borrowedIDs = new ArrayList<>(); // secondary linker, NOT SAVED IN DATABASE, has to be relinked in parser
+	//private ArrayList<String> borrowedIDs = new ArrayList<>(); // secondary linker, NOT SAVED IN DATABASE, has to be relinked in parser
 	
 	public Person(String id){
 		this.ID = id;
@@ -27,7 +24,7 @@ public class Person {
 	}
 	public String getID() { return ID; }
 	public void setID(String id) { ID = id; }
-	public List<String> getBorrowedIDs() { return borrowedIDs; }
+	//public List<String> getBorrowedIDs() { return borrowedIDs; }
 	
 	
 	

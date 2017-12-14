@@ -162,10 +162,10 @@ public class BorrowBook extends JInternalFrame {
 						b.setBorrowedTime( ((Date)datePicker2.getModel().getValue()).getTime() );
 						b.setBorrowedUntilTime( ((Date)datePicker1.getModel().getValue()).getTime() );
 						
-						if (!per.getBorrowedIDs().contains(b.getID()))
+						if (b.getTakerID().isEmpty()) // bad : !per.getBorrowedIDs().contains(b.getID())
 						{
 							b.setTakerID(per.getID());
-							per.getBorrowedIDs().add(b.getID());
+							//per.getBorrowedIDs().add(b.getID());
 							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 							dispose();
 							

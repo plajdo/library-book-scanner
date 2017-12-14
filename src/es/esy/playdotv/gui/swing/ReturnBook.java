@@ -1,23 +1,16 @@
 package es.esy.playdotv.gui.swing;
 
-import javax.swing.JInternalFrame;
-import net.miginfocom.swing.MigLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JDesktopPane;
-
+import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
+import es.esy.playdotv.objects.Book;
+import net.miginfocom.swing.MigLayout;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
-import java.awt.event.ActionEvent;
 
 public class ReturnBook extends JInternalFrame{
 	
@@ -25,6 +18,8 @@ public class ReturnBook extends JInternalFrame{
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+
+	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	public ReturnBook(JDesktopPane desktopPane){
 		setTitle("Vr\u00E1ti\u0165 knihu");
@@ -101,6 +96,10 @@ public class ReturnBook extends JInternalFrame{
 						/*
 						 * TODO: Kód na vrátenie knihy
 						 */
+						
+						Book b = db.books.get(textField.getText()); // book to be returned
+						
+						
 						dispose();
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
