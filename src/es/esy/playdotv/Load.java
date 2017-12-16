@@ -11,7 +11,7 @@ import javax.swing.*;
 public class Load
 {
 	
-	public static final String VERSION = "v1.0 BETA";
+	public static final String VERSION = "v1.0";
 	
 	public static String DATABASE_PATH = "lbsdatabase.xml";
 	private static LBSDatabase db = LBSDatabase.getInstance();
