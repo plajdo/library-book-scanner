@@ -207,16 +207,16 @@ public class MainMenu {
 				JOptionPane.showMessageDialog(null, "Ctrl+W = Pridaù knihu\nCtrl+Q = Odstr·niù knihu\nCtrl+S = Pridaù osobu\nCtrl+A = Odstr·niù osobu\nF1 = VypoûiËaù knihu\nF2 = Vr·tiù knihu\nF3 = Zoznam knÌh\nShift+F3 = Knihy na vr·tenie\nF4 = Zoznam ötudentov\nF12 = Pomoooc", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
 			}
 		});
-		
+		/*
 		JMenuItem mntmNastavenia = new JMenuItem("Nastavenia");
 		mntmNastavenia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					//TODO: @SuppressWarnings("unused")
-					//TODO: Settings s = new Settings();
+					@SuppressWarnings("unused")
+					Settings s = new Settings();
 			}
 		});
 		//mnIn.add(mntmNastavenia);
-		
+		*/
 		//---------------RESET +save---------------
 		
 		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
