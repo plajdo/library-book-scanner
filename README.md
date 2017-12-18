@@ -1,2 +1,6 @@
-# library-:b:ook-scanner xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+#library-:b:ook-scanner 
 Simple book management with qr codes for our school.
+
+
+
+xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
