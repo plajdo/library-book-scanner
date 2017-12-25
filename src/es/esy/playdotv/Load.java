@@ -27,7 +27,7 @@ public class Load
 				db.save(DATABASE_PATH);
 				
 			}catch (Exception e){
-				JOptionPane.showMessageDialog(null, "Chyba pri resetovaní databázy.");
+				JOptionPane.showMessageDialog(null, "Chyba pri resetovanï¿½ databï¿½zy.");
 				e.printStackTrace();
 			}finally{
 				System.exit(0);
