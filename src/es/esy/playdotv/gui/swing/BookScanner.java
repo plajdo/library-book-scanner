@@ -1,7 +1,6 @@
 package es.esy.playdotv.gui.swing;
 
 import com.github.sarxos.webcam.Webcam;
-import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
@@ -21,8 +20,6 @@ public class BookScanner extends JInternalFrame {
 	private JTextField textField;
 	volatile BufferedImage webcamImage;
 	private String data = "";
-	
-	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	List<DDEventListener> listeners = new ArrayList<>();
 	
