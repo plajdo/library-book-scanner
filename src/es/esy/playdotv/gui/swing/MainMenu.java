@@ -2,7 +2,6 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class MainMenu {
+public class MainMenu{
 	
 	private JFrame frmGymnziumLipany;
 	private JDesktopPane desktopPane;
@@ -46,10 +45,10 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
-		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
+		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [" + Load.OS + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365)); // minsize
+		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365));
 		
 		// ---------EXIT--------
 
@@ -59,22 +58,26 @@ public class MainMenu {
 			public void windowClosing(WindowEvent event)
 			{
 				super.windowClosing(event);
-				
 				db.save(Load.DATABASE_PATH);
-				
 				System.exit(0);
 					
 			}
 		});
-		
-		
-		//-----------------
-		
-		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
+		frmGymnziumLipany.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		desktopPane = new ImageDesktopPane();
+		desktopPane.setPreferredSize(new Dimension(frmGymnziumLipany.getWidth(), frmGymnziumLipany.getHeight()));
 		
-		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 0 0,grow");
+		frmGymnziumLipany.getContentPane().add(desktopPane);
+		
+		frmGymnziumLipany.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				desktopPane.setPreferredSize(new Dimension(frmGymnziumLipany.getWidth(), frmGymnziumLipany.getHeight()));
+			}
+		});
+		
+		frmGymnziumLipany.getContentPane().repaint();
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmGymnziumLipany.setJMenuBar(menuBar);
@@ -96,7 +99,7 @@ public class MainMenu {
 		
 		JMenuItem mntmPridaKnihu = new JMenuItem("Prida\u0165 knihu");
 		mnKniha_1.add(mntmPridaKnihu);
-		mntmPridaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
+		mntmPridaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.ALT_MASK));
 		mntmPridaKnihu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				openAddBook();
@@ -111,7 +114,7 @@ public class MainMenu {
 			
 		});
 		mnKniha_1.add(mntmOdstrniKnihu);
-		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.ALT_MASK));
 		
 		JSeparator separator_1 = new JSeparator();
 		mnKniha_1.add(separator_1);
@@ -122,7 +125,7 @@ public class MainMenu {
 				openBorrowBook();
 			}
 		});
-		mntmVypoiaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+		mntmVypoiaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.ALT_MASK));
 		mnKniha_1.add(mntmVypoiaKnihu);
 		
 		JMenuItem mntmVrtiKnihu = new JMenuItem("Vr\u00E1ti\u0165 knihu");
@@ -131,7 +134,7 @@ public class MainMenu {
 				openReturnBook();
 			}
 		});
-		mntmVrtiKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
+		mntmVrtiKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, InputEvent.ALT_MASK));
 		mnKniha_1.add(mntmVrtiKnihu);
 		
 		JSeparator separator_2 = new JSeparator();
@@ -143,7 +146,7 @@ public class MainMenu {
 				openListAllBooks();
 			}
 		});
-		mntmZoznamKnh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
+		mntmZoznamKnh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5, InputEvent.ALT_MASK));
 		mnKniha_1.add(mntmZoznamKnh);
 		
 		JMenuItem mntmKnihyNaVrtenie = new JMenuItem("Knihy na vr\u00E1tenie");
@@ -152,7 +155,7 @@ public class MainMenu {
 				openBooksToReturn();
 			}
 		});
-		mntmKnihyNaVrtenie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, InputEvent.SHIFT_MASK));
+		mntmKnihyNaVrtenie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK));
 		mnKniha_1.add(mntmKnihyNaVrtenie);
 		
 		JMenu mntudent = new JMenu("\u010Citate\u013E");
@@ -160,7 +163,7 @@ public class MainMenu {
 		
 		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u010Ditate\u013Ea");
 		mntudent.add(mntmPridaiaka);
-		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_6, InputEvent.ALT_MASK));
 		mntmPridaiaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openAddStudent();
@@ -175,7 +178,7 @@ public class MainMenu {
 			}
 		});
 		mntudent.add(mntmOdstrniiaka);
-		mntmOdstrniiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
+		mntmOdstrniiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_7, InputEvent.ALT_MASK));
 		
 		JSeparator separator_3 = new JSeparator();
 		mntudent.add(separator_3);
@@ -186,7 +189,7 @@ public class MainMenu {
 				openListAllStudents();
 			}
 		});
-		mntmZoznamtudentov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
+		mntmZoznamtudentov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_8, InputEvent.ALT_MASK));
 		mntudent.add(mntmZoznamtudentov);
 		
 		JMenu mnIn = new JMenu("In\u00E9");
@@ -201,12 +204,14 @@ public class MainMenu {
 		JSeparator separator_5 = new JSeparator();
 		mnIn.add(separator_5);
 		
-		JMenuItem mntmPomoc = new JMenuItem("Pomoc");
+		
+		JMenuItem mntmPomoc = new JMenuItem("Inform√°cie");
 		mntmPomoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Ctrl+W = Pridaù knihu\nCtrl+Q = Odstr·niù knihu\nCtrl+S = Pridaù osobu\nCtrl+A = Odstr·niù osobu\nF1 = VypoûiËaù knihu\nF2 = Vr·tiù knihu\nF3 = Zoznam knÌh\nShift+F3 = Knihy na vr·tenie\nF4 = Zoznam ötudentov\nF12 = Pomoooc", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
+				JOptionPane.showMessageDialog(null, "Github: https://github.com/ShardBytes/library-book-scanner", "Inform√°cie", JOptionPane.INFORMATION_MESSAGE, null);
 			}
 		});
+		
 		/*
 		JMenuItem mntmNastavenia = new JMenuItem("Nastavenia");
 		mntmNastavenia.addActionListener(new ActionListener() {
@@ -219,8 +224,9 @@ public class MainMenu {
 		*/
 		//---------------RESET +save---------------
 		
-		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
+		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_9, InputEvent.ALT_MASK));
 		mnIn.add(mntmPomoc);
+		
 		mntmVymazatDatabazu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//db.reset();
@@ -382,5 +388,4 @@ public class MainMenu {
 			e1.printStackTrace();
 		}
 	}
-	
 }

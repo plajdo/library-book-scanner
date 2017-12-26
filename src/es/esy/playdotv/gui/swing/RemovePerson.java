@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 
 public class RemovePerson extends JInternalFrame {
 	
@@ -26,7 +28,7 @@ public class RemovePerson extends JInternalFrame {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Odstr\u00E1ni\u0165 osobu");
-		setBounds(100, 100, 500, 112);
+		setBounds(100, 100, 500, 190);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][grow][pref!][]"));
 
 		JLabel lblIdKnihy = new JLabel("ID osoby:");
@@ -40,6 +42,7 @@ public class RemovePerson extends JInternalFrame {
 		getContentPane().add(separator, "cell 0 2 2 1,grow");
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		getContentPane().add(panel, "cell 0 3 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow]", "[]"));
 
@@ -53,10 +56,10 @@ public class RemovePerson extends JInternalFrame {
 							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 							dispose();
 						}else{
-							JOptionPane.showMessageDialog(null, "Osoba m· vypoûiËanÈ knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Osoba m√° vypo≈æiƒçan√© knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
-						JOptionPane.showMessageDialog(null, "Osoba neexistuje v datab·ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Osoba neexistuje v datab√°ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}else{
 					JOptionPane.showMessageDialog(null, "Zadajte ID osoby.", "Chyba", JOptionPane.ERROR_MESSAGE);

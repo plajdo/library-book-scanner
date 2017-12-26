@@ -33,7 +33,7 @@ public class PersonScanner extends JInternalFrame {
 		ImageIcon ic = new ImageIcon(webcam.getImage());
 		
 		setTitle("Nasn\u00EDma\u0165 osobu");
-		setBounds(100, 100, 450, 260);
+		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][grow][][]"));
 		
 		JLabel lblSkener = new JLabel("Skener:");

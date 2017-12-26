@@ -16,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 
 public class ReturnBook extends JInternalFrame{
 	
@@ -30,7 +32,7 @@ public class ReturnBook extends JInternalFrame{
 	
 	public ReturnBook(JDesktopPane desktopPane){
 		setTitle("Vr\u00E1ti\u0165 knihu");
-		setBounds(100, 100, 460, 155);
+		setBounds(100, 100, 460, 236);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][]"));
 		
 		JLabel lblisloKnihy = new JLabel("ID knihy:");
@@ -60,6 +62,7 @@ public class ReturnBook extends JInternalFrame{
 		getContentPane().add(separator, "cell 0 3 2 1,grow");
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		getContentPane().add(panel, "cell 0 4 2 1,grow");
 		panel.setLayout(new MigLayout("", "[110.00,grow][110.00,grow][grow]", "[]"));
 		
@@ -81,9 +84,9 @@ public class ReturnBook extends JInternalFrame{
 							textField_1.setText("Chyba");
 							textField_2.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField.setText("Zrušené");
-							textField_1.setText("Zrušené");
-							textField_2.setText("Zrušené");
+							textField.setText("Zruï¿½enï¿½");
+							textField_1.setText("Zruï¿½enï¿½");
+							textField_2.setText("Zruï¿½enï¿½");
 						}
 					}
 				});
@@ -118,10 +121,10 @@ public class ReturnBook extends JInternalFrame{
 								//System.out.println("KLOSS");
 								dispose();
 							}else{
-								JOptionPane.showMessageDialog(null, "Kniha nie je vypožièaná.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Kniha nie je vypoï¿½iï¿½anï¿½.", "Chyba", JOptionPane.ERROR_MESSAGE);
 							}
 						}else{
-							JOptionPane.showMessageDialog(null, "Kniha neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Kniha neexistuje v databï¿½ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);

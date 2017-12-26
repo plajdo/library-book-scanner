@@ -28,7 +28,7 @@ public class ListAllPersons extends JInternalFrame {
 		setClosable(true);
 		setResizable(true);
 		setMaximizable(false);
-		setTitle("Zoznam v\u0161etk\u00FDch osÙb");
+		setTitle("Zoznam v\u0161etk\u00FDch ƒçitateƒæov");
 		setBounds(100, 100, 450, 300);
 		
 		table = new JTable();
@@ -41,7 +41,7 @@ public class ListAllPersons extends JInternalFrame {
 		getContentPane().add(scrollPane, BorderLayout.NORTH);
 		
 		tblModel = new DefaultTableModel(null, new String[]{
-				"ID ûiaka", "Meno", "Trieda", "Knihy"
+				"ID ≈æiaka", "Meno", "Trieda", "Knihy"
 		});
 		table.setModel(tblModel);
 		

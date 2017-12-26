@@ -8,10 +8,6 @@
 	<classpathentry kind="lib" path="lib/webcam-capture-0.3.10.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.2.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
-	<classpathentry kind="lib" path="lib/JTattoo-1.6.11.jar"/>
 	<classpathentry kind="lib" path="lib/jdatepicker-1.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/charm-glisten-4.4.1.jar"/>
-	<classpathentry kind="lib" path="lib/jfoenix.jar"/>
-	<classpathentry kind="lib" path="lib/fontawesomefx-8.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 
 public class AddBook extends JInternalFrame {
 	
@@ -33,8 +35,8 @@ public class AddBook extends JInternalFrame {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Prida\u0165 knihu");
-		setBounds(100, 100, 500, 200);
-		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][grow][pref!][]"));
+		setBounds(100, 100, 633, 244);
+		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][pref!,grow][]"));
 
 		JLabel lblIdKnihy = new JLabel("ID knihy:");
 		getContentPane().add(lblIdKnihy, "cell 0 0,alignx trailing");
@@ -58,10 +60,11 @@ public class AddBook extends JInternalFrame {
 		textField_2.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
-		getContentPane().add(separator, "cell 0 4 2 1,grow");
+		getContentPane().add(separator, "cell 0 3 2 1,grow");
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, "cell 0 5 2 1,grow");
+		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		getContentPane().add(panel, "cell 0 4 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow]", "[]"));
 
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 knihu do datab\u00E1zy");
@@ -106,7 +109,7 @@ public class AddBook extends JInternalFrame {
 		});
 		panel.add(btnUloiQrKd, "flowx,cell 1 0,growx");
 
-		JButton btnDokoni = new JButton("DokonËiù");
+		JButton btnDokoni = new JButton("Dokonƒçi≈•");
 		btnDokoni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

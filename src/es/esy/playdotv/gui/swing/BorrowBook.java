@@ -21,6 +21,8 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 
 public class BorrowBook extends JInternalFrame {
 
@@ -39,7 +41,7 @@ public class BorrowBook extends JInternalFrame {
 	public BorrowBook(JDesktopPane desktopPane) {
 
 		setTitle("Vypo\u017Ei\u010Dia\u0165 knihu");
-		setBounds(100, 100, 460, 285);
+		setBounds(100, 100, 557, 390);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][]"));
 
 		JLabel lblisloKnihy = new JLabel("ID knihy:");
@@ -103,8 +105,9 @@ public class BorrowBook extends JInternalFrame {
 		getContentPane().add(separator_1, "cell 0 8 2 1,grow");
 
 		JPanel panel = new JPanel();
+		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		getContentPane().add(panel, "cell 0 9 2 1,grow");
-		panel.setLayout(new MigLayout("", "[110.00][][110.00]", "[][]"));
+		panel.setLayout(new MigLayout("", "[110.00,grow,center][][110.00,grow,center]", "[grow][grow]"));
 
 		JButton btnSkenovaKnihu = new JButton("Nasn\u00EDma\u0165 knihu");
 		btnSkenovaKnihu.addActionListener(new ActionListener(){
@@ -117,16 +120,16 @@ public class BorrowBook extends JInternalFrame {
 							String tempid = bs.getData();
 							Book tempbook = db.books.get(tempid);
 							textField.setText(tempid);
-							textField_1.setText(tempbook.getAuthor()); // TODO : neviem ci take poradie
+							textField_1.setText(tempbook.getAuthor());
 							textField_2.setText(tempbook.getName());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
 							textField_1.setText("Chyba");
 							textField_2.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField.setText("ZruöenÈ");
-							textField_1.setText("ZruöenÈ");
-							textField_2.setText("ZruöenÈ");
+							textField.setText("Zru≈°en√©");
+							textField_1.setText("Zru≈°en√©");
+							textField_2.setText("Zru≈°en√©");
 						}
 					}
 				});
@@ -163,29 +166,31 @@ public class BorrowBook extends JInternalFrame {
 								Person per = db.persons.get(textField_3.getText());
 								Book b = db.books.get(textField.getText());
 								
-								b.setBorrowedTime(((Date) datePicker2.getModel().getValue()).getTime());
-								b.setBorrowedUntilTime(((Date) datePicker1.getModel().getValue()).getTime());
+								Date d1 = (Date)datePicker2.getModel().getValue();
+								Date d2 = (Date)datePicker1.getModel().getValue();
 								
-								if(b.getBorrowedTime() < b.getBorrowedUntilTime()){
+								if(d1.getTime() < d2.getTime()){
 									if(b.getTakerID().isEmpty()){
 										b.setTakerID(per.getID());
 										per.addBookCount();
+										b.setBorrowedTime(((Date) datePicker2.getModel().getValue()).getTime());
+										b.setBorrowedUntilTime(((Date) datePicker1.getModel().getValue()).getTime());
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
 									}else{
-										JOptionPane.showMessageDialog(null, "Kniha je uû vypoûiËan· osobou s ID " + b.getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
+										JOptionPane.showMessageDialog(null, "Kniha je u≈æ vypo≈æiƒçan√° osobou s ID " + b.getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
 									}
 								}else{
-									JOptionPane.showMessageDialog(null, "Neplatn˝ d·tum.", "Chyba", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(null, "Neplatn√Ω d√°tum.", "Chyba", JOptionPane.ERROR_MESSAGE);
 								}
 							}else{
-								JOptionPane.showMessageDialog(null, "Osoba neexistuje v datab·ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Osoba neexistuje v datab√°ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 							}
 						}else{
-							JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab·ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab√°ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
-						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID osoby a d·tumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID osoby a d√°tumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}catch(NullPointerException e1){
 
@@ -205,16 +210,16 @@ public class BorrowBook extends JInternalFrame {
 							String tempid = ps.getData();
 							Person tempperson = db.persons.get(tempid);
 							textField_3.setText(tempid);
-							textField_4.setText(tempperson.getName()); // TODO : neviem ci take poradie v2
+							textField_4.setText(tempperson.getName());
 							textField_5.setText(tempperson.getGroup());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField_3.setText("Chyba");
 							textField_4.setText("Chyba");
 							textField_5.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField_3.setText("ZruöenÈ");
-							textField_4.setText("ZruöenÈ");
-							textField_5.setText("ZruöenÈ");
+							textField_3.setText("Zru≈°en√©");
+							textField_4.setText("Zru≈°en√©");
+							textField_5.setText("Zru≈°en√©");
 						}
 					}
 				});

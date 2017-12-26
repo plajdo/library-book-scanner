@@ -44,10 +44,7 @@ class RefreshImage extends Thread{
 			
 			x = Reader.readQR(webcamImage);
 			if(!(x == null)){
-				//String[] splitText = x.split(";");
 				textField.setText(x);
-				//textField_1.setText(splitText[1]);
-				//textField_2.setText(splitText[2]);
 			}
 			try {
 				Thread.sleep(42);

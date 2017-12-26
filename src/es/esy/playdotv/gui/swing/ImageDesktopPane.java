@@ -24,8 +24,7 @@ public class ImageDesktopPane extends JDesktopPane
     @Override
     public void paintComponent(Graphics g)
     {
-        if (backgroundImage!=null)
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        if (backgroundImage!=null) g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
     
 }

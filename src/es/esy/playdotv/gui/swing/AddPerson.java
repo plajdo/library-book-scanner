@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 
 public class AddPerson extends JInternalFrame {
 	
@@ -32,11 +34,11 @@ public class AddPerson extends JInternalFrame {
 	public AddPerson() {
 		setClosable(true);
 		setIconifiable(true);
-		setTitle("Prida\u0165 ûiaka");
-		setBounds(100, 100, 500, 200);
+		setTitle("Prida≈• ≈æiaka");
+		setBounds(100, 100, 652, 246);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][grow][pref!][]"));
 
-		JLabel lblIdKnihy = new JLabel("ID ûiaka:");
+		JLabel lblIdKnihy = new JLabel("ID ≈æiaka:");
 		getContentPane().add(lblIdKnihy, "cell 0 0,alignx trailing");
 		
 		textField = new JTextField();
@@ -61,6 +63,7 @@ public class AddPerson extends JInternalFrame {
 		getContentPane().add(separator, "cell 0 4 2 1,grow");
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		getContentPane().add(panel, "cell 0 5 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow]", "[]"));
 
@@ -77,7 +80,7 @@ public class AddPerson extends JInternalFrame {
 					
 					dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 				}else{
-					JOptionPane.showMessageDialog(null, "VyplÚte vöetky ˙daje.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "VyplÔøΩte vÔøΩetky ÔøΩdaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -109,7 +112,7 @@ public class AddPerson extends JInternalFrame {
 		});
 		panel.add(btnUloiQrKd, "flowx,cell 1 0,growx");
 
-		JButton btnDokoni = new JButton("DokonËiù");
+		JButton btnDokoni = new JButton("Dokonƒçi≈•");
 		btnDokoni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
