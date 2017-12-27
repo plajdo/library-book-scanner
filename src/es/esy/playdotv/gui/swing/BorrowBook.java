@@ -163,13 +163,15 @@ public class BorrowBook extends JInternalFrame {
 								Person per = db.persons.get(textField_3.getText());
 								Book b = db.books.get(textField.getText());
 								
-								b.setBorrowedTime(((Date) datePicker2.getModel().getValue()).getTime());
-								b.setBorrowedUntilTime(((Date) datePicker1.getModel().getValue()).getTime());
+								Date d1 = (Date)datePicker2.getModel().getValue();
+								Date d2 = (Date)datePicker1.getModel().getValue();
 								
-								if(b.getBorrowedTime() < b.getBorrowedUntilTime()){
+								if(d1.getTime() < d2.getTime()){
 									if(b.getTakerID().isEmpty()){
 										b.setTakerID(per.getID());
 										per.addBookCount();
+										b.setBorrowedTime(((Date)datePicker2.getModel().getValue()).getTime());
+										b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
 									}else{
