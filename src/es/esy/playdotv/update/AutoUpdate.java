@@ -2,22 +2,29 @@ package es.esy.playdotv.update;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public final class AutoUpdate {
+import com.stackoverflow.ordiel.CopyOut;
+
+public final class AutoUpdate{
 	
-	public static void updateData(){
-		String JSON = getGithubJSON();
-		
-		JSONObject jobj1 = new JSONObject(JSON);
-		System.out.println(jobj1.getString("html_url"));
-		System.out.println(jobj1.getBoolean("draft"));
-		
+	static{
+		updateData();
 	}
+	
+	public static final String CURRENT_VERSION = "v1.0.0";
+	public static final String LATEST_VERSION = GithubData.getRelease_version();
 	
 	private static String getGithubJSON(){
 		URL url;
@@ -40,6 +47,104 @@ public final class AutoUpdate {
 		}
 		return resultString.toString();
 
+	}
+	
+	public static void updateData(){
+		String JSON = getGithubJSON();
+		
+		JSONObject jobj1 = new JSONObject(JSON);
+		GithubData.setRelease_url(jobj1.get("html_url").toString());
+		GithubData.setRelease_id(jobj1.get("id").toString());
+		GithubData.setRelease_version(jobj1.get("tag_name").toString());
+		GithubData.setRelease_name(jobj1.get("name").toString());
+		GithubData.setRelease_branch(jobj1.get("target_commitish").toString());
+		GithubData.setRelease_isPrerelease(jobj1.getBoolean("prerelease"));
+		
+		JSONObject jobj2 = jobj1.getJSONObject("author");
+		GithubData.setAuthor_name(jobj2.get("login").toString());
+		GithubData.setAuthor_id(jobj2.get("id").toString());
+		GithubData.setAuthor_avatar_url(jobj2.get("avatar_url").toString());
+		GithubData.setAuthor_url(jobj2.get("html_url").toString());
+		GithubData.setAuthor_organisations(jobj2.get("organizations_url").toString());
+		GithubData.setAuthor_repos(jobj2.get("repos_url").toString());
+		GithubData.setAuthor_subscriptions(jobj2.get("subscriptions_url").toString());
+		GithubData.setAuthor_type(jobj2.get("type").toString());
+		GithubData.setAuthor_isAdmin(jobj2.getBoolean("site_admin"));
+		
+		JSONArray jarr1 = jobj1.getJSONArray("assets");
+		JSONObject jobj3 = jarr1.getJSONObject(0);
+		GithubData.setAssets_url(jobj3.get("url").toString());
+		GithubData.setAssets_id(jobj3.get("id").toString());
+		GithubData.setAssets_name(jobj3.get("name").toString());
+		GithubData.setAssets_label(jobj3.get("label").toString());
+		GithubData.setAssets_size(jobj3.get("size").toString());
+		GithubData.setAssets_download_count(jobj3.get("download_count").toString());
+		GithubData.setAssets_download_url(jobj3.get("browser_download_url").toString());
+		
+	}
+	
+	public static boolean updateAvailable(){
+		String versionNoV = CURRENT_VERSION.substring(1);
+		String versionLatestNoV = LATEST_VERSION.substring(1);
+		String[] version = versionNoV.split("\\.");
+		String[] versionLatest = versionLatestNoV.split("\\.");
+		int[] versionNum = stringArrayToIntArray(version);
+		int[] versionLatestNum = stringArrayToIntArray(versionLatest);
+		System.out.println(Arrays.toString(version));
+		System.out.println(Arrays.toString(versionLatest));
+		System.out.println(Arrays.toString(versionNum));
+		System.out.println(Arrays.toString(versionLatestNum));
+		System.out.println(CURRENT_VERSION);
+		System.out.println(LATEST_VERSION);
+		System.out.println(versionNoV);
+		System.out.println(versionLatestNoV);
+		
+		if(versionNum[0] < versionLatestNum[0]){
+			return true;
+		}else if(versionNum[0] > versionLatestNum[0]){
+			return false;
+		}else{
+			if(versionNum[1] < versionLatestNum[1]){
+				return true;
+			}else if(versionNum[1] > versionLatestNum[1]){
+				return false;
+			}else{
+				if(versionNum[2] < versionLatestNum[2]){
+					return true;
+				}else if(versionNum[2] > versionLatestNum[2]){
+					return false;
+				}else{
+					return false;
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	public static void update() throws IOException{
+		URL website = new URL(GithubData.getRelease_url());
+		Path out = Paths.get(getJarName() + "_u");
+		try(InputStream in = website.openStream()){
+			Files.copy(in, out, StandardCopyOption.REPLACE_EXISTING);
+		}
+		System.exit(0);
+		
+	}
+	
+	private static String getJarName(){
+		return new java.io.File(AutoUpdate.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName().toString();
+	}
+	
+	private static int[] stringArrayToIntArray(String[] array){
+		int[] arrNew = new int[array.length];
+		int index = 0;
+		for(String s : array){
+			arrNew[index] = Integer.parseInt(s);
+			index++;
+		}
+		return arrNew;
 	}
 	
 	public static final class GithubData{
