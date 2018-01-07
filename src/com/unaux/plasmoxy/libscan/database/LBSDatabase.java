@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
-/* Simple database for libary-book-scanner*/
+/* Simple database for library-book-scanner*/
 
 public class LBSDatabase
 {
@@ -55,7 +55,7 @@ public class LBSDatabase
 			dBuilder = dbFactory.newDocumentBuilder();
 			transformer = transformerFactory.newTransformer();
 			
-			// set indentation so it doesnt look like shit
+			// set indentation so it doesn't look like shit
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 		}
@@ -83,14 +83,14 @@ public class LBSDatabase
 		}
 		catch(IOException e)
 		{
-			JOptionPane.showMessageDialog(null, "Súbor sa nenašiel, bola vytvorená nová databáza.");
+			JOptionPane.showMessageDialog(null, "S\u00FAbor sa nena\u0161iel, bola vytvoren\u00E1 nov\u00E1 datab\u00E1za.");
 			return;
 		}
 		catch(SAXException e)
 		{
-			JOptionPane.showMessageDialog(null, "LOAD - Chyba pri naèítaní ( SAXException )");
+			JOptionPane.showMessageDialog(null, "Datab\u00E1za je po\u0161koden\u00E1 (SAXException).");
 			System.exit(0);
-			return; // unnecessary but it will help with IDE errors below ( doc not initialized )
+			return; // unnecessary but it will help with IDE errors below (doc not initialized)
 		}
 		
 		doc.getDocumentElement().normalize();
@@ -200,7 +200,7 @@ public class LBSDatabase
 			transformer.transform(src, result);
 		}
 		catch (TransformerException e) {
-			System.out.println("SAVE PARSE ERROR"); // TODO - ked neje subor
+			System.out.println("SAVE PARSE ERROR");
 			e.printStackTrace();
 			System.exit(-1);
 		}

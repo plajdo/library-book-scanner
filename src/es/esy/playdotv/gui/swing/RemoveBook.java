@@ -26,7 +26,7 @@ public class RemoveBook extends JInternalFrame {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Odstr\u00E1ni\u0165 knihu");
-		setBounds(100, 100, 500, 112);
+		setBounds(100, 100, 300, 112);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][grow][pref!][]"));
 
 		JLabel lblIdKnihy = new JLabel("ID knihy:");
@@ -43,7 +43,7 @@ public class RemoveBook extends JInternalFrame {
 		getContentPane().add(panel, "cell 0 3 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow]", "[]"));
 
-		JButton btnPotvrdiAPrida = new JButton("Odstr\u00E1ni\u0165 knihu z datab\u00E1zy");
+		JButton btnPotvrdiAPrida = new JButton("Odstr\u00E1ni\u0165");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(textField.getText().length() > 0){
@@ -53,10 +53,10 @@ public class RemoveBook extends JInternalFrame {
 							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 							dispose();
 						}else{
-							JOptionPane.showMessageDialog(null, "Kniha je vypožièaná osobou " + db.books.get(textField.getText()).getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Kniha je vypo\u017Ei\u010Dan\u00E1 osobou " + db.books.get(textField.getText()).getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
-						JOptionPane.showMessageDialog(null, "Kniha neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}else{
 					JOptionPane.showMessageDialog(null, "Zadajte ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
