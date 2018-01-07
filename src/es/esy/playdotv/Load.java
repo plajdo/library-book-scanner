@@ -5,6 +5,7 @@ import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
+import es.esy.playdotv.update.AutoUpdate;
 
 import javax.swing.*;
 
@@ -40,6 +41,8 @@ public class Load
 	}
 	
 	public static void main(String[] args){
+		
+		AutoUpdate.updateData();
 		
 		db.load(DATABASE_PATH);
 		
