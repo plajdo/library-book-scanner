@@ -14,6 +14,7 @@ class RefreshImage extends Thread{
 	private volatile ImageIcon ic;
 	private volatile Webcam webcam;
 	private volatile JTextField textField;
+	private long sleepTime;
 	
 	RefreshImage(BufferedImage b, JLabel l, ImageIcon i, Webcam w, JTextField t1){
 		this.webcamImage = b;
@@ -38,25 +39,28 @@ class RefreshImage extends Thread{
 	public void run(){
 		String x;
 		
-		while(running){					
+		while(running){
+			sleepTime = calculateSleepFromFps(webcam.getFPS());
 			webcamImage = webcam.getImage();
 			redrawImage(lblObrzok, webcamImage, ic);
 			
 			x = Reader.readQR(webcamImage);
 			if(!(x == null)){
-				//String[] splitText = x.split(";");
 				textField.setText(x);
-				//textField_1.setText(splitText[1]);
-				//textField_2.setText(splitText[2]);
 			}
 			try {
-				Thread.sleep(42);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
 		}
 		
+	}
+	
+	private long calculateSleepFromFps(double fps){
+		long fps_l = (long)Math.floor(fps);
+		return 1000L / fps_l;
 	}
 	
 }

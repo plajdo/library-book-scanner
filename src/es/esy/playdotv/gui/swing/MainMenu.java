@@ -2,16 +2,13 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
+import es.esy.playdotv.update.AutoUpdate;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 public class MainMenu {
 	
@@ -46,7 +43,7 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
-		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
+		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + AutoUpdate.getCurrentVersion() + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365)); // minsize
@@ -197,10 +194,11 @@ public class MainMenu {
 		
 		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 datab\u00E1zu");
 		mnVymaza.add(mntmVymazatDatabazu);
-		
+		/*
 		JSeparator separator_5 = new JSeparator();
 		mnIn.add(separator_5);
-		
+		*/
+		/*
 		JMenuItem mntmPomoc = new JMenuItem("Pomoc");
 		mntmPomoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -216,37 +214,22 @@ public class MainMenu {
 			}
 		});
 		//mnIn.add(mntmNastavenia);
-		*/
-		//---------------RESET +save---------------
 		
 		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
 		mnIn.add(mntmPomoc);
+		*/
 		mntmVymazatDatabazu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//db.reset();
 				Load.resetDatabase();
 			}
 		});
 		
-		// ---------------------------
-		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		
-		try(InputStream input = new FileInputStream("config.properties")){
-			Properties prop = new Properties();
-			
-			prop.load(input);
-			openWindow(prop.getProperty("WO1"));
-			openWindow(prop.getProperty("WO2"));
-			openWindow(prop.getProperty("WO3"));
-			
-		}catch(IOException e){
-			
-		}
-		
 	}
 	
+	@SuppressWarnings("unused")
 	private void openWindow(String property){
 		try{
 			switch(property){

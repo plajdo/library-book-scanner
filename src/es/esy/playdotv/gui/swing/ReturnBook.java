@@ -74,7 +74,7 @@ public class ReturnBook extends JInternalFrame{
 							String tempid = bs.getData();
 							Book tempbook = db.books.get(tempid);
 							textField.setText(tempid);
-							textField_1.setText(tempbook.getAuthor()); // TODO : neviem ci take poradie
+							textField_1.setText(tempbook.getAuthor());
 							textField_2.setText(tempbook.getName());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
@@ -111,17 +111,13 @@ public class ReturnBook extends JInternalFrame{
 								b.setTakerID("");
 								b.setBorrowedTime(0);
 								b.setBorrowedUntilTime(0);
-								//System.out.println("SUBB sT-ract");
-								
-								//System.out.println("DISC PATCH ENVENT");
 								dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
-								//System.out.println("KLOSS");
 								dispose();
 							}else{
-								JOptionPane.showMessageDialog(null, "Kniha nie je vypožièaná.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Kniha nie je vypo\u017Ei\u010Dan\u00E1.", "Chyba", JOptionPane.ERROR_MESSAGE);
 							}
 						}else{
-							JOptionPane.showMessageDialog(null, "Kniha neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
