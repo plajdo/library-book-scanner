@@ -43,7 +43,7 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
-		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + AutoUpdate.getCurrentVersion() + "] [SK]");
+		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + "" + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365)); // minsize
