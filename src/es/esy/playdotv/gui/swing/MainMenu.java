@@ -88,6 +88,14 @@ public class MainMenu {
 		});
 		mnSbor.add(mntmUkoni);
 		
+		JMenuItem mntmUloi = new JMenuItem("ulo\\u017Ei\\u0165");
+		mntmUloi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				db.save(Load.DATABASE_PATH);
+			}
+		});
+		mnSbor.add(mntmUloi);
+		
 		JMenu mnKniha_1 = new JMenu("Kniha");
 		menuBar.add(mnKniha_1);
 		
@@ -157,7 +165,7 @@ public class MainMenu {
 		
 		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u010Ditate\u013Ea");
 		mntudent.add(mntmPridaiaka);
-		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mntmPridaiaka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openAddStudent();
@@ -172,7 +180,7 @@ public class MainMenu {
 			}
 		});
 		mntudent.add(mntmOdstrniiaka);
-		mntmOdstrniiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
+		mntmOdstrniiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		
 		JSeparator separator_3 = new JSeparator();
 		mntudent.add(separator_3);
@@ -194,30 +202,6 @@ public class MainMenu {
 		
 		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 datab\u00E1zu");
 		mnVymaza.add(mntmVymazatDatabazu);
-		/*
-		JSeparator separator_5 = new JSeparator();
-		mnIn.add(separator_5);
-		*/
-		/*
-		JMenuItem mntmPomoc = new JMenuItem("Pomoc");
-		mntmPomoc.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Ctrl+W = Pridaù knihu\nCtrl+Q = Odstr·niù knihu\nCtrl+S = Pridaù osobu\nCtrl+A = Odstr·niù osobu\nF1 = VypoûiËaù knihu\nF2 = Vr·tiù knihu\nF3 = Zoznam knÌh\nShift+F3 = Knihy na vr·tenie\nF4 = Zoznam ötudentov\nF12 = Pomoooc", "Pomoc", JOptionPane.INFORMATION_MESSAGE, null);
-			}
-		});
-		/*
-		JMenuItem mntmNastavenia = new JMenuItem("Nastavenia");
-		mntmNastavenia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					@SuppressWarnings("unused")
-					Settings s = new Settings();
-			}
-		});
-		//mnIn.add(mntmNastavenia);
-		
-		mntmPomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
-		mnIn.add(mntmPomoc);
-		*/
 		mntmVymazatDatabazu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Load.resetDatabase();
@@ -365,5 +349,4 @@ public class MainMenu {
 			e1.printStackTrace();
 		}
 	}
-	
 }
