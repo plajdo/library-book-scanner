@@ -106,7 +106,7 @@ public class AddBook extends JInternalFrame {
 		});
 		panel.add(btnUloiQrKd, "flowx,cell 1 0,growx");
 
-		JButton btnDokoni = new JButton("DokonËiù");
+		JButton btnDokoni = new JButton("Dokon\u010Di\u0165");
 		btnDokoni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

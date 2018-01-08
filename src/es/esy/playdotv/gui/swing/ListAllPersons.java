@@ -28,7 +28,7 @@ public class ListAllPersons extends JInternalFrame {
 		setClosable(true);
 		setResizable(true);
 		setMaximizable(false);
-		setTitle("Zoznam v\u0161etk\u00FDch osôb");
+		setTitle("Zoznam v\u0161etk\u00FDch \u010Ditate\u013Eov");
 		setBounds(100, 100, 450, 300);
 		
 		table = new JTable();
@@ -41,7 +41,7 @@ public class ListAllPersons extends JInternalFrame {
 		getContentPane().add(scrollPane, BorderLayout.NORTH);
 		
 		tblModel = new DefaultTableModel(null, new String[]{
-				"ID žiaka", "Meno", "Trieda", "Knihy"
+				"ID \u010Ditate\u013Ea", "Meno", "Trieda", "Knihy"
 		});
 		table.setModel(tblModel);
 		
@@ -148,7 +148,7 @@ public class ListAllPersons extends JInternalFrame {
 				if (temp.getTakerID().equals(p.getID())) borrowed.add(temp.getID());
 			}
 				
-			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), getBookIDList(borrowed)  });
+			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), getBookIDList(borrowed)});
 			
 		}
 		

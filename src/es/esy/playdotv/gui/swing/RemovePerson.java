@@ -25,11 +25,11 @@ public class RemovePerson extends JInternalFrame {
 	public RemovePerson() {
 		setClosable(true);
 		setIconifiable(true);
-		setTitle("Odstr\u00E1ni\u0165 osobu");
-		setBounds(100, 100, 500, 112);
+		setTitle("Odstr\u00E1ni\u0165 \u010Ditate\u013Ea");
+		setBounds(100, 100, 300, 112);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][grow][pref!][]"));
 
-		JLabel lblIdKnihy = new JLabel("ID osoby:");
+		JLabel lblIdKnihy = new JLabel("ID \u010Ditate\u013Ea:");
 		getContentPane().add(lblIdKnihy, "cell 0 0,alignx trailing");
 		
 		textField = new JTextField();
@@ -43,7 +43,7 @@ public class RemovePerson extends JInternalFrame {
 		getContentPane().add(panel, "cell 0 3 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow]", "[]"));
 
-		JButton btnPotvrdiAPrida = new JButton("Odstr\u00E1ni\u0165 osobu z datab\u00E1zy");
+		JButton btnPotvrdiAPrida = new JButton("Odstr\u00E1ni\u0165");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(textField.getText().length() > 0){
@@ -53,13 +53,13 @@ public class RemovePerson extends JInternalFrame {
 							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 							dispose();
 						}else{
-							JOptionPane.showMessageDialog(null, "Osoba má vypožièané knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "\u010Citate\u013E m\u00E1 " + (db.persons.get(textField.getText()).getNumBookCount() == 1 ? "vypo\u017Ei\u010Dan\u00FA knihu." : "vypo\u017Ei\u010Dan\u00E9 viacer\u00E9 knihy."), "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
-						JOptionPane.showMessageDialog(null, "Osoba neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "\u010Citate\u013E neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}else{
-					JOptionPane.showMessageDialog(null, "Zadajte ID osoby.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Zadajte ID \u010Ditate\u013Ea.", "Chyba", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			

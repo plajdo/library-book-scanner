@@ -32,11 +32,11 @@ public class AddPerson extends JInternalFrame {
 	public AddPerson() {
 		setClosable(true);
 		setIconifiable(true);
-		setTitle("Prida\u0165 ûiaka");
+		setTitle("Prida\u0165 \u010Ditate\u013Ea");
 		setBounds(100, 100, 500, 200);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][grow][pref!][]"));
 
-		JLabel lblIdKnihy = new JLabel("ID ûiaka:");
+		JLabel lblIdKnihy = new JLabel("ID \u010Ditate\u013Ea:");
 		getContentPane().add(lblIdKnihy, "cell 0 0,alignx trailing");
 		
 		textField = new JTextField();
@@ -64,7 +64,7 @@ public class AddPerson extends JInternalFrame {
 		getContentPane().add(panel, "cell 0 5 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow]", "[]"));
 
-		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u017Eiaka do datab\u00E1zy");
+		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u010Ditate\u013Ea do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
@@ -77,7 +77,7 @@ public class AddPerson extends JInternalFrame {
 					
 					dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 				}else{
-					JOptionPane.showMessageDialog(null, "VyplÚte vöetky ˙daje.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Vypl\u0148te v\u0161etky \u00FAdaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -109,7 +109,7 @@ public class AddPerson extends JInternalFrame {
 		});
 		panel.add(btnUloiQrKd, "flowx,cell 1 0,growx");
 
-		JButton btnDokoni = new JButton("DokonËiù");
+		JButton btnDokoni = new JButton("Dokon\u010Di\u0165");
 		btnDokoni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

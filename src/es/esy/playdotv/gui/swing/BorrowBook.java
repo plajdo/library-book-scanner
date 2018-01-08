@@ -68,7 +68,7 @@ public class BorrowBook extends JInternalFrame {
 		JSeparator separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 3 2 1,grow");
 
-		JLabel lblIdiaka = new JLabel("ID osoby:");
+		JLabel lblIdiaka = new JLabel("ID \u010Ditate\u013Ea:");
 		getContentPane().add(lblIdiaka, "cell 0 4,alignx trailing,aligny center");
 
 		textField_3 = new JTextField();
@@ -117,16 +117,16 @@ public class BorrowBook extends JInternalFrame {
 							String tempid = bs.getData();
 							Book tempbook = db.books.get(tempid);
 							textField.setText(tempid);
-							textField_1.setText(tempbook.getAuthor()); // TODO : neviem ci take poradie
-							textField_2.setText(tempbook.getName());
+							textField_1.setText(tempbook.getName());
+							textField_2.setText(tempbook.getAuthor());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
 							textField_1.setText("Chyba");
 							textField_2.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField.setText("Zrušené");
-							textField_1.setText("Zrušené");
-							textField_2.setText("Zrušené");
+							textField.setText("Zru\\u0161en\\u00E9");
+							textField_1.setText("Zru\\u0161en\\u00E9");
+							textField_2.setText("Zru\\u0161en\\u00E9");
 						}
 					}
 				});
@@ -175,19 +175,19 @@ public class BorrowBook extends JInternalFrame {
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
 									}else{
-										JOptionPane.showMessageDialog(null, "Kniha je už vypožièaná osobou s ID " + b.getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
+										JOptionPane.showMessageDialog(null, "Kniha je u\u017E vypo\u017Ei\u010Dan\u00E1 \u010Ditate\u013Eom s ID" + b.getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
 									}
 								}else{
-									JOptionPane.showMessageDialog(null, "Neplatný dátum.", "Chyba", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(null, "Neplatn\u00FD d\u00E1tum.", "Chyba", JOptionPane.ERROR_MESSAGE);
 								}
 							}else{
-								JOptionPane.showMessageDialog(null, "Osoba neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "\u010Citate\u013E neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 							}
 						}else{
-							JOptionPane.showMessageDialog(null, "Kniha neexistuje v databáze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
-						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID osoby a dátumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID \u010Ditate\u013Ea a d\u00E1tumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}catch(NullPointerException e1){
 
@@ -196,7 +196,7 @@ public class BorrowBook extends JInternalFrame {
 		});
 		panel.add(btnPotvrdi, "cell 2 0,growx,aligny center");
 
-		JButton btnSkenovaOsobu = new JButton("Nasn\u00EDma\u0165 osobu");
+		JButton btnSkenovaOsobu = new JButton("Nasn\u00EDma\u0165 \u010Ditate\u013Ea");
 		btnSkenovaOsobu.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				PersonScanner ps = new PersonScanner();
@@ -207,16 +207,16 @@ public class BorrowBook extends JInternalFrame {
 							String tempid = ps.getData();
 							Person tempperson = db.persons.get(tempid);
 							textField_3.setText(tempid);
-							textField_4.setText(tempperson.getName()); // TODO : neviem ci take poradie v2
+							textField_4.setText(tempperson.getName());
 							textField_5.setText(tempperson.getGroup());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField_3.setText("Chyba");
 							textField_4.setText("Chyba");
 							textField_5.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField_3.setText("Zrušené");
-							textField_4.setText("Zrušené");
-							textField_5.setText("Zrušené");
+							textField_3.setText("Zru\\u0161en\\u00E9");
+							textField_4.setText("Zru\\u0161en\\u00E9");
+							textField_5.setText("Zru\\u0161en\\u00E9");
 						}
 					}
 				});

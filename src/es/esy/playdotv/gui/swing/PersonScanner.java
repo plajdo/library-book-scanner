@@ -32,7 +32,7 @@ public class PersonScanner extends JInternalFrame {
 		webcam.open();
 		ImageIcon ic = new ImageIcon(webcam.getImage());
 		
-		setTitle("Nasn\u00EDma\u0165 osobu");
+		setTitle("Nasn\u00EDma\u0165 \u010Ditate\u013Ea");
 		setBounds(100, 100, 450, 260);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][grow][][]"));
 		
@@ -43,7 +43,7 @@ public class PersonScanner extends JInternalFrame {
 		lblInsertSkenerHere.setMaximumSize(new Dimension(200, 150));
 		getContentPane().add(lblInsertSkenerHere, "cell 1 0");
 		
-		JLabel lblsloKnihy = new JLabel("ID osoby:");
+		JLabel lblsloKnihy = new JLabel("ID \u010Ditate\u013Ea:");
 		getContentPane().add(lblsloKnihy, "cell 0 1,alignx trailing,aligny center");
 		
 		textField = new JTextField();
