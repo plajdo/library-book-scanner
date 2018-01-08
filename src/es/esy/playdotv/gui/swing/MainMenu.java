@@ -2,7 +2,6 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
-import es.esy.playdotv.update.AutoUpdate;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -43,7 +42,7 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
-		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + AutoUpdate.CURRENT_VERSION + "] [SK]");
+		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365)); // minsize
@@ -88,7 +87,7 @@ public class MainMenu {
 		});
 		mnSbor.add(mntmUkoni);
 		
-		JMenuItem mntmUloi = new JMenuItem("ulo\\u017Ei\\u0165");
+		JMenuItem mntmUloi = new JMenuItem("Ulo\u017Ei\u0165");
 		mntmUloi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				db.save(Load.DATABASE_PATH);

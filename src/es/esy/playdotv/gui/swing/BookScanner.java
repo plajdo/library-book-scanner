@@ -27,10 +27,17 @@ public class BookScanner extends JInternalFrame {
 		return data;
 	}
 	
-	public BookScanner() {
-		Webcam webcam = Webcam.getDefault();
-		webcam.open();
-		ImageIcon ic = new ImageIcon(webcam.getImage());
+	public BookScanner(){
+		ImageIcon ic = null;
+		Webcam webcam = null;
+		try{
+			webcam = Webcam.getDefault();
+			webcam.open();
+			ic = new ImageIcon(webcam.getImage());
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Pripojte webkameru.", "Chyba", JOptionPane.ERROR_MESSAGE);
+			dispose();
+		}
 		
 		setTitle("Nasn\u00EDma\u0165 knihu");
 		setBounds(100, 100, 450, 260);
