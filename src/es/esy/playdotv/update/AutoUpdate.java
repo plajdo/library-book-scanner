@@ -15,8 +15,6 @@ import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.stackoverflow.ordiel.CopyOut;
-
 public final class AutoUpdate{
 	
 	static{

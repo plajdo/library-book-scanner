@@ -5,9 +5,6 @@ import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
-import es.esy.playdotv.update.AutoUpdate;
-
-import java.io.IOException;
 
 import javax.swing.*;
 
@@ -43,15 +40,6 @@ public class Load
 	}
 	
 	public static void main(String[] args){
-		AutoUpdate.updateData();
-		if(AutoUpdate.updateAvailable()){
-			try {
-				AutoUpdate.update();
-			}catch(IOException e){
-				JOptionPane.showMessageDialog(null, "Chyba pri aktualiz\u00E1cii.");
-				System.exit(-1);
-			}
-		}
 		
 		db.load(DATABASE_PATH);
 		
