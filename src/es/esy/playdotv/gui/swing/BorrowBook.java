@@ -117,16 +117,16 @@ public class BorrowBook extends JInternalFrame {
 							String tempid = bs.getData();
 							Book tempbook = db.books.get(tempid);
 							textField.setText(tempid);
-							textField_1.setText(tempbook.getAuthor());
-							textField_2.setText(tempbook.getName());
+							textField_1.setText(tempbook.getName());
+							textField_2.setText(tempbook.getAuthor());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
 							textField_1.setText("Chyba");
 							textField_2.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField.setText("Zrušené");
-							textField_1.setText("Zrušené");
-							textField_2.setText("Zrušené");
+							textField.setText("Zru\\u0161en\\u00E9");
+							textField_1.setText("Zru\\u0161en\\u00E9");
+							textField_2.setText("Zru\\u0161en\\u00E9");
 						}
 					}
 				});
@@ -214,9 +214,9 @@ public class BorrowBook extends JInternalFrame {
 							textField_4.setText("Chyba");
 							textField_5.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField_3.setText("Zrušené");
-							textField_4.setText("Zrušené");
-							textField_5.setText("Zrušené");
+							textField_3.setText("Zru\\u0161en\\u00E9");
+							textField_4.setText("Zru\\u0161en\\u00E9");
+							textField_5.setText("Zru\\u0161en\\u00E9");
 						}
 					}
 				});
