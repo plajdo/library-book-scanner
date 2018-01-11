@@ -112,10 +112,9 @@ public class ListAllBooks extends JInternalFrame{
 		for (String key : db.books.keySet()){
 			Book b = db.books.get(key);
 			
-			if(b.getTakerID().isEmpty())
-			{
+			if(b.getTakerID().isEmpty()){
 				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
-			} else {
+			}else{
 				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 			}
 			

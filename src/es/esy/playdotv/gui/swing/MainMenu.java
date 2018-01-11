@@ -102,7 +102,7 @@ public class MainMenu {
 		JMenuItem mntmZahodiZmeny = new JMenuItem("Zahodiť zmeny");
 		mntmZahodiZmeny.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Zahodi\u0165 a ukon\u010Di\u0165?");
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Zahodi\u0165 a ukon\u010Di\u0165?", "Zahodi\u0165 zmeny?", JOptionPane.YES_NO_OPTION);
 				if(dialogResult == JOptionPane.YES_OPTION){
 					System.exit(0);
 				}
