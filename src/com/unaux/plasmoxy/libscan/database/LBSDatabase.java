@@ -19,6 +19,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -206,12 +207,22 @@ public class LBSDatabase
 		}
 		
 	}
-    
-    public void reset()
-    {
-        books = new TreeMap<>();
-		persons = new TreeMap<>();
-    }
+
+	public void reset(){
+		Comparator<String> numberComparator = new Comparator<String>(){
+
+			@Override
+			public int compare(String o1, String o2) {
+				int i1 = Integer.parseInt(o1.split("/")[0]);
+				int i2 = Integer.parseInt(o2.split("/")[0]);
+				return i1 - i2;
+			}
+			
+		};
+		
+		books = new TreeMap<>(numberComparator);
+		persons = new TreeMap<>(numberComparator);
+	}
 
 
 }
