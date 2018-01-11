@@ -124,9 +124,9 @@ public class BorrowBook extends JInternalFrame {
 							textField_1.setText("Chyba");
 							textField_2.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField.setText("Zru\\u0161en\\u00E9");
-							textField_1.setText("Zru\\u0161en\\u00E9");
-							textField_2.setText("Zru\\u0161en\\u00E9");
+							textField.setText("Zru\u0161en\u00E9");
+							textField_1.setText("Zru\u0161en\u00E9");
+							textField_2.setText("Zru\u0161en\u00E9");
 						}
 					}
 				});
@@ -214,9 +214,9 @@ public class BorrowBook extends JInternalFrame {
 							textField_4.setText("Chyba");
 							textField_5.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField_3.setText("Zru\\u0161en\\u00E9");
-							textField_4.setText("Zru\\u0161en\\u00E9");
-							textField_5.setText("Zru\\u0161en\\u00E9");
+							textField_3.setText("Zru\u0161en\u00E9");
+							textField_4.setText("Zru\u0161en\u00E9");
+							textField_5.setText("Zru\u0161en\u00E9");
 						}
 					}
 				});

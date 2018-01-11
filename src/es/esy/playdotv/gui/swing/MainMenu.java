@@ -2,7 +2,6 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
-import es.esy.playdotv.update.AutoUpdate;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -43,7 +42,7 @@ public class MainMenu {
 	private void initialize() {
 
 		frmGymnziumLipany = new JFrame();
-		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + AutoUpdate.CURRENT_VERSION + "] [SK]");
+		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365)); // minsize
@@ -88,13 +87,20 @@ public class MainMenu {
 		});
 		mnSbor.add(mntmUkoni);
 		
-		JMenuItem mntmUloi = new JMenuItem("ulo\\u017Ei\\u0165");
+		JMenuItem mntmUloi = new JMenuItem("Ulo\u017Ei\u0165");
+		mntmUloi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmUloi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				db.save(Load.DATABASE_PATH);
 			}
 		});
+		
+		JSeparator separator_4 = new JSeparator();
+		mnSbor.add(separator_4);
 		mnSbor.add(mntmUloi);
+		
+		JMenuItem mntmZahodiZmeny = new JMenuItem("Zahodiť zmeny");
+		mnSbor.add(mntmZahodiZmeny);
 		
 		JMenu mnKniha_1 = new JMenu("Kniha");
 		menuBar.add(mnKniha_1);
