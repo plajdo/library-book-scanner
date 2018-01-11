@@ -100,6 +100,14 @@ public class MainMenu {
 		mnSbor.add(mntmUloi);
 		
 		JMenuItem mntmZahodiZmeny = new JMenuItem("Zahodiť zmeny");
+		mntmZahodiZmeny.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Zahodi\u0165 a ukon\u010Di\u0165?");
+				if(dialogResult == JOptionPane.YES_OPTION){
+					System.exit(0);
+				}
+			}
+		});
 		mnSbor.add(mntmZahodiZmeny);
 		
 		JMenu mnKniha_1 = new JMenu("Kniha");
