@@ -132,6 +132,14 @@ public class MainMenu {
 		mnKniha_1.add(mntmOdstrniKnihu);
 		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		
+		JMenuItem mntmPridaKnihy = new JMenuItem("Pridať knihy");
+		mntmPridaKnihy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openAddBooks();
+			}
+		});
+		mnKniha_1.add(mntmPridaKnihy);
+		
 		JSeparator separator_1 = new JSeparator();
 		mnKniha_1.add(separator_1);
 		
@@ -277,6 +285,16 @@ public class MainMenu {
 			e1.printStackTrace();
 		}
 		
+	}
+	
+	private void openAddBooks(){
+		AddBooks abs = new AddBooks();
+		desktopPane.add(abs);
+		try{
+			abs.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
 	}
 	
 	private void openAddStudent(){

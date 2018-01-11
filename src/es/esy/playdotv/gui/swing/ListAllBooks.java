@@ -55,6 +55,9 @@ public class ListAllBooks extends JInternalFrame{
 			}
 			
 		});
+		AddBooks.addDataDialogListener((TableRefreshEvent) -> {
+			refreshTable();
+		});	
 		RemoveBook.addDataDialogListener(new TableRefreshEventListener(){
 
 			@Override
