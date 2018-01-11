@@ -88,12 +88,19 @@ public class MainMenu {
 		mnSbor.add(mntmUkoni);
 		
 		JMenuItem mntmUloi = new JMenuItem("Ulo\u017Ei\u0165");
+		mntmUloi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmUloi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				db.save(Load.DATABASE_PATH);
 			}
 		});
+		
+		JSeparator separator_4 = new JSeparator();
+		mnSbor.add(separator_4);
 		mnSbor.add(mntmUloi);
+		
+		JMenuItem mntmZahodiZmeny = new JMenuItem("Zahodiť zmeny");
+		mnSbor.add(mntmZahodiZmeny);
 		
 		JMenu mnKniha_1 = new JMenu("Kniha");
 		menuBar.add(mnKniha_1);
