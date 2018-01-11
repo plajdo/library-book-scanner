@@ -44,6 +44,7 @@ public class AddBooks extends JInternalFrame {
 	private LBSDatabase db = LBSDatabase.getInstance();
 	
 	public AddBooks() {
+		setClosable(true);
 		setIconifiable(true);
 		setTitle("Prida\u0165 viacero kn\u00EDh");
 		setBounds(100, 100, 450, 280);
@@ -147,29 +148,25 @@ public class AddBooks extends JInternalFrame {
 		});
 		panel.add(btnZmazadaje, "cell 1 0,growx,aligny center");
 		
-		JButton btnVybraPrieinok = new JButton("Vybra\u0165 prie\u010Dinok");
-		panel.add(btnVybraPrieinok, "flowx,cell 0 1,growx,aligny center");
-		
-		JButton btnUkoniPridvanieKnh = new JButton("Ukon\u010Di\u0165");
-		btnUkoniPridvanieKnh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		panel.add(btnUkoniPridvanieKnh, "cell 1 1,growx,aligny center");
-		
 		JButton btnPreskoi = new JButton("Presko\u010Di\u0165");
 		btnPreskoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int prir_int = Integer.parseInt(prir.getText());
-				int sign_int = Integer.parseInt(sig_num.getText());
-				prir_int++;
-				sign_int++;
-				prir.setText(String.valueOf(prir_int));
-				sig_num.setText(String.valueOf(sign_int));
+				try{
+					int prir_int = Integer.parseInt(prir.getText());
+					int sign_int = Integer.parseInt(sig_num.getText());
+					prir_int++;
+					sign_int++;
+					prir.setText(String.valueOf(prir_int));
+					sig_num.setText(String.valueOf(sign_int));
+				}catch(Exception e1){
+					TermUtils.printerr("Cannot increment!");
+				}
 			}
 		});
-		panel.add(btnPreskoi, "cell 0 0");
+		panel.add(btnPreskoi, "flowx,cell 0 1,growx,aligny center");
+		
+		JButton btnVybraPrieinok = new JButton("Vybra\u0165 prie\u010Dinok");
+		panel.add(btnVybraPrieinok, "cell 1 1,growx,aligny center");
 		
 		FileSystemView fs = FileSystemView.getFileSystemView();
 		@SuppressWarnings("unused")
