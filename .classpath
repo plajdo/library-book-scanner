@@ -14,5 +14,7 @@
 	<classpathentry kind="lib" path="lib/jfoenix.jar"/>
 	<classpathentry kind="lib" path="lib/fontawesomefx-8.9.jar"/>
 	<classpathentry kind="lib" path="lib/jxl.jar"/>
+	<classpathentry kind="lib" path="lib/jansi-1.16.jar"/>
+	<classpathentry kind="lib" path="lib/JCDP-2.0.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

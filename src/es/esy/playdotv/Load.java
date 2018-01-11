@@ -5,13 +5,14 @@ import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
+import es.esy.playdotv.gui.terminal.TermUtils;
 
 import javax.swing.*;
 
 public class Load
 {
 	
-	public static final String VERSION = "v1.0.4";
+	public static final String VERSION = "v1.0.5";
 	
 	public static String DATABASE_PATH = "lbsdatabase.xml";
 	private static LBSDatabase db = LBSDatabase.getInstance();
@@ -41,6 +42,10 @@ public class Load
 	
 	public static void main(String[] args){
 		
+		if(System.console() == null){
+			System.setProperty("jansi.passthrough", "true");
+		}
+		
 		db.load(DATABASE_PATH);
 		
 		switch(LAF){
@@ -51,7 +56,7 @@ public class Load
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			System.out.println("Using McWin theme.");
+			TermUtils.println("Using McWin theme.");
 			break;
 			
 		case GRAPHITE:
@@ -61,11 +66,11 @@ public class Load
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			System.out.println("Using Graphite theme.");
+			TermUtils.println("Using Graphite theme.");
 			break;
 			
 		default:
-			System.out.println("Using Metal theme.");
+			TermUtils.println("Using Metal theme");
 			break;
 		}
 		
