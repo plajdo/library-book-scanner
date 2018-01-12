@@ -101,11 +101,12 @@ public class MainMenu {
 		mnSbor.add(separator_4);
 		mnSbor.add(mntmUloi);
 		
-		JMenuItem mntmZahodiZmeny = new JMenuItem("Zahodiť zmeny");
+		JMenuItem mntmZahodiZmeny = new JMenuItem("Zahodi\u0165 zmeny");
 		mntmZahodiZmeny.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Zahodi\u0165 a ukon\u010Di\u0165?", "Zahodi\u0165 zmeny?", JOptionPane.YES_NO_OPTION);
 				if(dialogResult == JOptionPane.YES_OPTION){
+					TermUtils.println("Exitting");
 					System.exit(0);
 				}
 			}
@@ -134,7 +135,7 @@ public class MainMenu {
 		mnKniha_1.add(mntmOdstrniKnihu);
 		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		
-		JMenuItem mntmPridaKnihy = new JMenuItem("Pridať knihy");
+		JMenuItem mntmPridaKnihy = new JMenuItem("Prida\u0165 knihy");
 		mntmPridaKnihy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openAddBooks();

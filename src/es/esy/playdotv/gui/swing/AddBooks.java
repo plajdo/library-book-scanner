@@ -27,14 +27,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class AddBooks extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
-	
-	private JTextField prir;
 	private JTextField sig;
-	private JTextField sig_num;
 	private JTextField name;
 	private JTextField author;
 	private JTextField qrloc;
@@ -53,9 +52,9 @@ public class AddBooks extends JInternalFrame {
 		JLabel lblIdKnihy = new JLabel("ID knihy:");
 		getContentPane().add(lblIdKnihy, "cell 0 0,alignx trailing");
 		
-		prir = new JTextField();
-		getContentPane().add(prir, "cell 1 0,growx");
-		prir.setColumns(10);
+		JSpinner spinnerprir = new JSpinner();
+		spinnerprir.setModel(new SpinnerNumberModel(new Integer(0), null, null, new Integer(1)));
+		getContentPane().add(spinnerprir, "flowx,cell 1 0,growx");
 		
 		JLabel label = new JLabel("/");
 		getContentPane().add(label, "cell 2 0,alignx trailing");
@@ -64,9 +63,9 @@ public class AddBooks extends JInternalFrame {
 		getContentPane().add(sig, "cell 3 0,growx");
 		sig.setColumns(10);
 		
-		sig_num = new JTextField();
-		getContentPane().add(sig_num, "cell 4 0,growx");
-		sig_num.setColumns(10);
+		JSpinner spinnersig = new JSpinner();
+		spinnersig.setModel(new SpinnerNumberModel(new Integer(0), null, null, new Integer(1)));
+		getContentPane().add(spinnersig, "flowx,cell 4 0,growx");
 		
 		JLabel lblNzovKnihy = new JLabel("N\u00E1zov knihy:");
 		getContentPane().add(lblNzovKnihy, "cell 0 1,alignx trailing");
@@ -99,19 +98,19 @@ public class AddBooks extends JInternalFrame {
 		JButton btnaliaKniha = new JButton("\u010Eal\u0161ia kniha");
 		btnaliaKniha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int prir_int = Integer.parseInt(prir.getText());
-				int sign_int = Integer.parseInt(sig_num.getText());
+				int prir_int = (int)spinnerprir.getModel().getValue();
+				int sign_int = (int)spinnersig.getModel().getValue();
 				
 				StringBuilder bookID = new StringBuilder();
-				bookID.append(prir.getText());
+				bookID.append(prir_int);
 				bookID.append("/");
 				bookID.append(sig.getText());
-				bookID.append(sig_num.getText());
+				bookID.append(sign_int);
 				
 				StringBuilder qrName = new StringBuilder();
-				qrName.append(prir.getText());
+				qrName.append(prir_int);
 				qrName.append(sig.getText());
-				qrName.append(sig_num.getText());
+				qrName.append(prir_int);
 				
 				Book nb = new Book(bookID.toString());
 				nb.setName(name.getText());
@@ -131,8 +130,8 @@ public class AddBooks extends JInternalFrame {
 				
 				prir_int++;
 				sign_int++;
-				prir.setText(String.valueOf(prir_int));
-				sig_num.setText(String.valueOf(sign_int));
+				spinnerprir.getModel().setValue(prir_int);
+				spinnersig.getModel().setValue(sign_int);
 				
 			}
 		});
@@ -152,12 +151,12 @@ public class AddBooks extends JInternalFrame {
 		btnPreskoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					int prir_int = Integer.parseInt(prir.getText());
-					int sign_int = Integer.parseInt(sig_num.getText());
+					int prir_int = (int)spinnerprir.getModel().getValue();
+					int sign_int = (int)spinnersig.getModel().getValue();
 					prir_int++;
 					sign_int++;
-					prir.setText(String.valueOf(prir_int));
-					sig_num.setText(String.valueOf(sign_int));
+					spinnerprir.getModel().setValue(prir_int);
+					spinnersig.getModel().setValue(sign_int);
 				}catch(Exception e1){
 					TermUtils.printerr("Cannot increment!");
 				}
@@ -177,9 +176,11 @@ public class AddBooks extends JInternalFrame {
 		int r = chooser.showDialog(null, "Select directory");
 		if(r == JFileChooser.APPROVE_OPTION){
 			qrloc.setText(chooser.getSelectedFile().toString());
+			setVisible(true);
+		}else{
+			setVisible(true);
+			dispose();
 		}
-		
-		setVisible(true);
 
 	}
 	
