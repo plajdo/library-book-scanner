@@ -1,5 +1,6 @@
 package com.unaux.plasmoxy.libscan.database;
 
+import es.esy.playdotv.gui.terminal.TermUtils;
 import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Person;
 import org.w3c.dom.Document;
@@ -61,7 +62,7 @@ public class LBSDatabase
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 		}
 		catch (Exception e) {
-			System.err.println("PROBLEM BUILDING FACTORIES");
+			TermUtils.printerr("Problem building factories");
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -201,7 +202,7 @@ public class LBSDatabase
 			transformer.transform(src, result);
 		}
 		catch (TransformerException e) {
-			System.out.println("SAVE PARSE ERROR");
+			TermUtils.printerr("Save parse error");
 			e.printStackTrace();
 			System.exit(-1);
 		}
