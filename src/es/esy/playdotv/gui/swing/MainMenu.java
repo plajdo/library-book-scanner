@@ -2,6 +2,7 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
+import es.esy.playdotv.gui.terminal.TermUtils;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -55,9 +56,9 @@ public class MainMenu {
 			public void windowClosing(WindowEvent event)
 			{
 				super.windowClosing(event);
-				
+				TermUtils.println("Saving database");
 				db.save(Load.DATABASE_PATH);
-				
+				TermUtils.println("Exitting");
 				System.exit(0);
 					
 			}
@@ -91,6 +92,7 @@ public class MainMenu {
 		mntmUloi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmUloi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TermUtils.println("Saving database");
 				db.save(Load.DATABASE_PATH);
 			}
 		});

@@ -3,6 +3,8 @@ package es.esy.playdotv;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
+
+import es.esy.playdotv.document.Table;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
 import es.esy.playdotv.gui.terminal.TermUtils;
@@ -46,6 +48,14 @@ public class Load
 			System.setProperty("jansi.passthrough", "true");
 		}
 		
+		try {
+			Table.createTable();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		TermUtils.println("Loading database");
 		db.load(DATABASE_PATH);
 		
 		switch(LAF){
