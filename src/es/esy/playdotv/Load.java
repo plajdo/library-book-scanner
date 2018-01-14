@@ -4,7 +4,6 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 
-import es.esy.playdotv.document.Table;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
 import es.esy.playdotv.gui.terminal.TermUtils;
@@ -19,7 +18,7 @@ public class Load
 	public static String DATABASE_PATH = "lbsdatabase.xml";
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	
-	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.MCWIN;
+	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
 	public static void resetDatabase(){
 		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
@@ -46,13 +45,6 @@ public class Load
 		
 		if(System.console() == null){
 			System.setProperty("jansi.passthrough", "true");
-		}
-		
-		try {
-			Table.createTable();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		
 		TermUtils.println("Loading database");
