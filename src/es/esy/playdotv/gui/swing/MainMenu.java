@@ -234,7 +234,15 @@ public class MainMenu {
 		});
 		
 		JSeparator separator = new JSeparator();
-		separator.setOrientation(SwingConstants.VERTICAL);
+		mnIn.add(separator);
+		
+		JMenuItem mntmExportova = new JMenuItem("Exportovať databázu");
+		mntmExportova.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openExportMenu();
+			}
+		});
+		mnIn.add(mntmExportova);
 		
 	}
 	
@@ -380,6 +388,16 @@ public class MainMenu {
 		desktopPane.add(rb);
 		try{
 			rb.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
+	
+	private void openExportMenu(){
+		Export exp = new Export();
+		desktopPane.add(exp);
+		try{
+			exp.setSelected(true);
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}
