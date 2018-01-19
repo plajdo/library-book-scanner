@@ -4,10 +4,14 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 
+import es.esy.playdotv.document.BorrowingEntry;
 import es.esy.playdotv.document.Table;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
 import es.esy.playdotv.gui.terminal.TermUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.*;
 
@@ -64,7 +68,7 @@ public class Load
 				}
 			}
 		};
-		new Thread(autosave).start();
+		//new Thread(autosave).start();
 		
 		switch(LAF){
 		case MCWIN:
@@ -94,8 +98,12 @@ public class Load
 		
 		//MainMenu.open();
 		
+		ArrayList<BorrowingEntry> entryList = new ArrayList<BorrowingEntry>();
+		entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Filip Šašala", "Antigona", "172/B2980"));
+		entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Random Týpek", "Antigona", "172/B2980"));
+		
 		try {
-			Table.createTable();
+			Table.createTable(entryList, "Kvinta");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
