@@ -17,26 +17,25 @@ public class MainMenu {
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	
-	private static MainMenu menuInstance;
-	
-	private MainMenu(){
-		menuInstance = new MainMenu();
+	public static void open() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainMenu window = new MainMenu();
+					window.frmGymnziumLipany.setLocationRelativeTo(null);
+					window.frmGymnziumLipany.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
-	static MainMenu getMenuInstance(){
-		return menuInstance;
-	}
-	
-	void openMenu() {
+	public MainMenu() {
 		initialize();
-		frmGymnziumLipany.setLocationRelativeTo(null);
-	}
-	
-	void exitApp(){
-		frmGymnziumLipany.dispatchEvent(new WindowEvent(frmGymnziumLipany, WindowEvent.WINDOW_CLOSING));
 	}
 
-	private void closeWindow()
+	public void closeWindow()
 	{
 		frmGymnziumLipany.dispatchEvent(new WindowEvent(frmGymnziumLipany, WindowEvent.WINDOW_CLOSING));
 	}
