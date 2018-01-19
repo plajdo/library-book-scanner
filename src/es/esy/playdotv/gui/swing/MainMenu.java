@@ -58,7 +58,7 @@ public class MainMenu {
 				super.windowClosing(event);
 				TermUtils.println("Saving database");
 				db.save(Load.DATABASE_PATH);
-				TermUtils.println("Exitting");
+				TermUtils.println("Exiting");
 				System.exit(0);
 					
 			}
@@ -93,7 +93,12 @@ public class MainMenu {
 		mntmUloi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TermUtils.println("Saving database");
-				db.save(Load.DATABASE_PATH);
+				try{
+					db.save(Load.DATABASE_PATH);
+					JOptionPane.showMessageDialog(null, "Ulo\u017Een\u00E9", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.INFORMATION_MESSAGE);
+				}catch(Exception e1){
+					JOptionPane.showMessageDialog(null, "Chyba pri ukladan\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		
@@ -106,7 +111,7 @@ public class MainMenu {
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Zahodi\u0165 a ukon\u010Di\u0165?", "Zahodi\u0165 zmeny?", JOptionPane.YES_NO_OPTION);
 				if(dialogResult == JOptionPane.YES_OPTION){
-					TermUtils.println("Exitting");
+					TermUtils.println("Exiting");
 					System.exit(0);
 				}
 			}

@@ -4,6 +4,7 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 
+import es.esy.playdotv.document.Table;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
 import es.esy.playdotv.gui.terminal.TermUtils;
@@ -13,7 +14,7 @@ import javax.swing.*;
 public class Load
 {
 	
-	public static final String VERSION = "v1.0.5";
+	public static final String VERSION = "v1.1.0 PRE-RELEASE";
 	
 	public static String DATABASE_PATH = "lbsdatabase.xml";
 	private static LBSDatabase db = LBSDatabase.getInstance();
@@ -50,6 +51,21 @@ public class Load
 		TermUtils.println("Loading database");
 		db.load(DATABASE_PATH);
 		
+		Runnable autosave = () -> {
+			Thread t = Thread.currentThread();
+			TermUtils.println("Autosave running");
+			while(1 < 2){
+				try{
+					Thread.sleep(60000);
+					TermUtils.println("Saving database");
+					saveDatabase();
+				}catch(InterruptedException e){
+					TermUtils.println("Autosave thread " + t.getName() + " stopped");
+				}
+			}
+		};
+		new Thread(autosave).start();
+		
 		switch(LAF){
 		case MCWIN:
 			try{
@@ -76,7 +92,22 @@ public class Load
 			break;
 		}
 		
-		MainMenu.open();
+		//MainMenu.open();
+		
+		try {
+			Table.createTable();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private static synchronized void saveDatabase(){
+		try{
+			db.save(DATABASE_PATH);
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
+		}
 		
 	}
 	
