@@ -3,6 +3,7 @@ package es.esy.playdotv.gui.swing;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.event.TableRefreshEvent;
 import es.esy.playdotv.event.TableRefreshEventListener;
+import es.esy.playdotv.gui.terminal.TermUtils;
 import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Person;
 
@@ -39,12 +40,11 @@ public class ListAllPersons extends JInternalFrame {
 		table.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent e){
-				JTable tableClicked = (JTable)((JTable)e.getSource()).getComponent(0);
 				Point point = e.getPoint();
-				int row = tableClicked.rowAtPoint(point);
-				if(row != -1){
+				int row = table.rowAtPoint(point);
+				if(e.getClickCount() == 2 && row != -1){
 					PersonInfo pi = new PersonInfo(db.persons.get(table.getModel().getValueAt(row, 0)));
-					pi.setVisible(true);
+					MainMenu.getDesktopPane().add(pi);
 					try{
 						pi.setSelected(true);
 					}catch(PropertyVetoException e1){
