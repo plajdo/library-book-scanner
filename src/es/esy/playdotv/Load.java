@@ -96,8 +96,8 @@ public class Load
 			break;
 		}
 		
-		//MainMenu.open();
-		
+		MainMenu.open();
+		/*
 		ArrayList<BorrowingEntry> entryList = new ArrayList<BorrowingEntry>();
 		entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Filip Šašala", "Antigona", "172/B2980"));
 		entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Random Týpek", "Antigona", "172/B2980"));
@@ -107,7 +107,7 @@ public class Load
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		*/
 	}
 	
 	private static synchronized void saveDatabase(){
