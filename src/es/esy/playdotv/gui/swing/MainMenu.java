@@ -13,7 +13,7 @@ import java.beans.PropertyVetoException;
 public class MainMenu {
 	
 	private JFrame frmGymnziumLipany;
-	private JDesktopPane desktopPane;
+	private static JDesktopPane desktopPane;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	
@@ -407,4 +407,9 @@ public class MainMenu {
 			e1.printStackTrace();
 		}
 	}
+
+	public static JDesktopPane getDesktopPane() {
+		return desktopPane;
+	}
+	
 }
