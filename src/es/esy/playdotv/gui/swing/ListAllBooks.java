@@ -42,7 +42,14 @@ public class ListAllBooks extends JInternalFrame{
 		
 		tblModel = new DefaultTableModel(null, new String[]{
 				"ID knihy", "N\u00E1zov knihy", "Autor knihy", "Vypo\u017Ei\u010Dan\u00E1?"
-		});
+		}){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column){
+				return false;
+			}
+		};
 		table.setModel(tblModel);
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		

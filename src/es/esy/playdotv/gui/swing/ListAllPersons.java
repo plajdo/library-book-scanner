@@ -13,6 +13,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
 
 public class ListAllPersons extends JInternalFrame {
 	
@@ -33,6 +36,23 @@ public class ListAllPersons extends JInternalFrame {
 		
 		table = new JTable();
 		scrollPane = new JScrollPane(table);
+		table.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e){
+				JTable tableClicked = (JTable)((JTable)e.getSource()).getComponent(0);
+				Point point = e.getPoint();
+				int row = tableClicked.rowAtPoint(point);
+				if(row != -1){
+					PersonInfo pi = new PersonInfo(db.persons.get(table.getModel().getValueAt(row, 0)));
+					pi.setVisible(true);
+					try{
+						pi.setSelected(true);
+					}catch(PropertyVetoException e1){
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -42,7 +62,14 @@ public class ListAllPersons extends JInternalFrame {
 		
 		tblModel = new DefaultTableModel(null, new String[]{
 				"ID \u010Ditate\u013Ea", "Meno", "Trieda", "Knihy"
-		});
+		}){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column){
+				return false;
+			}
+		};
 		table.setModel(tblModel);
 		
 		AddBook.addDataDialogListener(new TableRefreshEventListener(){
