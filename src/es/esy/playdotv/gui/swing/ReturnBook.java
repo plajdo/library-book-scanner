@@ -81,9 +81,9 @@ public class ReturnBook extends JInternalFrame{
 							textField_1.setText("Chyba");
 							textField_2.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField.setText("Zrušené");
-							textField_1.setText("Zrušené");
-							textField_2.setText("Zrušené");
+							textField.setText("Zruï¿½enï¿½");
+							textField_1.setText("Zruï¿½enï¿½");
+							textField_2.setText("Zruï¿½enï¿½");
 						}
 					}
 				});
@@ -102,22 +102,26 @@ public class ReturnBook extends JInternalFrame{
 			public void actionPerformed(ActionEvent e){
 				try{
 					if(textField.getText().length() > 0){
-						if(db.books.containsKey(textField.getText())){
-							Book b = db.books.get(textField.getText());
-							if(!b.getTakerID().isEmpty() && !(b.getBorrowedTime() == 0) && !(b.getBorrowedUntilTime() == 0)){
-								
-								db.persons.get(b.getTakerID()).subtractBookCount();
-								
-								b.setTakerID("");
-								b.setBorrowedTime(0);
-								b.setBorrowedUntilTime(0);
-								dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
-								dispose();
+						if(isInteger(textField.getText())){
+							if(db.books.containsKey(textField.getText())){
+								Book b = db.books.get(textField.getText());
+								if(!b.getTakerID().isEmpty() && !(b.getBorrowedTime() == 0) && !(b.getBorrowedUntilTime() == 0)){
+									
+									db.persons.get(b.getTakerID()).subtractBookCount();
+									
+									b.setTakerID("");
+									b.setBorrowedTime(0);
+									b.setBorrowedUntilTime(0);
+									dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+									dispose();
+								}else{
+									JOptionPane.showMessageDialog(null, "Kniha nie je vypo\u017Ei\u010Dan\u00E1.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								}
 							}else{
-								JOptionPane.showMessageDialog(null, "Kniha nie je vypo\u017Ei\u010Dan\u00E1.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 							}
 						}else{
-							JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Neplatn\u00E9 ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy.", "Chyba", JOptionPane.ERROR_MESSAGE);
@@ -155,6 +159,17 @@ public class ReturnBook extends JInternalFrame{
 		for(TableRefreshEventListener trel: listeners){
 			trel.handleTableRefreshEvent(evt);
 		}
+	}
+	
+	private boolean isInteger(String s){
+		try{
+			String parseString = s.split("/")[0];
+			Integer.parseInt(parseString);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	
 	}
 
 }

@@ -63,7 +63,7 @@ public class Load
 				}
 			}
 		};
-		//new Thread(autosave).start();
+		new Thread(autosave).start();
 		
 		switch(LAF){
 		case MCWIN:

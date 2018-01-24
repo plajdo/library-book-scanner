@@ -151,18 +151,6 @@ public class ListAllPersons extends JInternalFrame {
 		
 	}
 	
-	private String getBookIDList(List<String> list){
-		StringBuilder x = new StringBuilder();
-		
-		for( int i = 0; i<list.size(); i++ ) 
-		{
-			x.append(list.get(i));
-			x.append((i<list.size()-1) ? ", " : "");
-		}
-		
-		return x.toString();
-	}
-	
 	private void addStuffToTable(){
 		db.persons.keySet().forEach((key) -> {
 			Person p = db.persons.get(key);
@@ -173,7 +161,7 @@ public class ListAllPersons extends JInternalFrame {
 				if (temp.getTakerID().equals(p.getID())) borrowed.add(temp.getID());
 			});
 				
-			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), getBookIDList(borrowed)});
+			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
 		});
 		
 	}
