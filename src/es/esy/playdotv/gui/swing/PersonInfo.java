@@ -5,7 +5,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
+
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 
@@ -50,45 +50,43 @@ public class PersonInfo extends JInternalFrame {
 		JLabel lblVypoianKnihy = new JLabel("Vypo\u017Ei\u010Dan\u00E9 knihy (" + p.getBookCount() + "):");
 		getContentPane().add(lblVypoianKnihy, "cell 0 2,alignx trailing");
 		
-		AbstractListModel<String> model = new AbstractListModel<String>() {
-			private static final long serialVersionUID = 1L;
-			String[] values = new String[] {};
-			public int getSize() {
-				return values.length;
-			}
-			public String getElementAt(int index) {
-				return values[index];
-			}
-		};
-		
-		addStuffToList(model, p);
-		
-		JList<String> list = new JList<>(model);
-		list.setToolTipText("");
+		JList<String> list = new JList<String>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		DefaultListModel<String> model = new DefaultListModel<String>();
 		getContentPane().add(list, "cell 0 3 2 1,grow");
 		
+		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> {
+			refreshList(model, p, list);
+		});
+		BorrowBook.addDataDialogListener((TableRefreshEventListener) -> {
+			refreshList(model, p, list);
+		});
+		
+		refreshList(model, p, list);
+		
 		setVisible(true);
+		
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void addStuffToList(AbstractListModel model, Person p){
-		for(String key : db.books.keySet()){
-			Book tempBook = db.books.get(key);
-			if(tempBook.getTakerID() == p.getID()){
-				((DefaultListModel)model).addElement("ASDasdasda");
+	private void addStuffToList(DefaultListModel model, Person p){
+		db.books.keySet().forEach((s) -> {
+			Book tempBook = db.books.get(s);
+			if(tempBook.getTakerID().equals(p.getID())){
+				model.addElement(tempBook.getID() + " " + tempBook.getAuthor() + ": " + tempBook.getName());
 			}
-			
-		}
+		});
 		
 	}
 	
-	private void clearStuffFromList(){
-		//TODO: Update, refresh, eventy
+	private void clearStuffFromList(DefaultListModel<String> dml){
+		dml.clear();
 	}
 	
-	private void refreshList() {
-		//TODO: Update, refresh, eventy
+	private void refreshList(DefaultListModel<String> dml, Person p, JList<String> l) {
+		clearStuffFromList(dml);
+		addStuffToList(dml, p);
+		l.setModel(dml);
 	}
 
 }
