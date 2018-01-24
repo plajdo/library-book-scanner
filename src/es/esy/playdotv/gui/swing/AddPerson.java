@@ -67,15 +67,18 @@ public class AddPerson extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u010Ditate\u013Ea do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
 				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(textField_2.getText().isEmpty())){
-					Person np = new Person(textField.getText());
-					np.setName(textField_1.getText());
-					np.setGroup(textField_2.getText());
-					db.persons.put(textField.getText(), np);
-					btnPotvrdiAPrida.setEnabled(false);
-					
-					dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+					if(isInteger(textField.getText())){
+						Person np = new Person(textField.getText());
+						np.setName(textField_1.getText());
+						np.setGroup(textField_2.getText());
+						db.persons.put(textField.getText(), np);
+						btnPotvrdiAPrida.setEnabled(false);
+						
+						dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+					}else{
+						JOptionPane.showMessageDialog(null, "ID mus\u00ED by\u0165 \u010D\u00EDslo.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					}
 				}else{
 					JOptionPane.showMessageDialog(null, "Vypl\u0148te v\u0161etky \u00FAdaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
 				}
@@ -135,6 +138,17 @@ public class AddPerson extends JInternalFrame {
 		for(TableRefreshEventListener trel: listeners){
 			trel.handleTableRefreshEvent(evt);
 		}
+	}
+	
+	private boolean isInteger(String s){
+		try{
+			String parseString = s.split("/")[0];
+			Integer.parseInt(parseString);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	
 	}
 	
 }

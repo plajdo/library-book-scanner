@@ -56,13 +56,13 @@ public class PersonInfo extends JInternalFrame {
 		getContentPane().add(list, "cell 0 3 2 1,grow");
 		
 		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> {
-			refreshList(model, p, list);
+			refreshList(model, p, list, lblVypoianKnihy);
 		});
 		BorrowBook.addDataDialogListener((TableRefreshEventListener) -> {
-			refreshList(model, p, list);
+			refreshList(model, p, list, lblVypoianKnihy);
 		});
 		
-		refreshList(model, p, list);
+		refreshList(model, p, list, lblVypoianKnihy);
 		
 		setVisible(true);
 		
@@ -73,7 +73,7 @@ public class PersonInfo extends JInternalFrame {
 		db.books.keySet().forEach((s) -> {
 			Book tempBook = db.books.get(s);
 			if(tempBook.getTakerID().equals(p.getID())){
-				model.addElement(tempBook.getID() + " " + tempBook.getAuthor() + ": " + tempBook.getName());
+				model.addElement("[" + tempBook.getID() + "] " + tempBook.getAuthor() + ": " + tempBook.getName());
 			}
 		});
 		
@@ -83,10 +83,11 @@ public class PersonInfo extends JInternalFrame {
 		dml.clear();
 	}
 	
-	private void refreshList(DefaultListModel<String> dml, Person p, JList<String> l) {
+	private void refreshList(DefaultListModel<String> dml, Person p, JList<String> l, JLabel label) {
 		clearStuffFromList(dml);
 		addStuffToList(dml, p);
 		l.setModel(dml);
+		label.setText("Vypo\u017Ei\u010Dan\u00E9 knihy (" + p.getBookCount() + "):");
 	}
 
 }

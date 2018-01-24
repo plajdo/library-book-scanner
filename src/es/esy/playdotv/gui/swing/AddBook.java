@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddBook extends JInternalFrame {
+public class AddBook extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
@@ -67,15 +67,22 @@ public class AddBook extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 knihu do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
-				Book nb = new Book(textField.getText());
-				nb.setName(textField_1.getText());
-				nb.setAuthor(textField_2.getText());
-				nb.setTakerID("");
-				db.books.put(textField.getText(), nb);
-				btnPotvrdiAPrida.setEnabled(false);
-				
-				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(textField_2.getText().isEmpty())){
+					if(isInteger(textField.getText())){
+						Book nb = new Book(textField.getText());
+						nb.setName(textField_1.getText());
+						nb.setAuthor(textField_2.getText());
+						nb.setTakerID("");
+						db.books.put(textField.getText(), nb);
+						btnPotvrdiAPrida.setEnabled(false);
+						
+						dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+					}else{
+						JOptionPane.showMessageDialog(null, "ID mus\u00ED by\u0165 \u010D\u00EDslo.", "Chyba", JOptionPane.ERROR_MESSAGE);
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Vypl\u0148te v\u0161etky \u00FAdaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
+				}
 				
 			}
 			
@@ -132,6 +139,17 @@ public class AddBook extends JInternalFrame {
 		for(TableRefreshEventListener trel: listeners){
 			trel.handleTableRefreshEvent(evt);
 		}
+	}
+	
+	private boolean isInteger(String s){
+		try{
+			String parseString = s.split("/")[0];
+			Integer.parseInt(parseString);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	
 	}
 	
 }
