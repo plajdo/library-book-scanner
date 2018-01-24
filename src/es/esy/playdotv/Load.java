@@ -8,6 +8,12 @@ import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
 import es.esy.playdotv.gui.terminal.TermUtils;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.SplashScreen;
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.*;
 
 public class Load
@@ -43,12 +49,22 @@ public class Load
 	
 	public static void main(String[] args){
 		
+		splashProgress(0);
+		splashText("Terminal initialisation");
+		
+		TermUtils.init();
 		if(System.console() == null){
 			System.setProperty("jansi.passthrough", "true");
 		}
 		
+		splashProgress(20);
+		splashText("Loading database");
+		
 		TermUtils.println("Loading database");
 		db.load(DATABASE_PATH);
+		
+		splashProgress(40);
+		splashText("Running autosave");
 		
 		Runnable autosave = () -> {
 			Thread t = Thread.currentThread();
@@ -64,6 +80,9 @@ public class Load
 			}
 		};
 		new Thread(autosave).start();
+		
+		splashProgress(60);
+		splashText("Loading themes");
 		
 		switch(LAF){
 		case MCWIN:
@@ -91,7 +110,14 @@ public class Load
 			break;
 		}
 		
+		splashProgress(80);
+		splashText("Setting up the menu");
+		
 		MainMenu.open();
+		
+		splashProgress(100);
+		splashText("Finishing");
+		
 		/*
 		ArrayList<BorrowingEntry> entryList = new ArrayList<BorrowingEntry>();
 		entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Filip Šašala", "Antigona", "172/B2980"));
@@ -103,6 +129,7 @@ public class Load
 			e.printStackTrace();
 		}
 		*/
+		
 	}
 	
 	private static synchronized void saveDatabase(){
@@ -112,6 +139,51 @@ public class Load
 			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 		}
 		
+	}
+	
+	private static void splashProgress(int pct){
+		SplashScreen sp = SplashScreen.getSplashScreen();
+		Graphics2D splashGraphics = sp.createGraphics();
+		Dimension bounds = sp.getSize();
+		Rectangle2D splashProgressArea = new Rectangle2D.Double(bounds.getWidth() * 0.55d, bounds.getHeight() * 0.92d, bounds.getWidth() * 0.40d, 12);
+		if(sp != null && sp.isVisible()){
+			splashGraphics.setPaint(Color.LIGHT_GRAY);
+			splashGraphics.fill(splashProgressArea);
+
+			splashGraphics.setPaint(Color.BLUE);
+			splashGraphics.draw(splashProgressArea);
+
+			int x = (int) splashProgressArea.getMinX();
+			int y = (int) splashProgressArea.getMinY();
+			int wid = (int) splashProgressArea.getWidth();
+			int hgt = (int) splashProgressArea.getHeight();
+
+			int doneWidth = Math.round(pct*wid/100.0f);
+			doneWidth = Math.max(0, Math.min(doneWidth, wid-1));
+
+			splashGraphics.setPaint(Color.GREEN);
+			splashGraphics.fillRect(x, y+1, doneWidth, hgt-1);
+
+
+
+			sp.update();
+
+		}
+
+	}
+
+	private static void splashText(String str){
+		SplashScreen sp = SplashScreen.getSplashScreen();
+		Graphics2D splashGraphics = sp.createGraphics();
+		Dimension bounds = sp.getSize();
+		Rectangle2D splashTextArea = new Rectangle2D.Double(15.0d, bounds.getHeight() * 0.88d, bounds.getWidth() * 0.45d, 32.0d);
+
+		splashGraphics.setPaint(Color.BLACK);
+		splashGraphics.fill(splashTextArea);
+
+		splashGraphics.setPaint(Color.WHITE);
+		splashGraphics.drawString(str, (int)(splashTextArea.getX() + 10),(int)(splashTextArea.getY() + 15));
+
 	}
 	
 }
