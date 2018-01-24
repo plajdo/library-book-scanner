@@ -3,7 +3,6 @@ package es.esy.playdotv.gui.swing;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.event.TableRefreshEvent;
 import es.esy.playdotv.event.TableRefreshEventListener;
-import es.esy.playdotv.gui.terminal.TermUtils;
 import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Person;
 
@@ -165,19 +164,17 @@ public class ListAllPersons extends JInternalFrame {
 	}
 	
 	private void addStuffToTable(){
-		for(String key : db.persons.keySet()){
+		db.persons.keySet().forEach((key) -> {
 			Person p = db.persons.get(key);
 			List<String> borrowed = new ArrayList<>();
 			
-			for (String key2 : db.books.keySet())
-			{
+			db.books.keySet().forEach((key2) -> {
 				Book temp = db.books.get(key2);
 				if (temp.getTakerID().equals(p.getID())) borrowed.add(temp.getID());
-			}
+			});
 				
 			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), getBookIDList(borrowed)});
-			
-		}
+		});
 		
 	}
 	
