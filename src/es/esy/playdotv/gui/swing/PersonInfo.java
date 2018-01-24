@@ -5,7 +5,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JList;
-
+import javax.swing.JScrollPane;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 
@@ -53,7 +53,7 @@ public class PersonInfo extends JInternalFrame {
 		JList<String> list = new JList<String>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		DefaultListModel<String> model = new DefaultListModel<String>();
-		getContentPane().add(list, "cell 0 3 2 1,grow");
+		getContentPane().add(new JScrollPane(list), "cell 0 3 2 1,grow");
 		
 		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> {
 			refreshList(model, p, list, lblVypoianKnihy);
