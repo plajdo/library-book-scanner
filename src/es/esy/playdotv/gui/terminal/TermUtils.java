@@ -9,7 +9,7 @@ public class TermUtils {
 	
 	private static ColoredPrinter cp;
 	
-	static {
+	public static void init(){
 		cp = new ColoredPrinter.Builder(1, false).foreground(FColor.WHITE).background(BColor.BLACK).build();
 		
 	}
