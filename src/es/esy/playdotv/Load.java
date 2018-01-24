@@ -55,7 +55,7 @@ public class Load
 			TermUtils.println("Autosave running");
 			while(1 < 2){
 				try{
-					Thread.sleep(60000);
+					Thread.sleep(300000);
 					TermUtils.println("Saving database");
 					saveDatabase();
 				}catch(InterruptedException e){
