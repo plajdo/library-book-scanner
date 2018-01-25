@@ -11,8 +11,12 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Date;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
 
 public class ListAllBooks extends JInternalFrame{
 	
@@ -32,7 +36,24 @@ public class ListAllBooks extends JInternalFrame{
 		setBounds(100, 100, 450, 300);
 		
 		table = new JTable();
+		table.setRowSelectionAllowed(false);
 		scrollPane = new JScrollPane(table);
+		table.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e){
+				Point point = e.getPoint();
+				int row = table.rowAtPoint(point);
+				if(e.getClickCount() == 2 && row != -1){
+					BookInfo bi = new BookInfo(db.books.get(table.getModel().getValueAt(row, 0)));
+					MainMenu.getDesktopPane().add(bi);
+					try{
+						bi.setSelected(true);
+					}catch(PropertyVetoException e1){
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

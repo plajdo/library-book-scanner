@@ -35,6 +35,7 @@ public class ListAllPersons extends JInternalFrame {
 		setBounds(100, 100, 450, 300);
 		
 		table = new JTable();
+		table.setRowSelectionAllowed(false);
 		scrollPane = new JScrollPane(table);
 		table.addMouseListener(new MouseAdapter(){
 			@Override
