@@ -16,7 +16,7 @@ import java.beans.PropertyVetoException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ListAllPersons extends JInternalFrame {
+public class ListAllPersons extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTable table;

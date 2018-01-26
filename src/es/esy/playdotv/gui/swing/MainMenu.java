@@ -3,7 +3,6 @@ package es.esy.playdotv.gui.swing;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
 import es.esy.playdotv.gui.terminal.TermUtils;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,15 +62,11 @@ public class MainMenu {
 					
 			}
 		});
-		
-		
-		//-----------------
-		
-		frmGymnziumLipany.getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
+		frmGymnziumLipany.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		desktopPane = new ImageDesktopPane();
 		
-		frmGymnziumLipany.getContentPane().add(desktopPane, "cell 0 0,grow");
+		frmGymnziumLipany.getContentPane().add(desktopPane);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmGymnziumLipany.setJMenuBar(menuBar);
