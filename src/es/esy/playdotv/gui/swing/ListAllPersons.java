@@ -3,7 +3,6 @@ package es.esy.playdotv.gui.swing;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.event.TableRefreshEvent;
 import es.esy.playdotv.event.TableRefreshEventListener;
-import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Person;
 
 import javax.swing.*;
@@ -11,11 +10,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListAllPersons extends JInternalFrame {
 	
@@ -25,6 +24,7 @@ public class ListAllPersons extends JInternalFrame {
 	private DefaultTableModel tblModel;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
+	private JTextField textField;
 	
 	public ListAllPersons(){
 		setIconifiable(true);
@@ -58,7 +58,7 @@ public class ListAllPersons extends JInternalFrame {
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(getWidth(), getHeight() - 30));
 		
-		getContentPane().add(scrollPane, BorderLayout.NORTH);
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		tblModel = new DefaultTableModel(null, new String[]{
 				"ID \u010Ditate\u013Ea", "Meno", "Trieda", "Knihy"
@@ -71,6 +71,15 @@ public class ListAllPersons extends JInternalFrame {
 			}
 		};
 		table.setModel(tblModel);
+		
+		textField = new JTextField();
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshTable(textField.getText());
+			}
+		});
+		getContentPane().add(textField, BorderLayout.NORTH);
+		textField.setColumns(10);
 		
 		AddBook.addDataDialogListener(new TableRefreshEventListener(){
 
@@ -155,16 +164,22 @@ public class ListAllPersons extends JInternalFrame {
 	private void addStuffToTable(){
 		db.persons.keySet().forEach((key) -> {
 			Person p = db.persons.get(key);
-			List<String> borrowed = new ArrayList<>();
-			
-			db.books.keySet().forEach((key2) -> {
-				Book temp = db.books.get(key2);
-				if (temp.getTakerID().equals(p.getID())) borrowed.add(temp.getID());
-			});
-				
 			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
 		});
 		
+	}
+	
+	private void addSearchToTable(String search){
+		db.persons.keySet().forEach((key) -> {
+			Person p = db.persons.get(key);
+			if(p.getName().contains(search)){
+				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
+			}else if(p.getGroup().contains(search)){
+				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
+			}else if(p.getID().contains(search)){
+				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
+			}
+		});
 	}
 	
 	private void clearStuffFromTable(){
@@ -175,6 +190,11 @@ public class ListAllPersons extends JInternalFrame {
 	private void refreshTable(){
 		clearStuffFromTable();
 		addStuffToTable();
+	}
+	
+	private void refreshTable(String text){
+		clearStuffFromTable();
+		addSearchToTable(text);
 	}
 	
 	private void resizeTable(){

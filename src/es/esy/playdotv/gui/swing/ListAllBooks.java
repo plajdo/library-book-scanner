@@ -17,6 +17,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListAllBooks extends JInternalFrame{
 	
@@ -26,6 +28,7 @@ public class ListAllBooks extends JInternalFrame{
 	private DefaultTableModel tblModel;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
+	private JTextField txtA;
 	
 	public ListAllBooks(){
 		setIconifiable(true);
@@ -59,7 +62,7 @@ public class ListAllBooks extends JInternalFrame{
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(getWidth(), getHeight() - 30));
 		
-		getContentPane().add(scrollPane, BorderLayout.NORTH);
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		tblModel = new DefaultTableModel(null, new String[]{
 				"ID knihy", "N\u00E1zov knihy", "Autor knihy", "Vypo\u017Ei\u010Dan\u00E1?"
@@ -72,6 +75,15 @@ public class ListAllBooks extends JInternalFrame{
 			}
 		};
 		table.setModel(tblModel);
+		
+		txtA = new JTextField();
+		txtA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshTable(txtA.getText());
+			}
+		});
+		getContentPane().add(txtA, BorderLayout.NORTH);
+		txtA.setColumns(10);
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		
 		AddBook.addDataDialogListener(new TableRefreshEventListener(){
@@ -151,6 +163,32 @@ public class ListAllBooks extends JInternalFrame{
 		
 	}
 	
+	private void addSearchToTable(String search){
+		db.books.keySet().forEach((key) -> {
+			Book b = db.books.get(key);
+			if(b.getAuthor().contains(search)){
+				if(b.getTakerID().isEmpty()){
+					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
+				}else{
+					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
+				}
+			}else if(b.getName().contains(search)){
+				if(b.getTakerID().isEmpty()){
+					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
+				}else{
+					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
+				}
+			}else if(b.getID().contains(search)){
+				if(b.getTakerID().isEmpty()){
+					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
+				}else{
+					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
+				}
+			}
+		});
+
+	}
+	
 	private void clearStuffFromTable(){
 		tblModel.getDataVector().removeAllElements();
 		tblModel.fireTableDataChanged();
@@ -159,6 +197,11 @@ public class ListAllBooks extends JInternalFrame{
 	private void refreshTable(){
 		clearStuffFromTable();
 		addStuffToTable();
+	}
+	
+	private void refreshTable(String text){
+		clearStuffFromTable();
+		addSearchToTable(text);
 	}
 	
 	private void resizeTable(){
