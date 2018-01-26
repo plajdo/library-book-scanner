@@ -12,7 +12,7 @@ import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Person;
 
-public class BookInfo extends JInternalFrame {
+public class BookInfo extends JInternalFrame{
 	
 	LBSDatabase db = LBSDatabase.getInstance();
 	
