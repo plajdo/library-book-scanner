@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
 
-public class MainMenu {
+public class MainMenu{
 	
 	private JFrame frmGymnziumLipany;
 	private static JDesktopPane desktopPane;
@@ -45,12 +45,8 @@ public class MainMenu {
 		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
 		frmGymnziumLipany.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365)); // minsize
-		
-		// ---------EXIT--------
-
-		frmGymnziumLipany.addWindowListener(new WindowAdapter()
-		{
+		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365));
+		frmGymnziumLipany.addWindowListener(new WindowAdapter(){
 			@Override
 			public void windowClosing(WindowEvent event)
 			{

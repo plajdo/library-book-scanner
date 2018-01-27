@@ -14,42 +14,42 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
 
-public class Export extends JInternalFrame {
+public class Export extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 
 	public Export() {
-		setTitle("Exportovať databázu");
+		setTitle("Exportova\u0165 datab\u00E1zu");
 		setIconifiable(true);
 		setClosable(true);
 		setBounds(100, 100, 450, 250);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][]"));
 		
-		JLabel lblExportova = new JLabel("Exportovať:");
+		JLabel lblExportova = new JLabel("Exportova\u0165:");
 		getContentPane().add(lblExportova, "cell 0 0");
 		
-		JCheckBox chckbxZoznamKnh = new JCheckBox("Zoznam kníh");
+		JCheckBox chckbxZoznamKnh = new JCheckBox("Zoznam kn\u00EDh");
 		getContentPane().add(chckbxZoznamKnh, "cell 1 0,grow");
 		
-		JCheckBox chckbxZoznamitateov = new JCheckBox("Zoznam čitateľov");
+		JCheckBox chckbxZoznamitateov = new JCheckBox("Zoznam \u010Ditate\u013Eov");
 		getContentPane().add(chckbxZoznamitateov, "cell 1 1,grow");
 		
-		JCheckBox chckbxZoznamVpoiiek = new JCheckBox("Zoznam výpožičiek");
+		JCheckBox chckbxZoznamVpoiiek = new JCheckBox("Zoznam v\u00FDpo\u017Ei\u010Diek");
 		getContentPane().add(chckbxZoznamVpoiiek, "cell 1 2,grow");
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, "cell 0 3 2 1,grow");
 		panel.setLayout(new MigLayout("", "[][grow][]", "[][]"));
 		
-		JLabel lblExportovaDo = new JLabel("Exportovať do:");
+		JLabel lblExportovaDo = new JLabel("Exportova\u0165 do:");
 		panel.add(lblExportovaDo, "cell 0 0,alignx trailing");
 		
 		textField = new JTextField();
 		panel.add(textField, "cell 1 0 2 1,growx");
 		textField.setColumns(10);
 		
-		JButton btnExportova = new JButton("Exportovať");
+		JButton btnExportova = new JButton("Exportova\u0165");
 		btnExportova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO exportovať tabuľku
@@ -57,7 +57,7 @@ public class Export extends JInternalFrame {
 		});
 		panel.add(btnExportova, "cell 2 1,grow");
 		
-		JButton btnZvoliPrieinok = new JButton("Zvoliť priečinok");
+		JButton btnZvoliPrieinok = new JButton("Zvoli\u0165 prie\u010Dinok");
 		btnZvoliPrieinok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FileSystemView fs = FileSystemView.getFileSystemView();
