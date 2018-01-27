@@ -178,7 +178,6 @@ public class AddBooks extends JInternalFrame {
 			qrloc.setText(chooser.getSelectedFile().toString());
 			setVisible(true);
 		}else{
-			setVisible(true);
 			dispose();
 		}
 
