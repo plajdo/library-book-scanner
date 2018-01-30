@@ -16,8 +16,7 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.*;
 
-public class Load
-{
+public class Load{
 	
 	public static final String VERSION = "v1.1.0 PRE-RELEASE";
 	
@@ -117,18 +116,6 @@ public class Load
 		
 		splashProgress(100);
 		splashText("Finishing");
-		
-		/*
-		ArrayList<BorrowingEntry> entryList = new ArrayList<BorrowingEntry>();
-		entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Filip Šašala", "Antigona", "172/B2980"));
-		entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Random Týpek", "Antigona", "172/B2980"));
-		
-		try {
-			Table.createTable(entryList, "Kvinta");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
 		
 	}
 	
