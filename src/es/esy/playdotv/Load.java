@@ -4,6 +4,7 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 
+import es.esy.playdotv.document.BorrowingsDatabase;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
 import es.esy.playdotv.gui.terminal.TermUtils;
@@ -22,8 +23,10 @@ public class Load{
 	
 	public static final String VERSION = "v1.1.0 PRE-RELEASE";
 	
-	public static String DATABASE_PATH = "lbsdatabase.xml";
+	public static final String DATABASE_PATH = "lbsdatabase.xml";
+	public static final String B_DATABASE_PATH = "lbsdatabase2.json";
 	private static LBSDatabase db = LBSDatabase.getInstance();
+	private static BorrowingsDatabase dbBorrowings = BorrowingsDatabase.getInstance();
 	
 	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
@@ -63,6 +66,7 @@ public class Load{
 		
 		TermUtils.println("Loading database");
 		db.load(DATABASE_PATH);
+		dbBorrowings.load(B_DATABASE_PATH);
 		
 		splashProgress(40);
 		splashText("Running autosave");
@@ -124,6 +128,7 @@ public class Load{
 	private static synchronized void saveDatabase(){
 		try{
 			db.save(DATABASE_PATH);
+			dbBorrowings.save(B_DATABASE_PATH);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 		}
@@ -164,7 +169,7 @@ public class Load{
 			}catch(NullPointerException | IllegalStateException | IOException e){
 				TermUtils.printerr("Splash load failed");
 				/*
-				 * TODO: Fix this error
+				 * TODO: Fix this error (shows when database is not found)
 				 */
 			}
 			
@@ -191,7 +196,7 @@ public class Load{
 			}catch(NullPointerException | IllegalStateException | IOException e){
 				TermUtils.printerr("Splash load failed");
 				/*
-				 * TODO: Fix this error
+				 * TODO: Fix this error (shows when database is not found)
 				 */
 			}
 			

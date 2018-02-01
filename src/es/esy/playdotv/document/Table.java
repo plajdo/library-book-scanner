@@ -4,8 +4,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import es.esy.playdotv.gui.terminal.TermUtils;
-import jxl.Cell;
 import jxl.Workbook;
 import jxl.format.Alignment;
 import jxl.format.VerticalAlignment;
@@ -25,9 +23,6 @@ public class Table{
 		Workbook originalWorkbook = Workbook.getWorkbook(new File("zoznam.xls"));
 		WritableWorkbook workbook = Workbook.createWorkbook(new File(folder + "output_" + group + ".xls"), originalWorkbook);
 		WritableSheet sheet = workbook.getSheet(0);
-		
-		Cell A1 = sheet.getCell(0, 0);
-		TermUtils.println(A1.toString());
 		
 		WritableCellFormat cellFormat = new WritableCellFormat();
 		cellFormat.setFont(new WritableFont(WritableFont.createFont("Avenir Next Medium"), 12, WritableFont.NO_BOLD));
@@ -58,7 +53,7 @@ public class Table{
 			Label cellEntryC = new Label(2, getRow(), entry.getBookname(), normalCellFormat);
 			Label cellEntryD = new Label(3, getRow(), entry.getBookID(), normalCellFormat);
 			Label cellEntryE = new Label(4, getRow(), (entry.getReturnDate() == null ? "" : dateFormat.format(entry.getReturnDate())), normalCellFormat);
-
+			
 			try {
 				sheet.addCell(cellEntryA);
 				sheet.addCell(cellEntryB);

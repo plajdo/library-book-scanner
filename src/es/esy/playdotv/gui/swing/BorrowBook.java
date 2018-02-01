@@ -1,6 +1,9 @@
 package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
+
+import es.esy.playdotv.document.BorrowingEntry;
+import es.esy.playdotv.document.BorrowingsDatabase;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
@@ -172,6 +175,7 @@ public class BorrowBook extends JInternalFrame {
 										per.addBookCount();
 										b.setBorrowedTime(((Date)datePicker2.getModel().getValue()).getTime());
 										b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
+										BorrowingsDatabase.getInstance().borrowings.add(new BorrowingEntry());
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
 									}else{

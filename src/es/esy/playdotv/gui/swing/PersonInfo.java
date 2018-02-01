@@ -68,6 +68,9 @@ public class PersonInfo extends JInternalFrame {
 		
 	}
 	
+	/*
+	 * TODO: No loops, save book IDs with persons for better performance
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void addStuffToList(DefaultListModel model, Person p){
 		db.books.keySet().forEach((s) -> {
