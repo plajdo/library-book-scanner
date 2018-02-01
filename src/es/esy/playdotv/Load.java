@@ -13,6 +13,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.*;
 
@@ -130,10 +132,10 @@ public class Load{
 	
 	private static void splashProgress(int pct){
 		SplashScreen sp = SplashScreen.getSplashScreen();
-		Graphics2D splashGraphics = sp.createGraphics();
-		Dimension bounds = sp.getSize();
-		Rectangle2D splashProgressArea = new Rectangle2D.Double(bounds.getWidth() * 0.55d, bounds.getHeight() * 0.92d, bounds.getWidth() * 0.40d, 12);
 		if(sp != null && sp.isVisible()){
+			Graphics2D splashGraphics = sp.createGraphics();
+			Dimension bounds = sp.getSize();
+			Rectangle2D splashProgressArea = new Rectangle2D.Double(bounds.getWidth() * 0.55d, bounds.getHeight() * 0.92d, bounds.getWidth() * 0.40d, 12);
 			splashGraphics.setPaint(Color.LIGHT_GRAY);
 			splashGraphics.fill(splashProgressArea);
 
@@ -155,21 +157,45 @@ public class Load{
 
 			sp.update();
 
+		}else{
+			try{
+				sp.setImageURL(new URL("/src/res/splash.png"));
+				splashProgress(pct);
+			}catch(NullPointerException | IllegalStateException | IOException e){
+				TermUtils.printerr("Splash load failed");
+				/*
+				 * TODO: Fix this error
+				 */
+			}
+			
 		}
 
 	}
 
 	private static void splashText(String str){
 		SplashScreen sp = SplashScreen.getSplashScreen();
-		Graphics2D splashGraphics = sp.createGraphics();
-		Dimension bounds = sp.getSize();
-		Rectangle2D splashTextArea = new Rectangle2D.Double(15.0d, bounds.getHeight() * 0.88d, bounds.getWidth() * 0.45d, 32.0d);
+		if(sp != null && sp.isVisible()){
+			Graphics2D splashGraphics = sp.createGraphics();
+			Dimension bounds = sp.getSize();
+			Rectangle2D splashTextArea = new Rectangle2D.Double(15.0d, bounds.getHeight() * 0.88d, bounds.getWidth() * 0.45d, 32.0d);
 
-		splashGraphics.setPaint(Color.BLACK);
-		splashGraphics.fill(splashTextArea);
+			splashGraphics.setPaint(Color.BLACK);
+			splashGraphics.fill(splashTextArea);
 
-		splashGraphics.setPaint(Color.WHITE);
-		splashGraphics.drawString(str, (int)(splashTextArea.getX() + 10),(int)(splashTextArea.getY() + 15));
+			splashGraphics.setPaint(Color.WHITE);
+			splashGraphics.drawString(str, (int)(splashTextArea.getX() + 10),(int)(splashTextArea.getY() + 15));
+		}else{
+			try{
+				sp.setImageURL(new URL("/src/res/splash.png"));
+				splashText(str);
+			}catch(NullPointerException | IllegalStateException | IOException e){
+				TermUtils.printerr("Splash load failed");
+				/*
+				 * TODO: Fix this error
+				 */
+			}
+			
+		}
 
 	}
 	
