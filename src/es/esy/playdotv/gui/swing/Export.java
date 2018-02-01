@@ -11,11 +11,11 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
 import es.esy.playdotv.document.BorrowingEntry;
+import es.esy.playdotv.document.BorrowingsDatabase;
 import es.esy.playdotv.document.Table;
 
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -57,13 +57,12 @@ public class Export extends JInternalFrame{
 		JButton btnExportova = new JButton("Exportova\u0165");
 		btnExportova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<BorrowingEntry> entryList = new ArrayList<BorrowingEntry>();
-				entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Filip Šašala", "Antigona", "172/B2980"));
-				entryList.add(new BorrowingEntry(new Date(3281903), new Date(), "Random Týpek", "Antigona", "172/B2980"));
-				entryList.add(new BorrowingEntry(new Date(4281910), new Date(), "Random Koň", "Random kniha", "999/Sufurki"));
+				BorrowingsDatabase.getInstance().borrowings.add(new BorrowingEntry(new Date(3281903), null, "Filip Šašala", "Antigona", "172/B2980"));
+				BorrowingsDatabase.getInstance().borrowings.add(new BorrowingEntry(new Date(3281903), null, "Random Týpek", "Antigona", "173/B2981"));
+				BorrowingsDatabase.getInstance().borrowings.add(new BorrowingEntry(new Date(4281910), null, "Random", "Random", "999/ABCD"));
 				
 				try {
-					Table.createTable(entryList, "Kvinta", textField.getText() +"/");
+					Table.createTable(BorrowingsDatabase.getInstance().borrowings, "Kvinta", textField.getText() +"/");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
