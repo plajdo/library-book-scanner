@@ -53,11 +53,11 @@ public class Table{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
 		entries.forEach((entry) -> {
-			Label cellEntryA = new Label(0, getRow(), dateFormat.format(entry.getBorrowDate()));
-			Label cellEntryB = new Label(1, getRow(), entry.getUsername());
-			Label cellEntryC = new Label(2, getRow(), entry.getBookname());
-			Label cellEntryD = new Label(3, getRow(), entry.getBookID());
-			Label cellEntryE = new Label(4, getRow(), (entry.getReturnDate() == null ? "" : dateFormat.format(entry.getReturnDate())));
+			Label cellEntryA = new Label(0, getRow(), dateFormat.format(entry.getBorrowDate()), normalCellFormat);
+			Label cellEntryB = new Label(1, getRow(), entry.getUsername(), normalCellFormat);
+			Label cellEntryC = new Label(2, getRow(), entry.getBookname(), normalCellFormat);
+			Label cellEntryD = new Label(3, getRow(), entry.getBookID(), normalCellFormat);
+			Label cellEntryE = new Label(4, getRow(), (entry.getReturnDate() == null ? "" : dateFormat.format(entry.getReturnDate())), normalCellFormat);
 
 			try {
 				sheet.addCell(cellEntryA);
