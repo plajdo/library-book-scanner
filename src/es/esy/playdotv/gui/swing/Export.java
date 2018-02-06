@@ -24,7 +24,7 @@ public class Export extends JInternalFrame{
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 
-	public Export() {
+	public Export(){
 		setTitle("Exportova\u0165 datab\u00E1zu");
 		setIconifiable(true);
 		setClosable(true);
@@ -55,15 +55,15 @@ public class Export extends JInternalFrame{
 		textField.setColumns(10);
 		
 		JButton btnExportova = new JButton("Exportova\u0165");
-		btnExportova.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnExportova.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
 				BorrowingsDatabase.getInstance().borrowings.add(new BorrowingEntry(new Date(3281903), null, "Filip Šašala", "Antigona", "172/B2980"));
 				BorrowingsDatabase.getInstance().borrowings.add(new BorrowingEntry(new Date(3281903), null, "Random Týpek", "Antigona", "173/B2981"));
 				BorrowingsDatabase.getInstance().borrowings.add(new BorrowingEntry(new Date(4281910), null, "Random", "Random", "999/ABCD"));
 				
-				try {
+				try{
 					Table.createTable(BorrowingsDatabase.getInstance().borrowings, "Kvinta", textField.getText() +"/");
-				} catch (Exception e1) {
+				}catch(Exception e1){
 					e1.printStackTrace();
 				}
 				
