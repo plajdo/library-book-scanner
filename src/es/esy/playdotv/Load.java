@@ -24,9 +24,8 @@ public class Load{
 	public static final String VERSION = "v1.1.0 PRE-RELEASE";
 	
 	public static final String DATABASE_PATH = "lbsdatabase.xml";
-	public static final String B_DATABASE_PATH = "lbsdatabase2.json";
+	public static final String B_DATABASE_PATH = "lbsdatabase2";
 	private static LBSDatabase db = LBSDatabase.getInstance();
-	private static BorrowingsDatabase dbBorrowings = BorrowingsDatabase.getInstance();
 	
 	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
@@ -66,7 +65,6 @@ public class Load{
 		
 		TermUtils.println("Loading database");
 		db.load(DATABASE_PATH);
-		dbBorrowings.load(B_DATABASE_PATH);
 		
 		splashProgress(40);
 		splashText("Running autosave");
@@ -128,7 +126,6 @@ public class Load{
 	private static synchronized void saveDatabase(){
 		try{
 			db.save(DATABASE_PATH);
-			dbBorrowings.save(B_DATABASE_PATH);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 		}

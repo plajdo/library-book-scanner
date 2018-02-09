@@ -1,6 +1,9 @@
 package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
+
+import es.esy.playdotv.Load;
+import es.esy.playdotv.document.BorrowingsDatabase;
 import es.esy.playdotv.event.DDEventListener;
 import es.esy.playdotv.event.DataDialogEvent;
 import es.esy.playdotv.event.DataDialogEventOperation;
@@ -8,6 +11,7 @@ import es.esy.playdotv.event.TableRefreshEvent;
 import es.esy.playdotv.event.TableRefreshEventListener;
 import es.esy.playdotv.event.TableRefreshEventOperation;
 import es.esy.playdotv.objects.Book;
+import es.esy.playdotv.objects.Person;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -15,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReturnBook extends JInternalFrame{
@@ -81,9 +86,9 @@ public class ReturnBook extends JInternalFrame{
 							textField_1.setText("Chyba");
 							textField_2.setText("Chyba");
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_CANCELLED){
-							textField.setText("Zru�en�");
-							textField_1.setText("Zru�en�");
-							textField_2.setText("Zru�en�");
+							textField.setText("Zru\u0161en\u00E9");
+							textField_1.setText("Zru\u0161en\u00E9");
+							textField_2.setText("Zru\u0161en\u00E9");
 						}
 					}
 				});
@@ -106,12 +111,28 @@ public class ReturnBook extends JInternalFrame{
 							if(db.books.containsKey(textField.getText())){
 								Book b = db.books.get(textField.getText());
 								if(!b.getTakerID().isEmpty() && !(b.getBorrowedTime() == 0) && !(b.getBorrowedUntilTime() == 0)){
-									
-									db.persons.get(b.getTakerID()).subtractBookCount();
-									
+									Person p = db.persons.get(b.getTakerID());
+									p.subtractBookCount();
 									b.setTakerID("");
 									b.setBorrowedTime(0);
 									b.setBorrowedUntilTime(0);
+									
+									if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, p.getGroup())){
+										JOptionPane.showMessageDialog(null, "Chyba v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+									}else{
+										try(BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup())){
+											bd.open();
+											bd.borrowings.forEach((borrowing) -> {
+												if(borrowing.getBookID().equals(b.getID())){
+													borrowing.setReturnDate(new Date());
+												}
+											});
+										}catch(Exception e1){
+											e1.printStackTrace();
+										}
+										
+									}
+									
 									dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 									dispose();
 								}else{
