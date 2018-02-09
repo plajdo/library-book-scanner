@@ -13,21 +13,18 @@ import org.json.JSONObject;
 
 import es.esy.playdotv.gui.terminal.TermUtils;
 
-public class BorrowingsDatabase{
+public class BorrowingsDatabase implements AutoCloseable{
 	
-	public volatile ArrayList<BorrowingEntry> borrowings = new ArrayList<BorrowingEntry>();
+	public ArrayList<BorrowingEntry> borrowings = new ArrayList<BorrowingEntry>();
 	
-	private static BorrowingsDatabase instance = new BorrowingsDatabase();
-	public static BorrowingsDatabase getInstance(){
-		return instance;
+	private String finalPath;
+	
+	public BorrowingsDatabase(String filepath, String group){
+		finalPath = filepath + "_" + group + ".json";
 	}
 	
-	private BorrowingsDatabase(){
-		//Do nothing in constructor
-	}
-
-	public void load(String path){
-		try(	Scanner s = new Scanner(new File(path))){
+	public void open(){
+		try(	Scanner s = new Scanner(new File(finalPath))){
 			StringBuilder sb = new StringBuilder();
 			while(s.hasNext()){
 				sb.append(s.next());
@@ -38,11 +35,19 @@ public class BorrowingsDatabase{
 			JSONObject obj = new JSONObject(sb.toString());
 			long max = obj.getLong("maxBorrowing");
 			
-			for(long current = 0; current < max; current++){
-				JSONArray arr = obj.getJSONArray("borrowing" + current);
-				borrowings.add(new BorrowingEntry((Date)arr.get(2), (Date)arr.get(3), arr.getString(4), arr.getString(1), arr.getString(0)));
-				
-			}
+			TermUtils.println("bd max loaded");
+			
+			//if(max > 0L){
+				TermUtils.println("bd max more than 1L");
+				for(long current = 1; current <= max; current++){
+					JSONArray arr = obj.getJSONArray("borrowing" + current);
+					/*
+					 * TODO: Cast from String to Date doesn't work
+					 */
+					borrowings.add(new BorrowingEntry((Date)arr.get(2), (Date)arr.get(3), arr.getString(4), arr.getString(1), arr.getString(0)));
+					TermUtils.println("loopin in the databasee");
+				}
+			//}
 			
 		} catch (FileNotFoundException e) {
 			TermUtils.printerr("Cannot load borrowings database");
@@ -50,33 +55,37 @@ public class BorrowingsDatabase{
 		
 	}
 
-	public void save(String path){
-		JSONObject obj = new JSONObject();
-		if(borrowings.size() != 0){
-			borrowings.forEach((borrowing) -> {
-				JSONArray arr = new JSONArray();
-				arr.put(borrowing.getBookID());
-				arr.put(borrowing.getBookname());
-				arr.put(borrowing.getBorrowDate());
-				arr.put(borrowing.getReturnDate());
-				arr.put(borrowing.getUsername());
-				obj.put("borrowing" + borrowing.getBorrowingNum(), arr);
-			});
-			obj.put("maxBorrowing", BorrowingEntry.getMaxBorrowingNum());
-			
-			try(FileWriter file = new FileWriter(path)){
-				
-			}catch(IOException e){
-				TermUtils.printerr("Cannot save borrowings database");
-			}
-			
-		}else{
-			TermUtils.println("Borrowings database empty, not saving");
-		}
+	public void reset(){
 		
 	}
+	
+	/**
+	 * @param group Group/Class name to check
+	 * @return True if database for specified group exists, false if database for specified group was not found
+	 */
+	public static boolean groupExists(String filepath, String group){
+		return new File(filepath + "_" + group + ".json").exists();
+	}
 
-	public void reset(){
+	@Override
+	public void close() throws IOException{
+		JSONObject obj = new JSONObject();
+		borrowings.forEach((borrowing) -> {
+			JSONArray arr = new JSONArray();
+			arr.put(borrowing.getBookID());
+			arr.put(borrowing.getBookname());
+			arr.put(borrowing.getBorrowDate());
+			arr.put(borrowing.getReturnDate());
+			arr.put(borrowing.getUsername());
+			obj.put("borrowing" + borrowing.getBorrowingNum(), arr);
+		});
+		obj.put("maxBorrowing", BorrowingEntry.getMaxBorrowingNum());
+
+		try(FileWriter file = new FileWriter(finalPath)){
+			file.write(obj.toString(2));
+		}catch(IOException e){
+			TermUtils.printerr("Cannot save borrowings database");
+		}
 		
 	}
 	

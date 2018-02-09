@@ -2,8 +2,9 @@ package es.esy.playdotv.document;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
+import es.esy.playdotv.Load;
+import es.esy.playdotv.gui.terminal.TermUtils;
 import jxl.Workbook;
 import jxl.format.Alignment;
 import jxl.format.VerticalAlignment;
@@ -18,7 +19,7 @@ public class Table{
 	
 	private static int row = 2;
 	
-	public static void createTable(List<BorrowingEntry> entries, String group, String folder) throws Exception{
+	public static void createTable(String group, String folder) throws Exception{
 		
 		Workbook originalWorkbook = Workbook.getWorkbook(new File("zoznam.xls"));
 		WritableWorkbook workbook = Workbook.createWorkbook(new File(folder + "output_" + group + ".xls"), originalWorkbook);
@@ -46,13 +47,18 @@ public class Table{
 		normalCellFormat.setVerticalAlignment(v_align_normal);
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+		
+		BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, group);
+		bd.open();
 
-		entries.forEach((entry) -> {
+		bd.borrowings.forEach((entry) -> {
 			Label cellEntryA = new Label(0, getRow(), dateFormat.format(entry.getBorrowDate()), normalCellFormat);
 			Label cellEntryB = new Label(1, getRow(), entry.getUsername(), normalCellFormat);
 			Label cellEntryC = new Label(2, getRow(), entry.getBookname(), normalCellFormat);
 			Label cellEntryD = new Label(3, getRow(), entry.getBookID(), normalCellFormat);
 			Label cellEntryE = new Label(4, getRow(), (entry.getReturnDate() == null ? "" : dateFormat.format(entry.getReturnDate())), normalCellFormat);
+			
+			TermUtils.println("foreaching");
 			
 			try {
 				sheet.addCell(cellEntryA);
@@ -70,6 +76,7 @@ public class Table{
 		
 		workbook.write();
 		workbook.close();
+		bd.close();
 		
 	}
 	

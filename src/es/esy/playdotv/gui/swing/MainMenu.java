@@ -16,7 +16,6 @@ public class MainMenu{
 	private static JDesktopPane desktopPane;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
-	private BorrowingsDatabase dbb = BorrowingsDatabase.getInstance();
 	
 	public static void open() {
 		EventQueue.invokeLater(new Runnable() {
@@ -55,7 +54,6 @@ public class MainMenu{
 				super.windowClosing(event);
 				TermUtils.println("Saving database");
 				db.save(Load.DATABASE_PATH);
-				dbb.save(Load.B_DATABASE_PATH);
 				TermUtils.println("Exiting");
 				System.exit(0);
 					
@@ -89,7 +87,6 @@ public class MainMenu{
 				TermUtils.println("Saving database");
 				try{
 					db.save(Load.DATABASE_PATH);
-					dbb.save(Load.B_DATABASE_PATH);
 					JOptionPane.showMessageDialog(null, "Ulo\u017Een\u00E9", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.INFORMATION_MESSAGE);
 				}catch(Exception e1){
 					JOptionPane.showMessageDialog(null, "Chyba pri ukladan\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
