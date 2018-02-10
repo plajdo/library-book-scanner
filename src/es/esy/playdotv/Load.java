@@ -1,5 +1,6 @@
 package es.esy.playdotv;
 
+import com.apple.laf.AquaLookAndFeel;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
@@ -71,6 +72,7 @@ public class Load{
 		
 		Runnable autosave = () -> {
 			Thread t = Thread.currentThread();
+			t.setName("Thread-Autosave");
 			TermUtils.println("Autosave running");
 			while(1 < 2){
 				try{

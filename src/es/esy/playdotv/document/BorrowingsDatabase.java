@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import es.esy.playdotv.document.util.TimeUtils;
 import es.esy.playdotv.gui.terminal.TermUtils;
 
 public class BorrowingsDatabase implements AutoCloseable{
@@ -44,7 +46,7 @@ public class BorrowingsDatabase implements AutoCloseable{
 					/*
 					 * TODO: Cast from String to Date doesn't work
 					 */
-					borrowings.add(new BorrowingEntry((Date)arr.get(2), (Date)arr.get(3), arr.getString(4), arr.getString(1), arr.getString(0)));
+					borrowings.add(new BorrowingEntry(TimeUtils.localToOld(LocalDate.parse((String)arr.get(2))), TimeUtils.localToOld(LocalDate.parse((String)arr.get(3))), arr.getString(4), arr.getString(1), arr.getString(0)));
 					TermUtils.println("loopin in the databasee");
 				}
 			//}
@@ -74,8 +76,8 @@ public class BorrowingsDatabase implements AutoCloseable{
 			JSONArray arr = new JSONArray();
 			arr.put(borrowing.getBookID());
 			arr.put(borrowing.getBookname());
-			arr.put(borrowing.getBorrowDate());
-			arr.put(borrowing.getReturnDate());
+			arr.put(TimeUtils.dateToLocal(borrowing.getBorrowDate()).toString());
+			arr.put(TimeUtils.dateToLocal(borrowing.getReturnDate()).toString());
 			arr.put(borrowing.getUsername());
 			obj.put("borrowing" + borrowing.getBorrowingNum(), arr);
 		});
