@@ -1,11 +1,9 @@
 package es.esy.playdotv;
 
-import com.apple.laf.AquaLookAndFeel;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 
-import es.esy.playdotv.document.BorrowingsDatabase;
 import es.esy.playdotv.gui.swing.LookAndFeelSettingsList;
 import es.esy.playdotv.gui.swing.MainMenu;
 import es.esy.playdotv.gui.terminal.TermUtils;

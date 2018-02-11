@@ -10,14 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
-import es.esy.playdotv.Load;
-import es.esy.playdotv.document.BorrowingEntry;
-import es.esy.playdotv.document.BorrowingsDatabase;
 import es.esy.playdotv.document.Table;
 
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class Export extends JInternalFrame{
