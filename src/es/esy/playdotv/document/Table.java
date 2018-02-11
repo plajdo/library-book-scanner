@@ -49,9 +49,8 @@ public class Table{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		
 		BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, group);
-		bd.open();
-
-		bd.borrowings.forEach((entry) -> {
+		
+		bd.forEachBorrowing((id, entry) -> {
 			Label cellEntryA = new Label(0, getRow(), dateFormat.format(entry.getBorrowDate()), normalCellFormat);
 			Label cellEntryB = new Label(1, getRow(), entry.getUsername(), normalCellFormat);
 			Label cellEntryC = new Label(2, getRow(), entry.getBookname(), normalCellFormat);
@@ -76,7 +75,6 @@ public class Table{
 		
 		workbook.write();
 		workbook.close();
-		bd.close();
 		
 	}
 	

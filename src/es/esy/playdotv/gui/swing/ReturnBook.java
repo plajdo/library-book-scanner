@@ -120,12 +120,8 @@ public class ReturnBook extends JInternalFrame{
 									if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, p.getGroup())){
 										JOptionPane.showMessageDialog(null, "Chyba v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 									}else{
-										try(BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup())){
-											bd.open();
-											bd.
-										}catch(Exception e1){
-											e1.printStackTrace();
-										}
+										BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup());
+										bd.addDate(b);
 										
 									}
 									
