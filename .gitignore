@@ -7,3 +7,4 @@ bin/
 *.psd
 *.xls
 .DS_Store
+*.json

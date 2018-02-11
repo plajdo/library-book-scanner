@@ -72,7 +72,6 @@ public class Load{
 		
 		Runnable autosave = () -> {
 			Thread t = Thread.currentThread();
-			t.setDaemon(true);
 			t.setName("Thread-Autosave");
 			TermUtils.println("Autosave running");
 			while(1 < 2){
@@ -85,7 +84,9 @@ public class Load{
 				}
 			}
 		};
-		new Thread(autosave).start();
+		Thread as = new Thread(autosave);
+		as.setDaemon(true);
+		as.start();
 		
 		splashProgress(60);
 		splashText("Loading themes");
