@@ -72,6 +72,7 @@ public class Load{
 		
 		Runnable autosave = () -> {
 			Thread t = Thread.currentThread();
+			t.setDaemon(true);
 			t.setName("Thread-Autosave");
 			TermUtils.println("Autosave running");
 			while(1 < 2){
