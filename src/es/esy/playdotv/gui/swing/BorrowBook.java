@@ -179,15 +179,11 @@ public class BorrowBook extends JInternalFrame {
 										b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
 										
 										if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, per.getGroup())){
-											try(BorrowingsDatabase borrow = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup())){}
-											catch(Exception e1){e1.printStackTrace();}
+											BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup());
+											bd.create();
 										}
-										try(BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup())){
-											bd.open();
-											bd.borrowings.add(new BorrowingEntry(new Date(b.getBorrowedTime()), null, per.getName(), b.getName(), b.getID()));
-										}catch(Exception e1){
-											e1.printStackTrace();
-										}
+										BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup());
+										bd.add(new BorrowingEntry(new Date(b.getBorrowedTime()), null, per.getName(), b.getName(), b.getID()));
 										
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();

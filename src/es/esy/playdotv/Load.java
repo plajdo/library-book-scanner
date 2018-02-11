@@ -84,7 +84,9 @@ public class Load{
 				}
 			}
 		};
-		new Thread(autosave).start();
+		Thread as = new Thread(autosave);
+		as.setDaemon(true);
+		as.start();
 		
 		splashProgress(60);
 		splashText("Loading themes");

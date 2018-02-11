@@ -8,3 +8,4 @@ out/
 *.psd
 *.xls
 .DS_Store
+*.json
