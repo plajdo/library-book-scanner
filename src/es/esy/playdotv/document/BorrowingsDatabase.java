@@ -14,15 +14,26 @@ import org.json.JSONObject;
 
 import es.esy.playdotv.document.util.TimeUtils;
 import es.esy.playdotv.gui.terminal.TermUtils;
+import es.esy.playdotv.objects.Book;
 
 public class BorrowingsDatabase implements AutoCloseable{
 	
-	public ArrayList<BorrowingEntry> borrowings = new ArrayList<BorrowingEntry>();
+	private ArrayList<BorrowingEntry> borrowings = new ArrayList<BorrowingEntry>();
 	
 	private String finalPath;
+	private long maxBorrowing;
 	
 	public BorrowingsDatabase(String filepath, String group){
 		finalPath = filepath + "_" + group + ".json";
+	}
+	
+	public void add(BorrowingEntry e){
+		
+	}
+	
+	public void addDate(int entryID){
+		borrowings.get(entryID).setReturnDate(new Date());
+		
 	}
 	
 	public void open(){
@@ -62,6 +73,7 @@ public class BorrowingsDatabase implements AutoCloseable{
 	}
 	
 	/**
+	 * @param filepath Path including file name, but without extension
 	 * @param group Group/Class name to check
 	 * @return True if database for specified group exists, false if database for specified group was not found
 	 */

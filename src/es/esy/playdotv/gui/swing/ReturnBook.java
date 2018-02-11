@@ -122,11 +122,7 @@ public class ReturnBook extends JInternalFrame{
 									}else{
 										try(BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup())){
 											bd.open();
-											bd.borrowings.forEach((borrowing) -> {
-												if(borrowing.getBookID().equals(b.getID())){
-													borrowing.setReturnDate(new Date());
-												}
-											});
+											bd.
 										}catch(Exception e1){
 											e1.printStackTrace();
 										}
