@@ -2,7 +2,6 @@ package es.esy.playdotv.gui.swing;
 
 import com.unaux.plasmoxy.libscan.database.LBSDatabase;
 import es.esy.playdotv.Load;
-import es.esy.playdotv.document.BorrowingsDatabase;
 import es.esy.playdotv.gui.terminal.TermUtils;
 
 import javax.swing.*;
