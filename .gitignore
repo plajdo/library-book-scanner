@@ -1,4 +1,5 @@
 bin/
+out/
 *.ser
 .idea/
 *.iml
