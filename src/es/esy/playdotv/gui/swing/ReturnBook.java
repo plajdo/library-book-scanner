@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ReturnBook extends JInternalFrame{
@@ -119,11 +118,10 @@ public class ReturnBook extends JInternalFrame{
 									
 									if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, p.getGroup())){
 										JOptionPane.showMessageDialog(null, "Chyba v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
-									}else{
-										BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup());
-										bd.addDate(b);
-										
 									}
+									
+									BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup());
+									bd.addDate(b);
 									
 									dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 									dispose();
