@@ -22,8 +22,8 @@ public class Load{
 	
 	public static final String VERSION = "v1.1.0 PRE-RELEASE";
 	
-	public static final String DATABASE_PATH = "lbsdatabase.xml";
-	public static final String B_DATABASE_PATH = "lbsdatabase2";
+	public static String DATABASE_PATH;
+	public static String B_DATABASE_PATH;
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	
 	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
@@ -50,9 +50,20 @@ public class Load{
 	}
 	
 	public static void main(String[] args){
-		
+		begin("lbsdatabase.xml", "lbsdatabase2");
+	}
+	
+	/**
+	 * Method that loads everything and starts the GUI.
+	 * @param db_path Path to the main database file
+	 * @param b_db_path Path and name of the second database file
+	 */
+	public static void begin(String db_path, String b_db_path){
 		splashProgress(0);
-		splashText("Terminal initialisation");
+		splashText("Pre-Initialisation");
+		
+		DATABASE_PATH = db_path;
+		B_DATABASE_PATH = b_db_path;
 		
 		TermUtils.init();
 		if(System.console() == null){
@@ -60,13 +71,13 @@ public class Load{
 		}
 		
 		splashProgress(20);
-		splashText("Loading database");
+		splashText("Initialisation");
 		
 		TermUtils.println("Loading database");
 		db.load(DATABASE_PATH);
 		
 		splashProgress(40);
-		splashText("Running autosave");
+		splashText("Initialisation");
 		
 		Runnable autosave = () -> {
 			Thread t = Thread.currentThread();
@@ -87,7 +98,7 @@ public class Load{
 		as.start();
 		
 		splashProgress(60);
-		splashText("Loading themes");
+		splashText("Post-Initialisation");
 		
 		switch(LAF){
 		case MCWIN:
@@ -116,7 +127,7 @@ public class Load{
 		}
 		
 		splashProgress(80);
-		splashText("Setting up the menu");
+		splashText("Post-Initialisation");
 		
 		MainMenu.open();
 		
