@@ -13,8 +13,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.net.URL;
 
 import javax.swing.*;
 
@@ -146,70 +144,58 @@ public class Load{
 	}
 	
 	private static void splashProgress(int pct){
-		SplashScreen sp = SplashScreen.getSplashScreen();
-		if(sp != null && sp.isVisible()){
-			Graphics2D splashGraphics = sp.createGraphics();
-			Dimension bounds = sp.getSize();
-			Rectangle2D splashProgressArea = new Rectangle2D.Double(bounds.getWidth() * 0.55d, bounds.getHeight() * 0.92d, bounds.getWidth() * 0.40d, 12);
-			splashGraphics.setPaint(Color.LIGHT_GRAY);
-			splashGraphics.fill(splashProgressArea);
+		try{
+			SplashScreen sp = SplashScreen.getSplashScreen();
+			if(sp != null && sp.isVisible()){
+				Graphics2D splashGraphics = sp.createGraphics();
+				Dimension bounds = sp.getSize();
+				Rectangle2D splashProgressArea = new Rectangle2D.Double(bounds.getWidth() * 0.55d, bounds.getHeight() * 0.92d, bounds.getWidth() * 0.40d, 12);
+				splashGraphics.setPaint(Color.LIGHT_GRAY);
+				splashGraphics.fill(splashProgressArea);
 
-			splashGraphics.setPaint(Color.BLUE);
-			splashGraphics.draw(splashProgressArea);
+				splashGraphics.setPaint(Color.BLUE);
+				splashGraphics.draw(splashProgressArea);
 
-			int x = (int) splashProgressArea.getMinX();
-			int y = (int) splashProgressArea.getMinY();
-			int wid = (int) splashProgressArea.getWidth();
-			int hgt = (int) splashProgressArea.getHeight();
+				int x = (int) splashProgressArea.getMinX();
+				int y = (int) splashProgressArea.getMinY();
+				int wid = (int) splashProgressArea.getWidth();
+				int hgt = (int) splashProgressArea.getHeight();
 
-			int doneWidth = Math.round(pct*wid/100.0f);
-			doneWidth = Math.max(0, Math.min(doneWidth, wid-1));
+				int doneWidth = Math.round(pct*wid/100.0f);
+				doneWidth = Math.max(0, Math.min(doneWidth, wid-1));
 
-			splashGraphics.setPaint(Color.GREEN);
-			splashGraphics.fillRect(x, y+1, doneWidth, hgt-1);
+				splashGraphics.setPaint(Color.GREEN);
+				splashGraphics.fillRect(x, y+1, doneWidth, hgt-1);
+				
+				sp.update();
 
-
-
-			sp.update();
-
-		}else{
-			try{
-				sp.setImageURL(new URL("/src/res/splash.png"));
-				splashProgress(pct);
-			}catch(NullPointerException | IllegalStateException | IOException e){
-				TermUtils.printerr("Splash load failed");
-				/*
-				 * TODO: Fix this error (shows when database is not found)
-				 */
 			}
 			
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 	}
 
 	private static void splashText(String str){
-		SplashScreen sp = SplashScreen.getSplashScreen();
-		if(sp != null && sp.isVisible()){
-			Graphics2D splashGraphics = sp.createGraphics();
-			Dimension bounds = sp.getSize();
-			Rectangle2D splashTextArea = new Rectangle2D.Double(15.0d, bounds.getHeight() * 0.88d, bounds.getWidth() * 0.45d, 32.0d);
+		try{
+			SplashScreen sp = SplashScreen.getSplashScreen();
+			if(sp != null && sp.isVisible()){
+				Graphics2D splashGraphics = sp.createGraphics();
+				Dimension bounds = sp.getSize();
+				Rectangle2D splashTextArea = new Rectangle2D.Double(15.0d, bounds.getHeight() * 0.88d, bounds.getWidth() * 0.45d, 32.0d);
 
-			splashGraphics.setPaint(Color.BLACK);
-			splashGraphics.fill(splashTextArea);
+				splashGraphics.setPaint(Color.BLACK);
+				splashGraphics.fill(splashTextArea);
 
-			splashGraphics.setPaint(Color.WHITE);
-			splashGraphics.drawString(str, (int)(splashTextArea.getX() + 10),(int)(splashTextArea.getY() + 15));
-		}else{
-			try{
-				sp.setImageURL(new URL("/src/res/splash.png"));
-				splashText(str);
-			}catch(NullPointerException | IllegalStateException | IOException e){
-				TermUtils.printerr("Splash load failed");
-				/*
-				 * TODO: Fix this error (shows when database is not found)
-				 */
+				splashGraphics.setPaint(Color.WHITE);
+				splashGraphics.drawString(str, (int)(splashTextArea.getX() + 10),(int)(splashTextArea.getY() + 15));
+				
+				sp.update();
+				
 			}
-			
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 	}
