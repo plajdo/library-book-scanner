@@ -53,7 +53,7 @@ public class MainMenu{
 				super.windowClosing(event);
 				TermUtils.println("Saving database");
 				db.save(Load.DATABASE_PATH);
-				TermUtils.println("Exiting");
+				TermUtils.println("Exiting LBS");
 				System.exit(0);
 					
 			}
@@ -102,7 +102,7 @@ public class MainMenu{
 			public void actionPerformed(ActionEvent e) {
 				int dialogResult = JOptionPane.showConfirmDialog(null, "Zahodi\u0165 a ukon\u010Di\u0165?", "Zahodi\u0165 zmeny?", JOptionPane.YES_NO_OPTION);
 				if(dialogResult == JOptionPane.YES_OPTION){
-					TermUtils.println("Exiting");
+					TermUtils.println("Exiting LBS");
 					System.exit(0);
 				}
 			}
