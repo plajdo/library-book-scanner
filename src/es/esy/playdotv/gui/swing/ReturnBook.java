@@ -119,9 +119,9 @@ public class ReturnBook extends JInternalFrame{
 									if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, p.getGroup())){
 										JOptionPane.showMessageDialog(null, "Chyba v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 									}
-									
 									BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup());
 									bd.addDate(b);
+									System.out.println(bd.toString());
 									
 									dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 									dispose();

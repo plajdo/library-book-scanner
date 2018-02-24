@@ -11,7 +11,6 @@ import es.esy.playdotv.event.DataDialogEventOperation;
 import es.esy.playdotv.event.TableRefreshEvent;
 import es.esy.playdotv.event.TableRefreshEventListener;
 import es.esy.playdotv.event.TableRefreshEventOperation;
-import es.esy.playdotv.gui.terminal.TermUtils;
 import es.esy.playdotv.objects.Book;
 import es.esy.playdotv.objects.Person;
 import net.miginfocom.swing.MigLayout;
@@ -178,16 +177,14 @@ public class BorrowBook extends JInternalFrame {
 										b.setBorrowedTime(((Date)datePicker2.getModel().getValue()).getTime());
 										b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
 										
-										TermUtils.println("EXISTENCE CHECC");
 										if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, per.getGroup())){
-											TermUtils.println("EXISTENCE FAILED");
 											BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup());
 											bd.create();
-											TermUtils.println("EXISTENCE CREATED");
+											System.out.println(bd.toString());
 										}
 										BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup());
 										bd.add(new BorrowingEntry(new Date(b.getBorrowedTime()), null, per.getName(), b.getName(), b.getID()));
-										TermUtils.println("NO LOOK");
+										System.out.println(bd.toString());
 										
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
