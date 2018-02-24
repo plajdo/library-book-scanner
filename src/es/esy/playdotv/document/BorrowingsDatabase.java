@@ -1,21 +1,16 @@
 package es.esy.playdotv.document;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.function.BiConsumer;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import es.esy.playdotv.document.util.TimeUtils;
-import es.esy.playdotv.gui.terminal.TermUtils;
 import es.esy.playdotv.objects.Book;
 
 public class BorrowingsDatabase{
@@ -26,7 +21,7 @@ public class BorrowingsDatabase{
 	private long maxBorrowing;
 	
 	public BorrowingsDatabase(String filepath, String group){
-		finalPath = filepath + "_" + group + ".json";
+		finalPath = filepath + "_" + group + ".ser";
 	}
 	
 	public void add(BorrowingEntry e){
@@ -53,38 +48,45 @@ public class BorrowingsDatabase{
 		borrowings.forEach(action);
 	}
 	
+	@Override
+	public String toString(){
+		StringBuilder b = new StringBuilder();
+		open();
+		forEachBorrowing((id, borrowing) -> {
+			b.append("Book ID: " + borrowing.getBookID() + " Book name: " + borrowing.getBookname() + " Username: " + borrowing.getUsername() + " Borrow date: " + borrowing.getBorrowDate().toString() + " Return date: " + borrowing.getReturnDate().toString() + "\n");
+		});
+		return b.toString();
+	}
+	
 	public void create(){
 		close();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void open(){
-		try(	Scanner s = new Scanner(new File(finalPath))){
-			StringBuilder sb = new StringBuilder();
-			while(s.hasNext()){
-				sb.append(s.next());
-			}
+		try{
+			FileInputStream fis = new FileInputStream(finalPath);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			borrowings = (Map<Long, BorrowingEntry>)ois.readObject();
+			ois.close();
+			fis.close();
+		}catch(IOException | ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+
+	private void close(){
+		try{
+			FileOutputStream fos = new FileOutputStream(finalPath);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(borrowings);
+			oos.close();
+			fos.close();
 			
-			borrowings.clear();
-			
-			JSONObject obj = new JSONObject(sb.toString());
-			maxBorrowing = obj.getLong("maxBorrowing");
-			
-			TermUtils.println("bd max loaded");
-			
-			//if(max > 0L){
-				TermUtils.println("bd max more than 1L");
-				for(long current = 1; current <= maxBorrowing; current++){
-					JSONArray arr = obj.getJSONArray("borrowing" + current);
-					/*
-					 * TODO: Cast from String to Date doesn't work
-					 */
-					borrowings.put(current, new BorrowingEntry(TimeUtils.localToOld(LocalDate.parse((String)arr.get(2))), TimeUtils.localToOld(LocalDate.parse((String)arr.get(3))), arr.getString(4), arr.getString(1), arr.getString(0)));
-					TermUtils.println("loopin in the databasee");
-				}
-			//}
-			
-		} catch (FileNotFoundException e) {
-			TermUtils.printerr("Cannot load borrowings database");
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 		
 	}
@@ -95,28 +97,7 @@ public class BorrowingsDatabase{
 	 * @return True if database for specified group exists, false if database for specified group was not found
 	 */
 	public static boolean groupExists(String filepath, String group){
-		return new File(filepath + "_" + group + ".json").exists();
-	}
-
-	private void close(){
-		JSONObject obj = new JSONObject();
-		borrowings.forEach((id, borrowing) -> {
-			JSONArray arr = new JSONArray();
-			arr.put(borrowing.getBookID());
-			arr.put(borrowing.getBookname());
-			arr.put(TimeUtils.dateToLocal(borrowing.getBorrowDate()).toString());
-			arr.put(TimeUtils.dateToLocal(borrowing.getReturnDate()).toString());
-			arr.put(borrowing.getUsername());
-			obj.put("borrowing" + id, arr);
-		});
-		obj.put("maxBorrowing", maxBorrowing);
-
-		try(FileWriter file = new FileWriter(finalPath)){
-			file.write(obj.toString(2));
-		}catch(IOException e){
-			TermUtils.printerr("Cannot save borrowings database");
-		}
-		
+		return new File(filepath + "_" + group + ".ser").exists();
 	}
 	
 }

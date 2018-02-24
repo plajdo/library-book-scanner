@@ -1,8 +1,11 @@
 package es.esy.playdotv.document;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BorrowingEntry{
+public class BorrowingEntry implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Date borrowDate;
 	private Date returnDate;
