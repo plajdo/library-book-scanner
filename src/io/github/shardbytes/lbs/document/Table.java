@@ -47,6 +47,8 @@ public class Table{
 		normalCellFormat.setVerticalAlignment(v_align_normal);
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
+		/* TODO
 		
 		BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, group);
 		
@@ -70,7 +72,7 @@ public class Table{
 			}
 			increaseRow();
 		});
-		
+		*/
 		resetRow();
 		
 		workbook.write();

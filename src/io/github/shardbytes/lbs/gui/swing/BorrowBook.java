@@ -1,10 +1,10 @@
 package io.github.shardbytes.lbs.gui.swing;
 
+import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 
 import io.github.shardbytes.lbs.Load;
-import io.github.shardbytes.lbs.document.BorrowingEntry;
-import io.github.shardbytes.lbs.document.BorrowingsDatabase;
+import io.github.shardbytes.lbs.document.BorrowEntry;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
 import io.github.shardbytes.lbs.event.DataDialogEventOperation;
@@ -37,6 +37,7 @@ public class BorrowBook extends JInternalFrame {
 	private JTextField textField_5;
 
 	private LBSDatabase db = LBSDatabase.getInstance();
+	private BorrowDatabase bdb = BorrowDatabase.getInstance();
 
 	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 
@@ -176,6 +177,15 @@ public class BorrowBook extends JInternalFrame {
 										per.addBookCount();
 										b.setBorrowedTime(((Date)datePicker2.getModel().getValue()).getTime());
 										b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
+
+										BorrowEntry entry = new BorrowEntry(b.getBorrowedTime());
+										entry.setBookName(b.getName());
+										entry.setBookID(b.getID());
+										entry.setBorrowerCompleteName(per.getName() + " - " + per.getID());
+
+										bdb.safeAdd(per.getGroup(), entry);
+
+										/* TODO
 										
 										if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, per.getGroup())){
 											BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup());
@@ -185,6 +195,8 @@ public class BorrowBook extends JInternalFrame {
 										BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup());
 										bd.add(new BorrowingEntry(new Date(b.getBorrowedTime()), null, per.getName(), b.getName(), b.getID()));
 										System.out.println(bd.toString());
+
+										*/
 										
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
