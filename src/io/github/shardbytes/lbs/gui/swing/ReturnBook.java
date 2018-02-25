@@ -3,7 +3,6 @@ package io.github.shardbytes.lbs.gui.swing;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 
 import io.github.shardbytes.lbs.Load;
-import io.github.shardbytes.lbs.document.BorrowingsDatabase;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
 import io.github.shardbytes.lbs.event.DataDialogEventOperation;
@@ -115,6 +114,8 @@ public class ReturnBook extends JInternalFrame{
 									b.setTakerID("");
 									b.setBorrowedTime(0);
 									b.setBorrowedUntilTime(0);
+
+									/*
 									
 									if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, p.getGroup())){
 										JOptionPane.showMessageDialog(null, "Chyba v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
@@ -122,6 +123,8 @@ public class ReturnBook extends JInternalFrame{
 									BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup());
 									bd.addDate(b);
 									System.out.println(bd.toString());
+
+									*/
 									
 									dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 									dispose();

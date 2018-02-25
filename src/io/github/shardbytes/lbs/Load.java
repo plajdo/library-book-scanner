@@ -2,6 +2,7 @@ package io.github.shardbytes.lbs;
 
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
@@ -22,7 +23,9 @@ public class Load{
 	
 	public static String DATABASE_PATH;
 	public static String B_DATABASE_PATH;
+
 	private static LBSDatabase db = LBSDatabase.getInstance();
+	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
 	
 	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
@@ -48,7 +51,7 @@ public class Load{
 	}
 	
 	public static void main(String[] args){
-		begin("lbsdatabase.xml", "lbsdatabase2");
+		begin("lbsdatabase.xml", "borrowdatabase.xml");
 	}
 	
 	/**
@@ -71,8 +74,9 @@ public class Load{
 		splashProgress(20);
 		splashText("Initialisation");
 		
-		TermUtils.println("Loading database");
+		TermUtils.println("Loading databases");
 		db.load(DATABASE_PATH);
+		bdb.load(B_DATABASE_PATH);
 		
 		splashProgress(40);
 		splashText("Initialisation");
@@ -134,9 +138,10 @@ public class Load{
 		
 	}
 	
-	private static synchronized void saveDatabase(){
+	private static synchronized void saveDatabase(){ // only autosave !
 		try{
 			db.save(DATABASE_PATH);
+			bdb.save(B_DATABASE_PATH);
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 		}
