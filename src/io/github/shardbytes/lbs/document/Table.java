@@ -19,7 +19,7 @@ public class Table{
 	
 	private static int row = 2;
 	
-	public static void createTable(String group, String folder) throws Exception{
+	public static void createBorrowingsTable(String group, String folder) throws Exception{
 		
 		Workbook originalWorkbook = Workbook.getWorkbook(new File("zoznam.xls"));
 		WritableWorkbook workbook = Workbook.createWorkbook(new File(folder + "output_" + group + ".xls"), originalWorkbook);
@@ -90,6 +90,18 @@ public class Table{
 	
 	private static void resetRow(){
 		row = 2;
+	}
+	
+	public static void createBooksTable(String folder) throws Exception{
+		/*
+		 * TODO: Export zoznamu kníh do xls tabu¾ky (ready to print)
+		 */
+	}
+	
+	public static void createPersonTable(String folder) throws Exception{
+		/*
+		 * TODO: Export zoznamu osôb do xls tabu¾ky (ready to print)
+		 */
 	}
 	
 }
