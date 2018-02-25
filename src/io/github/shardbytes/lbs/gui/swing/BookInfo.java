@@ -66,12 +66,12 @@ public class BookInfo extends JInternalFrame{
 		getContentPane().add(textField_2, "cell 1 2,growx");
 		textField_2.setColumns(10);
 		
-		lblVypoian = new JLabel("Vypožičaná:");
+		lblVypoian = new JLabel("Vypo\u017Ei\u010Dan\u00E1:");
 		getContentPane().add(lblVypoian, "cell 0 3,alignx trailing");
 		
 		textField_3 = new JTextField();
 		textField_3.setEditable(false);
-		textField_3.setText((b.getTakerID().isEmpty() ? "Nie" : "Áno"));
+		textField_3.setText((b.getTakerID().isEmpty() ? "Nie" : "\u00C1no"));
 		getContentPane().add(textField_3, "cell 1 3,growx");
 		textField_3.setColumns(10);
 		
