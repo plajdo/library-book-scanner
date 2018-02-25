@@ -68,9 +68,6 @@ public class PersonInfo extends JInternalFrame {
 		
 	}
 	
-	/*
-	 * TODO: No loops, save book IDs with persons for better performance
-	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void addStuffToList(DefaultListModel model, Person p){
 		db.books.keySet().forEach((s) -> {
@@ -78,12 +75,13 @@ public class PersonInfo extends JInternalFrame {
 			if(tempBook.getTakerID().equals(p.getID())){
 				model.addElement("[" + tempBook.getID() + "] " + tempBook.getAuthor() + ": " + tempBook.getName());
 			}
+			
 		});
 		
 	}
 	
-	private void clearStuffFromList(DefaultListModel<String> dml){
-		dml.clear();
+	private void clearStuffFromList(DefaultListModel<String> dlm){
+		dlm.clear();
 	}
 	
 	private void refreshList(DefaultListModel<String> dml, Person p, JList<String> l, JLabel label) {

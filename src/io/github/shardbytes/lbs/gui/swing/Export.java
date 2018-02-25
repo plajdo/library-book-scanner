@@ -54,13 +54,33 @@ public class Export extends JInternalFrame{
 		JButton btnExportova = new JButton("Exportova\u0165");
 		btnExportova.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				try{
-					Table.createTable("Kvinta", textField.getText() +"/");
-				}catch(Exception e1){
-					e1.printStackTrace();
+				if(chckbxZoznamitateov.isSelected()){
+					try{
+						Table.createPersonTable(textField.getText() + File.separator);
+					}catch(Exception e1){
+						e1.printStackTrace();
+					}
+					
+				}
+				if(chckbxZoznamKnh.isSelected()){
+					try{
+						Table.createBooksTable(textField.getText() + File.separator);
+					}catch(Exception e1){
+						e1.printStackTrace();
+					}
+					
+				}
+				if(chckbxZoznamVpoiiek.isSelected()){
+					try{
+						Table.createBorrowingsTable(/*TODO: Zvoliù si triedu na export*/"Kvinta", textField.getText() + File.separator);
+					}catch(Exception e1){
+						e1.printStackTrace();
+					}
+					
 				}
 				
 			}
+			
 		});
 		panel.add(btnExportova, "cell 2 1,grow");
 		
@@ -80,7 +100,9 @@ public class Export extends JInternalFrame{
 				}else{
 					btnExportova.setEnabled(false);
 				}
+				
 			}
+			
 		});
 		panel.add(btnZvoliPrieinok, "cell 1 1,grow");
 		
