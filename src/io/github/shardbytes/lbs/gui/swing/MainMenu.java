@@ -232,7 +232,7 @@ public class MainMenu{
 		JSeparator separator = new JSeparator();
 		mnIn.add(separator);
 		
-		JMenuItem mntmExportova = new JMenuItem("Exportovať databázu");
+		JMenuItem mntmExportova = new JMenuItem("Exportova\u0165 datab\u00E1zu");
 		mntmExportova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openExportMenu();
