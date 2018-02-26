@@ -3,6 +3,7 @@ package io.github.shardbytes.lbs.gui.swing;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 
+import io.github.shardbytes.lbs.document.BorrowEntry;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
 import io.github.shardbytes.lbs.event.DataDialogEventOperation;
@@ -18,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReturnBook extends JInternalFrame{
@@ -115,8 +117,10 @@ public class ReturnBook extends JInternalFrame{
 									b.setTakerID("");
 									b.setBorrowedTime(0);
 									b.setBorrowedUntilTime(0);
-									
-									//bdb.borrowings.get(p.getGroup()).put(id, borrowentry);
+
+									BorrowEntry tempentry = bdb.borrowings.get(p.getGroup()).get(b.getCurrentBorrowEntryID());
+									tempentry.setReturnDate(new Date().getTime()); // set the return date of this book in entry
+									b.setCurrentBorrowEntryID(0); // unlink the book to entry
 									
 									dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 									dispose();

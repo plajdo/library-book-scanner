@@ -43,7 +43,7 @@ public class BorrowBook extends JInternalFrame {
 	public BorrowBook(JDesktopPane desktopPane) {
 
 		setTitle("Vypo\u017Ei\u010Dia\u0165 knihu");
-		setBounds(100, 100, 460, 285);
+		setBounds(100, 100, 460, 310);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][]"));
 
 		JLabel lblisloKnihy = new JLabel("ID knihy:");
@@ -177,12 +177,12 @@ public class BorrowBook extends JInternalFrame {
 										b.setBorrowedTime(((Date)datePicker2.getModel().getValue()).getTime());
 										b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
 
-										BorrowEntry entry = new BorrowEntry(b.getBorrowedTime());
-										entry.setBookName(b.getName());
-										entry.setBookID(b.getID());
-										entry.setBorrowerCompleteName(per.getName() + " - " + per.getID());
-
-										//bdb.safeAdd(per.getGroup(), entry);
+										BorrowEntry tempentry = bdb.safeAdd(per.getGroup());
+										tempentry.setBorrowDate(b.getBorrowedTime());
+										tempentry.setBookID(b.getID());
+										tempentry.setBorrowerCompleteName(per.getName() + " - " + per.getID());
+										tempentry.setBookName(b.getAuthor() + " - " + b.getName());
+										b.setCurrentBorrowEntryID(tempentry.getId());
 										
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
