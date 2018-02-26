@@ -8,6 +8,8 @@ import io.github.shardbytes.lbs.objects.Person;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
@@ -50,6 +52,9 @@ public class ListAllPersons extends JInternalFrame{
 					}catch(PropertyVetoException e1){
 						e1.printStackTrace();
 					}
+				} else if(e.getClickCount() == 1) {
+					Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+					clpbrd.setContents(new StringSelection( (String)table.getModel().getValueAt(row, table.columnAtPoint(point)) ), null);
 				}
 			}
 		});
