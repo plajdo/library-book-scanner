@@ -182,7 +182,7 @@ public class BorrowBook extends JInternalFrame {
 										entry.setBookID(b.getID());
 										entry.setBorrowerCompleteName(per.getName() + " - " + per.getID());
 
-										bdb.safeAdd(per.getGroup(), entry);
+										//bdb.safeAdd(per.getGroup(), entry);
 										
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
