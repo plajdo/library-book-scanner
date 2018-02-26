@@ -125,7 +125,8 @@ public class LBSDatabase
 			}
 			
 			b.setTakerID(e.getAttribute("takerID"));
-			b.setCurrentBorrowEntryID(Long.valueOf(e.getAttribute("currentBorrowEntryID")));
+
+			b.setCurrentBorrowEntryID(Long.valueOf( e.hasAttribute("currentBorrowEntryID") ? e.getAttribute("currentBorrowEntryID") : "0"));
 			
 			books.put(bookid, b); // pass ref to map
 		}
