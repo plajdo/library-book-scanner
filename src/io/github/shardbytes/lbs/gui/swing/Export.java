@@ -50,7 +50,9 @@ public class Export extends JInternalFrame{
 		textField = new JTextField();
 		panel.add(textField, "cell 1 0 2 1,growx");
 		textField.setColumns(10);
-		
+		/*
+		 * TODO: KeÔ nie je niË zvolenÈ, nedovoliù klikn˙ù
+		 */
 		JButton btnExportova = new JButton("Exportova\u0165");
 		btnExportova.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
