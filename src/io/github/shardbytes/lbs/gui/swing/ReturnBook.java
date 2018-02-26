@@ -36,7 +36,7 @@ public class ReturnBook extends JInternalFrame{
 	
 	public ReturnBook(JDesktopPane desktopPane){
 		setTitle("Vr\u00E1ti\u0165 knihu");
-		setBounds(100, 100, 460, 155);
+		setBounds(100, 100, 460, 165);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][]"));
 		
 		JLabel lblisloKnihy = new JLabel("ID knihy:");
