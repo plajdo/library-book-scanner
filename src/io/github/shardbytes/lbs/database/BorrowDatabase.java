@@ -2,8 +2,6 @@ package io.github.shardbytes.lbs.database;
 
 import io.github.shardbytes.lbs.document.BorrowEntry;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
-import io.github.shardbytes.lbs.objects.Book;
-import io.github.shardbytes.lbs.objects.Person;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,7 +19,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -68,6 +65,7 @@ public class BorrowDatabase
 
 
 	// create new map, parse xml to it and pass reference to singleton fields
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void load(String path)
 	{
 		reset(); // on load, reset ~ create objects for maps ( because we only had pointers till now )

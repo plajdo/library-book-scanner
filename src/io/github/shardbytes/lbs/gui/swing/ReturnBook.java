@@ -1,8 +1,8 @@
 package io.github.shardbytes.lbs.gui.swing;
 
+import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 
-import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
 import io.github.shardbytes.lbs.event.DataDialogEventOperation;
@@ -28,6 +28,7 @@ public class ReturnBook extends JInternalFrame{
 	private JTextField textField_2;
 
 	private LBSDatabase db = LBSDatabase.getInstance();
+	private BorrowDatabase bdb = BorrowDatabase.getInstance();
 	
 	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
@@ -114,17 +115,8 @@ public class ReturnBook extends JInternalFrame{
 									b.setTakerID("");
 									b.setBorrowedTime(0);
 									b.setBorrowedUntilTime(0);
-
-									/*
 									
-									if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, p.getGroup())){
-										JOptionPane.showMessageDialog(null, "Chyba v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
-									}
-									BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, p.getGroup());
-									bd.addDate(b);
-									System.out.println(bd.toString());
-
-									*/
+									bdb.borrowings.get(p.getGroup()).put(id, borrowentry);
 									
 									dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 									dispose();

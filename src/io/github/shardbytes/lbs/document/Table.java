@@ -2,8 +2,9 @@ package io.github.shardbytes.lbs.document;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import io.github.shardbytes.lbs.Load;
+import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import jxl.Workbook;
 import jxl.format.Alignment;
@@ -48,18 +49,16 @@ public class Table{
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-		/* TODO
+		BorrowDatabase bd = BorrowDatabase.getInstance();
 		
-		BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, group);
+		TermUtils.println("Exporting the database");
 		
-		bd.forEachBorrowing((id, entry) -> {
-			Label cellEntryA = new Label(0, getRow(), dateFormat.format(entry.getBorrowDate()), normalCellFormat);
-			Label cellEntryB = new Label(1, getRow(), entry.getUsername(), normalCellFormat);
-			Label cellEntryC = new Label(2, getRow(), entry.getBookname(), normalCellFormat);
+		bd.borrowings.get(group).forEach((id, entry) -> {
+			Label cellEntryA = new Label(0, getRow(), dateFormat.format(new Date(entry.getBorrowDate())), normalCellFormat);
+			Label cellEntryB = new Label(1, getRow(), entry.getBorrowerCompleteName(), normalCellFormat);
+			Label cellEntryC = new Label(2, getRow(), entry.getBookName(), normalCellFormat);
 			Label cellEntryD = new Label(3, getRow(), entry.getBookID(), normalCellFormat);
-			Label cellEntryE = new Label(4, getRow(), (entry.getReturnDate() == null ? "" : dateFormat.format(entry.getReturnDate())), normalCellFormat);
-			
-			TermUtils.println("foreaching");
+			Label cellEntryE = new Label(4, getRow(), (entry.getReturnDate() == 0 ? "" : dateFormat.format(new Date(entry.getReturnDate()))), normalCellFormat);
 			
 			try {
 				sheet.addCell(cellEntryA);
@@ -72,7 +71,7 @@ public class Table{
 			}
 			increaseRow();
 		});
-		*/
+		
 		resetRow();
 		
 		workbook.write();

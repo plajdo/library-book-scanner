@@ -3,7 +3,6 @@ package io.github.shardbytes.lbs.gui.swing;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 
-import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.document.BorrowEntry;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
@@ -184,19 +183,6 @@ public class BorrowBook extends JInternalFrame {
 										entry.setBorrowerCompleteName(per.getName() + " - " + per.getID());
 
 										bdb.safeAdd(per.getGroup(), entry);
-
-										/* TODO
-										
-										if(!BorrowingsDatabase.groupExists(Load.B_DATABASE_PATH, per.getGroup())){
-											BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup());
-											bd.create();
-											System.out.println(bd.toString());
-										}
-										BorrowingsDatabase bd = new BorrowingsDatabase(Load.B_DATABASE_PATH, per.getGroup());
-										bd.add(new BorrowingEntry(new Date(b.getBorrowedTime()), null, per.getName(), b.getName(), b.getID()));
-										System.out.println(bd.toString());
-
-										*/
 										
 										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 										dispose();
