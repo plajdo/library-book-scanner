@@ -10,16 +10,24 @@ public class BorrowEntry {
 	private String bookID = "";
 	private String bookName = "";
 
+	private long id;
+
 	private long returnDate;
 
 	// METHODS: CONSTRUCTOR
 
-	public BorrowEntry(long borrowDate) {
-		this.borrowDate = borrowDate;
+	public BorrowEntry(long id) {
+		this.id = id;
 	}
 
 
 	// METHODS: ACCESORS
+
+	public long getId() {
+		return id;
+	}
+
+
 
 	public long getBorrowDate() {
 		return borrowDate;
