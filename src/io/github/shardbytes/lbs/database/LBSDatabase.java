@@ -125,6 +125,7 @@ public class LBSDatabase
 			}
 			
 			b.setTakerID(e.getAttribute("takerID"));
+			b.setCurrentBorrowEntryID(Long.valueOf(e.getAttribute("currentBorrowEntryID")));
 			
 			books.put(bookid, b); // pass ref to map
 		}
@@ -179,6 +180,7 @@ public class LBSDatabase
 			el_b.setAttribute("takerID", b.getTakerID());
 			el_b.setAttribute("borrowedTime", Long.toString(b.getBorrowedTime()));
 			el_b.setAttribute("borrowedUntilTime", Long.toString(b.getBorrowedUntilTime()));
+			el_b.setAttribute("currentBorrowEntryID", String.valueOf(b.getCurrentBorrowEntryID()));
 		}
 		
 		// parse person map into document
