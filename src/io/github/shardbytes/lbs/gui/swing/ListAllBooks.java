@@ -8,10 +8,10 @@ import io.github.shardbytes.lbs.objects.Book;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.Date;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
@@ -54,6 +54,9 @@ public class ListAllBooks extends JInternalFrame{
 					}catch(PropertyVetoException e1){
 						e1.printStackTrace();
 					}
+				}else if(e.getClickCount() == 1) {
+					Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+					clpbrd.setContents(new StringSelection( (String)table.getModel().getValueAt(row, table.columnAtPoint(point)) ), null);
 				}
 			}
 		});
