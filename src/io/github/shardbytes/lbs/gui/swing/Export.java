@@ -20,24 +20,37 @@ public class Export extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
+	private JCheckBox chckbxZoznamKnh;
+	private JCheckBox chckbxZoznamitateov;
+	private JCheckBox chckbxZoznamVpoiiek;
+	private JButton btnExportova;
 
 	public Export(){
 		setTitle("Exportova\u0165 datab\u00E1zu");
 		setIconifiable(true);
 		setClosable(true);
-		setBounds(100, 100, 450, 250);
+		setBounds(100, 100, 450, 200);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][]"));
 		
 		JLabel lblExportova = new JLabel("Exportova\u0165:");
 		getContentPane().add(lblExportova, "cell 0 0");
 		
-		JCheckBox chckbxZoznamKnh = new JCheckBox("Zoznam kn\u00EDh");
+		chckbxZoznamKnh = new JCheckBox("Zoznam kn\u00EDh");
+		chckbxZoznamKnh.addActionListener((e) -> {
+			updateButton();
+		});
 		getContentPane().add(chckbxZoznamKnh, "cell 1 0,grow");
 		
-		JCheckBox chckbxZoznamitateov = new JCheckBox("Zoznam \u010Ditate\u013Eov");
+		chckbxZoznamitateov = new JCheckBox("Zoznam \u010Ditate\u013Eov");
+		chckbxZoznamitateov.addActionListener((e) -> {
+			updateButton();
+		});
 		getContentPane().add(chckbxZoznamitateov, "cell 1 1,grow");
 		
-		JCheckBox chckbxZoznamVpoiiek = new JCheckBox("Zoznam v\u00FDpo\u017Ei\u010Diek");
+		chckbxZoznamVpoiiek = new JCheckBox("Zoznam v\u00FDpo\u017Ei\u010Diek");
+		chckbxZoznamVpoiiek.addActionListener((e) -> {
+			updateButton();
+		});
 		getContentPane().add(chckbxZoznamVpoiiek, "cell 1 2,grow");
 		
 		JPanel panel = new JPanel();
@@ -50,10 +63,8 @@ public class Export extends JInternalFrame{
 		textField = new JTextField();
 		panel.add(textField, "cell 1 0 2 1,growx");
 		textField.setColumns(10);
-		/*
-		 * TODO: KeÔ nie je niË zvolenÈ, nedovoliù klikn˙ù
-		 */
-		JButton btnExportova = new JButton("Exportova\u0165");
+		
+		btnExportova = new JButton("Exportova\u0165");
 		btnExportova.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(chckbxZoznamitateov.isSelected()){
@@ -108,9 +119,13 @@ public class Export extends JInternalFrame{
 		});
 		panel.add(btnZvoliPrieinok, "cell 1 1,grow");
 		
-		btnExportova.setEnabled(false);
+		updateButton();
 		setVisible(true);
 		
+	}
+	
+	private void updateButton(){
+		btnExportova.setEnabled(chckbxZoznamitateov.isSelected() || chckbxZoznamKnh.isSelected() || chckbxZoznamVpoiiek.isSelected());
 	}
 
 }

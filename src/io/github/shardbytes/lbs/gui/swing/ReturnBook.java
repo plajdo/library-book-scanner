@@ -116,7 +116,7 @@ public class ReturnBook extends JInternalFrame{
 									b.setBorrowedTime(0);
 									b.setBorrowedUntilTime(0);
 									
-									bdb.borrowings.get(p.getGroup()).put(id, borrowentry);
+									//bdb.borrowings.get(p.getGroup()).put(id, borrowentry);
 									
 									dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 									dispose();
