@@ -33,8 +33,9 @@ public class BorrowDatabase
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	private Transformer transformer;
 
-	// <groupID, <borrowDate, entry>>
+	// <groupID, <entryID, entry>>
 	public volatile Map<String, Map<Long, BorrowEntry>> borrowings;
+	public volatile long iterator;
 
 	// singleton pattern CONSTRUCTOR
 	private static BorrowDatabase instance = new BorrowDatabase();
@@ -91,7 +92,7 @@ public class BorrowDatabase
 		}
 		
 		doc.getDocumentElement().normalize();
-		
+
 		NodeList group_nl = doc.getElementsByTagName("group");
 
 		for (int i = 0; i<group_nl.getLength(); i++) {
@@ -112,22 +113,34 @@ public class BorrowDatabase
 				if (entrynode.getNodeType() != Node.ELEMENT_NODE) continue; // skips non-element nodes
 				Element entry_el = (Element) entrynode;
 
-				long thisBorrowDate = Long.valueOf(entry_el.getAttribute("borrowDate"));
+				//iterator++; // create new id
 
-				long thisReturnDate = 0;
-				String stringReturnDate = entry_el.getAttribute("returnDate");
-				if (!stringReturnDate.equals("")) thisReturnDate = Long.valueOf(stringReturnDate);
+				long id = Long.valueOf(entry_el.getAttribute("id"));
 
-				BorrowEntry e = new BorrowEntry(thisBorrowDate);
+				BorrowEntry e = new BorrowEntry(id);
 				e.setBookID(entry_el.getAttribute("bookID"));
 				e.setBookName(entry_el.getAttribute("bookName"));
 				e.setBorrowerCompleteName(entry_el.getAttribute("borrowerCompleteName"));
-				e.setReturnDate(thisReturnDate);
+				e.setBorrowDate(Long.valueOf(entry_el.getAttribute("borrowDate")));
+				e.setReturnDate(Long.valueOf(entry_el.getAttribute("returnDate")));
 
-				groupBorrowings.put(thisBorrowDate, e);
+				groupBorrowings.put(id, e);
 
 			}
 		}
+
+
+		// load iterator after loading
+		NodeList metas = doc.getElementsByTagName("meta");
+
+		for (int i = 0; i<metas.getLength(); i++) {
+			Node metaNode = metas.item(i);
+			if (metaNode.getNodeType() != Node.ELEMENT_NODE) continue; // skips non-element nodes
+			Element meta = (Element) metaNode;
+
+			iterator = Long.valueOf(meta.getAttribute("iterator"));
+		}
+
 
 
 
@@ -143,6 +156,11 @@ public class BorrowDatabase
 		Element borrowdatabase = doc.createElement("borrowdatabase");
 		doc.appendChild(borrowdatabase);
 
+		// set iterator meta
+		Element meta = doc.createElement("meta");
+		borrowdatabase.appendChild(meta);
+		meta.setAttribute("iterator", String.valueOf(iterator));
+
 		for (String groupKey : borrowings.keySet()) {
 			Element group_el = doc.createElement("group");
 			borrowdatabase.appendChild(group_el);
@@ -156,6 +174,7 @@ public class BorrowDatabase
 				Element entry_el = doc.createElement("BorrowEntry");
 				group_el.appendChild(entry_el);
 
+				entry_el.setAttribute("id", String.valueOf(entry.getId()));
 				entry_el.setAttribute("borrowDate", String.valueOf(entry.getBorrowDate()));
 				entry_el.setAttribute("returnDate", String.valueOf(entry.getReturnDate()));
 				entry_el.setAttribute("bookID", entry.getBookID());
@@ -181,18 +200,23 @@ public class BorrowDatabase
 
 	}
 
-	public void safeAdd(String groupID, BorrowEntry e) { // use this to add entries !
+	public BorrowEntry safeAdd(String groupID) { // use this to add entries , returns the id of entry
+		iterator++;
+
+		BorrowEntry e = new BorrowEntry(iterator);
+
 		if (!borrowings.containsKey(groupID)) {
 			borrowings.put(groupID, new TreeMap<>());
 		}
 
-		if (!borrowings.get(groupID).containsKey(e.getBorrowDate())) {
-			borrowings.get(groupID).put(e.getBorrowDate(), e);
-		}
+		borrowings.get(groupID).put(iterator, e);
+
+		return e;
 	}
 
 	public void reset(){
 		borrowings = new TreeMap<>();
+		iterator = 0;
 	}
 
 

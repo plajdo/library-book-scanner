@@ -9,29 +9,17 @@ public class BorrowDatabaseTESTER {
 
 	public static void main(String[] args) {
 
-		bdb.load(Load.B_DATABASE_PATH);
-
-		/*
-
 		bdb.reset();
 
-		BorrowEntry entry = new BorrowEntry(3);
-		entry.setReturnDate(55);
-		entry.setBookID("83/23");
-		entry.setBorrowerCompleteName("Filip Šašala - 323");
-		entry.setBookName("Chalupa");
+		bdb.load("testdb.xml");
 
-		bdb.safeAdd("kvinta", entry);
-
-		bdb.save("testbdb.xml");
-
-		*/
-
-
+		System.out.print("ITERATOR = ");System.out.println(bdb.iterator);
 		for (String group : bdb.borrowings.keySet()) {
+			System.out.println(group);
 			for (Long borrowDate : bdb.borrowings.get(group).keySet()) {
 				BorrowEntry e = bdb.borrowings.get(group).get(borrowDate);
-				System.out.println(" --- ENTRY --- ");
+				System.out.println("	--- ENTRY --- ");
+				System.out.print("	ID: "); System.out.println(e.getId());
 				System.out.print("	borrowDate: "); System.out.println(e.getBorrowDate());
 				System.out.print("	returnDate: "); System.out.println(e.getReturnDate());
 				System.out.print("	bookID: "); System.out.println(e.getBookID());
