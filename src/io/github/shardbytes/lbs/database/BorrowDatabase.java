@@ -81,7 +81,7 @@ public class BorrowDatabase
 		}
 		catch(IOException e)
 		{
-			JOptionPane.showMessageDialog(null, "S\u00FAbor bgb databazy sa nena\u0161iel, bola vytvoren\u00E1 nov\u00E1 bdb datab\u00E1za.");
+			JOptionPane.showMessageDialog(null, "S\u00FAbor datab\u00E1zy v\u00FDpo\u017Ei\u010Diek sa nena\u0161iel, bola vytvoren\u00E1 nov\u00E1 bdb datab\u00E1za.");
 			return;
 		}
 		catch(SAXException e)
