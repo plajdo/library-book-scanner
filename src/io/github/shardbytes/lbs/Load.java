@@ -19,7 +19,7 @@ import javax.swing.*;
 
 public class Load{
 	
-	public static final String VERSION = "v1.1.0 PRE-RELEASE";
+	public static final String VERSION = "v1.1.0";
 	
 	public static String DATABASE_PATH;
 	public static String B_DATABASE_PATH;
@@ -48,6 +48,26 @@ public class Load{
 			
 		}
 		
+	}
+	
+	public static void resetBorrowing(){
+		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+			if(dialog2Result == JOptionPane.YES_OPTION){
+				try{
+					bdb.reset();
+					bdb.save(B_DATABASE_PATH);
+				}catch (Exception e){
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
+					e.printStackTrace();
+				}finally{
+					System.exit(0);
+				}
+				
+			}
+			
+		}
 	}
 	
 	public static void main(String[] args){
@@ -138,7 +158,7 @@ public class Load{
 		
 	}
 	
-	private static synchronized void saveDatabase(){ // only autosave !
+	private static synchronized void saveDatabase(){
 		try{
 			db.save(DATABASE_PATH);
 			bdb.save(B_DATABASE_PATH);

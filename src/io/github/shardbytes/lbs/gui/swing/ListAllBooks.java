@@ -59,6 +59,7 @@ public class ListAllBooks extends JInternalFrame{
 					clpbrd.setContents(new StringSelection( (String)table.getModel().getValueAt(row, table.columnAtPoint(point)) ), null);
 				}
 			}
+			
 		});
 		
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);

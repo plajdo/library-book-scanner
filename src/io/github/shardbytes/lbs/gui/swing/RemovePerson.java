@@ -26,7 +26,7 @@ public class RemovePerson extends JInternalFrame {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Odstr\u00E1ni\u0165 \u010Ditate\u013Ea");
-		setBounds(100, 100, 300, 112);
+		setBounds(100, 100, 300, 125);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][grow][pref!][]"));
 
 		JLabel lblIdKnihy = new JLabel("ID \u010Ditate\u013Ea:");

@@ -46,7 +46,7 @@ public class AddBooks extends JInternalFrame {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Prida\u0165 viacero kn\u00EDh");
-		setBounds(100, 100, 450, 280);
+		setBounds(100, 100, 450, 225);
 		getContentPane().setLayout(new MigLayout("", "[grow][grow][][grow][grow]", "[][][][][][grow][]"));
 		
 		JLabel lblIdKnihy = new JLabel("ID knihy:");

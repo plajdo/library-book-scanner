@@ -226,8 +226,16 @@ public class MainMenu{
 		JMenu mnVymaza = new JMenu("Vymaza\u0165");
 		mnIn.add(mnVymaza);
 		
-		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 datab\u00E1zu");
+		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 datab\u00E1zu kn\u00EDh");
 		mnVymaza.add(mntmVymazatDatabazu);
+		
+		JMenuItem mntmVymazaDatabzuVpoiiek = new JMenuItem("Vymaza\u0165 datab\u00E1zu v\u00FDpo\u017Ei\u010Diek");
+		mntmVymazaDatabzuVpoiiek.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Load.resetBorrowing();
+			}
+		});
+		mnVymaza.add(mntmVymazaDatabzuVpoiiek);
 		mntmVymazatDatabazu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Load.resetDatabase();
@@ -407,5 +415,4 @@ public class MainMenu{
 	public static JDesktopPane getDesktopPane() {
 		return desktopPane;
 	}
-	
 }
