@@ -72,44 +72,49 @@ public class Export extends JInternalFrame{
 		btnExportova = new JButton("Exportova\u0165");
 		btnExportova.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				if(chckbxZoznamitateov.isSelected()){
-					try{
-						Table.createPersonTable(textField.getText() + File.separator);
-					}catch(Exception e1){
-						e1.printStackTrace();
-					}
-					
-				}
-				if(chckbxZoznamKnh.isSelected()){
-					try{
-						Table.createBooksTable(textField.getText() + File.separator);
-					}catch(Exception e1){
-						e1.printStackTrace();
-					}
-					
-				}
-				if(chckbxZoznamVpoiiek.isSelected()){
-					try{
-						ArrayList<String> groupsList = new ArrayList<String>();
-						bdb.borrowings.forEach((group, map) -> {groupsList.add(group);});
-						Object[] groups = groupsList.toArray();
-						
+				if(!textField.getText().isEmpty()){
+					if(chckbxZoznamitateov.isSelected()){
 						try{
-							String input = (String)JOptionPane.showInputDialog(null, "zvolte triedu - export: ", "export", JOptionPane.INFORMATION_MESSAGE, null, groups, groups[0]);
-							if(!(input == null)){
-								Table.createBorrowingsTable(input, textField.getText() + File.separator);								
-							}
-						}catch(ArrayIndexOutOfBoundsException e1){
-							JOptionPane.showMessageDialog(null, "ziadna trieda nema vypozicane knihy, nie je co exportovat", "Chyba", JOptionPane.ERROR_MESSAGE);
+							Table.createPersonTable(textField.getText() + File.separator);
+						}catch(Exception e1){
 							e1.printStackTrace();
 						}
 						
-					}catch(Exception e1){
-						e1.printStackTrace();
 					}
+					if(chckbxZoznamKnh.isSelected()){
+						try{
+							Table.createBooksTable(textField.getText() + File.separator);
+						}catch(Exception e1){
+							e1.printStackTrace();
+						}
+						
+					}
+					if(chckbxZoznamVpoiiek.isSelected()){
+						try{
+							ArrayList<String> groupsList = new ArrayList<String>();
+							bdb.borrowings.forEach((group, map) -> {groupsList.add(group);});
+							Object[] groups = groupsList.toArray();
+							
+							try{
+								String input = (String)JOptionPane.showInputDialog(null, "Vyberte triedu na exportovanie:", "export", JOptionPane.INFORMATION_MESSAGE, null, groups, groups[0]);
+								if(!(input == null)){
+									Table.createBorrowingsTable(input, textField.getText() + File.separator);							
+								}
+							}catch(ArrayIndexOutOfBoundsException e1){
+								JOptionPane.showMessageDialog(null, "\u017Diadna trieda nem\u00E1 vypo\u017Ei\u010Dan\u00E9 knihy - nie je \u010Do exportova\u0165.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								e1.printStackTrace();
+							}
+							
+						}catch(Exception e1){
+							e1.printStackTrace();
+						}
+						
+					}
+					dispose();
 					
+				}else{
+					JOptionPane.showMessageDialog(null, "Zvo\u013Ete prie\u010Dinok, do ktor\u00E9ho sa m\u00E1 datab\u00E1za exportova\u0165.", "Chyba", JOptionPane.ERROR_MESSAGE);
 				}
-				dispose();
 				
 			}
 			
@@ -128,9 +133,6 @@ public class Export extends JInternalFrame{
 				int r = chooser.showDialog(null, "Select directory");
 				if(r == JFileChooser.APPROVE_OPTION){
 					textField.setText(chooser.getSelectedFile().toString());
-					btnExportova.setEnabled(true);
-				}else{
-					btnExportova.setEnabled(false);
 				}
 				
 			}
