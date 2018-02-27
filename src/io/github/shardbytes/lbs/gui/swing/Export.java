@@ -3,6 +3,7 @@ package io.github.shardbytes.lbs.gui.swing;
 import javax.swing.JInternalFrame;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -10,10 +11,14 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
+import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.document.Table;
+import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 
 public class Export extends JInternalFrame{
@@ -24,6 +29,8 @@ public class Export extends JInternalFrame{
 	private JCheckBox chckbxZoznamitateov;
 	private JCheckBox chckbxZoznamVpoiiek;
 	private JButton btnExportova;
+	
+	BorrowDatabase bdb = BorrowDatabase.getInstance();
 
 	public Export(){
 		setTitle("Exportova\u0165 datab\u00E1zu");
@@ -85,7 +92,18 @@ public class Export extends JInternalFrame{
 				}
 				if(chckbxZoznamVpoiiek.isSelected()){
 					try{
-						Table.createBorrowingsTable(/*TODO: Zvoliù si triedu na export*/"Kvinta", textField.getText() + File.separator);
+						ArrayList<String> groupsList = new ArrayList<String>();
+						bdb.borrowings.forEach((group, map) -> {groupsList.add(group);});
+						Object[] groups = groupsList.toArray();
+						
+						try{
+							String input = (String)JOptionPane.showInputDialog(null, "zvolte triedu - export: ", "export", JOptionPane.INFORMATION_MESSAGE, null, groups, groups[0]);							
+						}catch(ArrayIndexOutOfBoundsException e1){
+							JOptionPane.showMessageDialog(null, "ziadna trieda nema vypozicane knihy, nie je co exportovat", "Chyba", JOptionPane.ERROR_MESSAGE);
+							e1.printStackTrace();
+						}
+						
+						//Table.createBorrowingsTable(input, textField.getText() + File.separator);
 					}catch(Exception e1){
 						e1.printStackTrace();
 					}
