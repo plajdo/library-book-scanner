@@ -1,9 +1,2 @@
-# library-:b:ook-scanner 
-Simple book management with qr codes for our school.
-
-
-
-
-
-
-__xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD__
+# library-book-scanner
+Simple book management software with QR code implementation for libraries.

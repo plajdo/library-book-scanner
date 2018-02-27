@@ -1,8 +1,11 @@
 bin/
+out/
 *.ser
 .idea/
 *.iml
 *.properties
 *.xml
 *.psd
-classes/artifacts/lbs_1_0_beta/library-book-scanner.jar
+*.xls
+.DS_Store
+*.json
