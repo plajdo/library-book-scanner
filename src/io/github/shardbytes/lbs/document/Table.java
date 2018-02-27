@@ -27,7 +27,7 @@ public class Table{
 	
 	public static void createBorrowingsTable(String group, String folder) throws Exception{
 		
-		Workbook originalWorkbook = Workbook.getWorkbook(new File("zoznam.xls"));
+		Workbook originalWorkbook = Workbook.getWorkbook(new File("resources" + File.separator + "zoznam.xls"));
 		WritableWorkbook workbook = Workbook.createWorkbook(new File(folder + "output_" + group + ".xls"), originalWorkbook);
 		WritableSheet sheet = workbook.getSheet(0);
 		
@@ -143,7 +143,7 @@ public class Table{
 	}
 	
 	public static void createBooksTable(String folder) throws Exception{
-		Workbook originalWorkbook = Workbook.getWorkbook(new File("books.xls"));
+		Workbook originalWorkbook = Workbook.getWorkbook(new File("resources" + File.separator + "books.xls"));
 		WritableWorkbook workbook = Workbook.createWorkbook(new File(folder + "output_Books.xls"), originalWorkbook);
 		WritableSheet sheet = workbook.getSheet(0);
 		
@@ -247,7 +247,7 @@ public class Table{
 	}
 	
 	public static void createPersonTable(String folder) throws Exception{
-		Workbook originalWorkbook = Workbook.getWorkbook(new File("persons.xls"));
+		Workbook originalWorkbook = Workbook.getWorkbook(new File("resources" + File.separator + "persons.xls"));
 		WritableWorkbook workbook = Workbook.createWorkbook(new File(folder + "output_People.xls"), originalWorkbook);
 		WritableSheet sheet = workbook.getSheet(0);
 		
