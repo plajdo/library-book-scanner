@@ -17,6 +17,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -56,8 +57,15 @@ public class ListAllBooks extends JInternalFrame{
 					}
 				}else if(e.getClickCount() == 1) {
 					Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-					clpbrd.setContents(new StringSelection( (String)table.getModel().getValueAt(row, table.columnAtPoint(point)) ), null);
+					if(table.getModel().getValueAt(row, table.columnAtPoint(point)) instanceof java.util.Date){
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+						clpbrd.setContents(new StringSelection(dateFormat.format((Date)table.getModel().getValueAt(row, table.columnAtPoint(point)))), null);
+					}else{
+						clpbrd.setContents(new StringSelection( (String)table.getModel().getValueAt(row, table.columnAtPoint(point)) ), null);						
+					}
+					
 				}
+				
 			}
 			
 		});
@@ -163,11 +171,13 @@ public class ListAllBooks extends JInternalFrame{
 			}else{
 				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 			}
+			
 		});
 		
 	}
 	
 	private void addSearchToTable(String search){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		db.books.keySet().forEach((key) -> {
 			Book b = db.books.get(key);
 			if(b.getAuthor().contains(search)){
@@ -188,7 +198,15 @@ public class ListAllBooks extends JInternalFrame{
 				}else{
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 				}
+			}else if(dateFormat.format(b.getBorrowedUntilTime()).contains(search)){
+				if(b.getTakerID().isEmpty()){
+					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
+				}else{
+					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
+				}
+				
 			}
+			
 		});
 
 	}
