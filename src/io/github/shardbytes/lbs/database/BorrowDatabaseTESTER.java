@@ -1,6 +1,5 @@
 package io.github.shardbytes.lbs.database;
 
-import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.document.BorrowEntry;
 
 public class BorrowDatabaseTESTER {
