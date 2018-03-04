@@ -71,7 +71,7 @@ public class Load{
 	}
 	
 	public static void main(String[] args){
-		begin("lbsdatabase.xml", "borrowdatabase.xml");
+		begin(args[0], args[1]);
 	}
 	
 	/**
