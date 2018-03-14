@@ -19,7 +19,7 @@ import javax.swing.*;
 
 public class Load{
 	
-	public static final String VERSION = "v1.1.0";
+	public static final String VERSION = "v1.1.1";
 	
 	public static String DATABASE_PATH;
 	public static String B_DATABASE_PATH;
