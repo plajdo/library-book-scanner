@@ -30,6 +30,7 @@ public class Load{
 	
 	/*
 	 * Turn off the webcam when not in use
+	 * TODO: Load from some config/settings
 	 */
 	public static boolean webcamOptimise = false;
 	
