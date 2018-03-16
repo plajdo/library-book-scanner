@@ -26,8 +26,12 @@ public class Load{
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
+	private static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
-	static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
+	/*
+	 * Turn off the webcam when not in use
+	 */
+	public static boolean webcamOptimise = false;
 	
 	public static void resetDatabase(){
 		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
