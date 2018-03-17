@@ -1,10 +1,10 @@
 package io.github.shardbytes.lbs;
 
+import com.github.sarxos.webcam.Webcam;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
-
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
@@ -36,7 +36,6 @@ public class Load{
 	
 	/*
 	 * Turn off the webcam when not in use
-	 * TODO: Load from some config/settings
 	 */
 	public static boolean webcamOptimise;
 	
@@ -165,6 +164,11 @@ public class Load{
 		splashProgress(80);
 		splashText("Post-Initialisation");
 		
+		if(webcamOptimise){
+			Webcam w = Webcam.getDefault();
+			w.open();
+		}
+		
 		MainMenu.open();
 		
 		splashProgress(100);
@@ -241,7 +245,8 @@ public class Load{
 	
 	public static void writeBoolean(boolean b, File f){
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))){
-				oos.writeBoolean(b);
+			
+			oos.writeBoolean(b);
 		}catch(IOException e){
 			TermUtils.printerr("An IOException occured at Load.java::writeBoolean(boolean, File)");
 		}

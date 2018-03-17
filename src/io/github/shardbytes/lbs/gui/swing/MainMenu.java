@@ -253,6 +253,8 @@ public class MainMenu{
 		chckbxmntmOptimalizovaKameru.addActionListener((e) -> {
 			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
 			Load.writeBoolean(Load.webcamOptimise, new File("data" + File.separator + "webcamSettings.ser"));
+			JOptionPane.showMessageDialog(null, "LBS je potrebn\u00E9 re\u0161tartova\u0165", "Zmena nastaven\u00ED", JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
 		});
 		chckbxmntmOptimalizovaKameru.setSelected(Load.webcamOptimise);
 		mnNastavenia.add(chckbxmntmOptimalizovaKameru);
@@ -266,6 +268,14 @@ public class MainMenu{
 				openExportMenu();
 			}
 		});
+		
+		JMenuItem mntmZoznamVpoiiek = new JMenuItem("Zoznam výpožičiek");
+		mntmZoznamVpoiiek.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openBorrowingsList();
+			}
+		});
+		mnIn.add(mntmZoznamVpoiiek);
 		mnIn.add(mntmExportova);
 		
 	}
@@ -422,6 +432,16 @@ public class MainMenu{
 		desktopPane.add(exp);
 		try{
 			exp.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
+	
+	private void openBorrowingsList(){
+		BorrowingsList bl = new BorrowingsList();
+		desktopPane.add(bl);
+		try{
+			bl.setSelected(true);
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}

@@ -1,6 +1,8 @@
 package io.github.shardbytes.lbs.gui.swing;
 
 import com.github.sarxos.webcam.Webcam;
+
+import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
 import io.github.shardbytes.lbs.event.DataDialogEventOperation;
@@ -32,11 +34,13 @@ public class BookScanner extends JInternalFrame {
 		Webcam webcam = null;
 		try{
 			webcam = Webcam.getDefault();
-			webcam.open();
+			if(!Load.webcamOptimise){
+				webcam.open();				
+			}
 			ic = new ImageIcon(webcam.getImage());
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Pripojte webkameru.", "Chyba", JOptionPane.ERROR_MESSAGE);
-			dispose();
+			return;
 		}
 		
 		setTitle("Nasn\u00EDma\u0165 knihu");
