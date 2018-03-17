@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
+import java.io.File;
 
 public class MainMenu{
 	
@@ -245,6 +246,20 @@ public class MainMenu{
 		JSeparator separator = new JSeparator();
 		mnIn.add(separator);
 		
+		JMenu mnNastavenia = new JMenu("Nastavenia");
+		mnIn.add(mnNastavenia);
+		
+		JCheckBoxMenuItem chckbxmntmOptimalizovaKameru = new JCheckBoxMenuItem("Optimalizovať kameru");
+		chckbxmntmOptimalizovaKameru.addActionListener((e) -> {
+			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
+			Load.writeBoolean(Load.webcamOptimise, new File("data" + File.separator + "webcamSettings.ser"));
+		});
+		chckbxmntmOptimalizovaKameru.setSelected(Load.webcamOptimise);
+		mnNastavenia.add(chckbxmntmOptimalizovaKameru);
+		
+		JSeparator separator_5 = new JSeparator();
+		mnIn.add(separator_5);
+		
 		JMenuItem mntmExportova = new JMenuItem("Exportova\u0165 datab\u00E1zu");
 		mntmExportova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -415,4 +430,5 @@ public class MainMenu{
 	public static JDesktopPane getDesktopPane() {
 		return desktopPane;
 	}
+	
 }
