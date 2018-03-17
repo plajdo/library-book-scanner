@@ -14,6 +14,12 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.*;
 
@@ -32,7 +38,7 @@ public class Load{
 	 * Turn off the webcam when not in use
 	 * TODO: Load from some config/settings
 	 */
-	public static boolean webcamOptimise = false;
+	public static boolean webcamOptimise;
 	
 	public static void resetDatabase(){
 		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
@@ -123,6 +129,9 @@ public class Load{
 		Thread as = new Thread(autosave);
 		as.setDaemon(true);
 		as.start();
+		
+		TermUtils.println("Loading configs");
+		webcamOptimise = readBoolean(new File("data" + File.separator + "webcamSettings.ser"));
 		
 		splashProgress(60);
 		splashText("Post-Initialisation");
@@ -228,6 +237,24 @@ public class Load{
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static void writeBoolean(boolean b, File f){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))){
+				oos.writeBoolean(b);
+		}catch(IOException e){
+			TermUtils.printerr("An IOException occured at Load.java::writeBoolean(boolean, File)");
+		}
+		
+	}
+	
+	public static boolean readBoolean(File f){
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))){
+			return ois.readBoolean();
+		}catch(IOException e){
+			return false;
+		}
+		
 	}
 	
 }
