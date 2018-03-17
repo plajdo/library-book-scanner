@@ -1,6 +1,8 @@
 package io.github.shardbytes.lbs.gui.swing;
 
 import com.github.sarxos.webcam.Webcam;
+
+import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
 import io.github.shardbytes.lbs.event.DataDialogEventOperation;
@@ -27,10 +29,19 @@ public class PersonScanner extends JInternalFrame {
 		return data;
 	}
 	
-	public PersonScanner() {
-		Webcam webcam = Webcam.getDefault();
-		webcam.open();
-		ImageIcon ic = new ImageIcon(webcam.getImage());
+	public PersonScanner(){
+		ImageIcon ic = null;
+		Webcam webcam = null;
+		try{
+			webcam = Webcam.getDefault();
+			if(!Load.webcamOptimise){
+				webcam.open();				
+			}
+			ic = new ImageIcon(webcam.getImage());
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Pripojte webkameru.", "Chyba", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		
 		setTitle("Nasn\u00EDma\u0165 \u010Ditate\u013Ea");
 		setBounds(100, 100, 450, 260);
