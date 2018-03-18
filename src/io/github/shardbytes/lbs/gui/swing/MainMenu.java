@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
+import java.io.File;
 
 public class MainMenu{
 	
@@ -245,12 +246,36 @@ public class MainMenu{
 		JSeparator separator = new JSeparator();
 		mnIn.add(separator);
 		
+		JMenu mnNastavenia = new JMenu("Nastavenia");
+		mnIn.add(mnNastavenia);
+		
+		JCheckBoxMenuItem chckbxmntmOptimalizovaKameru = new JCheckBoxMenuItem("Optimalizovať kameru");
+		chckbxmntmOptimalizovaKameru.addActionListener((e) -> {
+			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
+			Load.writeBoolean(Load.webcamOptimise, new File("data" + File.separator + "webcamSettings.ser"));
+			JOptionPane.showMessageDialog(null, "LBS je potrebn\u00E9 re\u0161tartova\u0165", "Zmena nastaven\u00ED", JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
+		});
+		chckbxmntmOptimalizovaKameru.setSelected(Load.webcamOptimise);
+		mnNastavenia.add(chckbxmntmOptimalizovaKameru);
+		
+		JSeparator separator_5 = new JSeparator();
+		mnIn.add(separator_5);
+		
 		JMenuItem mntmExportova = new JMenuItem("Exportova\u0165 datab\u00E1zu");
 		mntmExportova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openExportMenu();
 			}
 		});
+		
+		JMenuItem mntmZoznamVpoiiek = new JMenuItem("Zoznam výpožičiek");
+		mntmZoznamVpoiiek.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openBorrowingsList();
+			}
+		});
+		mnIn.add(mntmZoznamVpoiiek);
 		mnIn.add(mntmExportova);
 		
 	}
@@ -411,8 +436,19 @@ public class MainMenu{
 			e1.printStackTrace();
 		}
 	}
+	
+	private void openBorrowingsList(){
+		BorrowingsList bl = new BorrowingsList();
+		desktopPane.add(bl);
+		try{
+			bl.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
 
 	public static JDesktopPane getDesktopPane() {
 		return desktopPane;
 	}
+	
 }

@@ -51,8 +51,8 @@ public class PersonInfo extends JInternalFrame {
 		getContentPane().add(lblVypoianKnihy, "cell 0 2,alignx trailing");
 		
 		JList<String> list = new JList<String>();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		DefaultListModel<String> model = new DefaultListModel<String>();
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		getContentPane().add(new JScrollPane(list), "cell 0 3 2 1,grow");
 		
 		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> {
