@@ -96,7 +96,7 @@ public class Export extends JInternalFrame{
 							Object[] groups = groupsList.toArray();
 							
 							try{
-								String input = (String)JOptionPane.showInputDialog(null, "Vyberte triedu na exportovanie:", "export", JOptionPane.INFORMATION_MESSAGE, null, groups, groups[0]);
+								String input = (String)JOptionPane.showInputDialog(null, "Vyberte triedu na exportovanie:", "Export", JOptionPane.INFORMATION_MESSAGE, null, groups, groups[0]);
 								if(!(input == null)){
 									Table.createBorrowingsTable(input, textField.getText() + File.separator);							
 								}
