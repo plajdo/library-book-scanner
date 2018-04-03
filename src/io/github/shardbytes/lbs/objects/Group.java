@@ -8,6 +8,10 @@ public class Group{
 	private int groupSize;
 	private HashSet<Person> peopleInGroup;
 	
+	public Group(String name){
+		this.groupName = name;
+	}
+	
 	public String getName(){
 		return groupName;
 	}

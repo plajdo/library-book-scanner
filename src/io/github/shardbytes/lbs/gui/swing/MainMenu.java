@@ -221,6 +221,17 @@ public class MainMenu{
 		mntmZoznamtudentov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		mntudent.add(mntmZoznamtudentov);
 		
+		JMenu mnTrieda = new JMenu("Trieda");
+		menuBar.add(mnTrieda);
+		
+		JMenuItem mntmPridatTriedu = new JMenuItem("Prida\u0165 triedu");
+		mntmPridatTriedu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				openAddNewClass();
+			}
+		});
+		mnTrieda.add(mntmPridatTriedu);
+		
 		JMenu mnIn = new JMenu("In\u00E9");
 		menuBar.add(mnIn);
 		
@@ -446,9 +457,18 @@ public class MainMenu{
 			e1.printStackTrace();
 		}
 	}
+	
+	private void openAddNewClass(){
+		AddClass ac = new AddClass();
+		desktopPane.add(ac);
+		try{
+			ac.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
 
 	public static JDesktopPane getDesktopPane() {
 		return desktopPane;
 	}
-	
 }
