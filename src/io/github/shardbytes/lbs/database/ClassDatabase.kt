@@ -1,6 +1,7 @@
 package io.github.shardbytes.lbs.database
 
 import io.github.shardbytes.lbs.gui.terminal.TermUtils
+import io.github.shardbytes.lbs.objects.Group
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -8,11 +9,7 @@ import java.io.PrintWriter
 
 class ClassDatabase private constructor(){
 	
-	var classList: ArrayList<String> = ArrayList()
-	
-	init{
-		load()
-	}
+	var classList: ArrayList<Group> = ArrayList()
 	
 	private object Holder{
 		val INSTANCE: ClassDatabase = ClassDatabase()
@@ -32,7 +29,7 @@ class ClassDatabase private constructor(){
 			var jsonArray: JSONArray = jsonObject.getJSONArray("groups")
 
 			for(i in 0..jsonArray.length() - 1){
-				classList.add(jsonArray.get(i).toString())
+				classList.add(Group(jsonArray.get(i).toString()))
 			}
 			
 		}catch(e: Exception){
@@ -49,7 +46,7 @@ class ClassDatabase private constructor(){
 			0 -> {}
 			else -> {
 				for(i in 0..classList.size - 1){
-						jsonArray.put(classList.get(i))
+						jsonArray.put(classList.get(i).getName())
 				}
 			}
 		}

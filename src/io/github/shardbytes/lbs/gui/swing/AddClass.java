@@ -50,8 +50,7 @@ public class AddClass extends JInternalFrame{
 		JButton btnPrida = new JButton("Prida\u0165");
 		btnPrida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cdb.getClassList().add(textField.getText());
-				cdb.save();
+				cdb.getClassList().add(new Group(textField.getText()));
 				refreshList(listModel, cdb.getClassList());
 				textField.setText("");
 			}
@@ -64,9 +63,8 @@ public class AddClass extends JInternalFrame{
 
 	}
 	
-	private void addGroupsToList(DefaultListModel<String> model, ArrayList<String/*TODO: Change to group*/> list){
-		list.forEach((string/*Change to group as well*/) -> {
-			Group group = new Group(string);
+	private void addGroupsToList(DefaultListModel<String> model, ArrayList<Group> list){
+		list.forEach((group) -> {
 			model.addElement(group.getName());
 		});
 		
@@ -76,7 +74,7 @@ public class AddClass extends JInternalFrame{
 		model.clear();
 	}
 	
-	private void refreshList(DefaultListModel<String> model, ArrayList<String/*CHANGG*/> groupList){
+	private void refreshList(DefaultListModel<String> model, ArrayList<Group> groupList){
 		clearList(model);
 		addGroupsToList(model, groupList);
 	}
