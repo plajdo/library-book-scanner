@@ -1,6 +1,7 @@
 package io.github.shardbytes.lbs.gui.swing;
 
 import io.github.shardbytes.lbs.database.BorrowDatabase;
+import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
@@ -18,6 +19,7 @@ public class MainMenu{
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	private BorrowDatabase bdb = BorrowDatabase.getInstance();
+	private ClassDatabase cdb = ClassDatabase.Companion.getInstance();
 	
 	public static void open() {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,6 +59,7 @@ public class MainMenu{
 				TermUtils.println("Saving databases");
 				db.save(Load.DATABASE_PATH);
 				bdb.save(Load.B_DATABASE_PATH);
+				cdb.save();
 
 				TermUtils.println("Exiting LBS");
 				System.exit(0);
@@ -92,6 +95,7 @@ public class MainMenu{
 				try{
 					db.save(Load.DATABASE_PATH);
 					bdb.save(Load.B_DATABASE_PATH);
+					cdb.save();
 					JOptionPane.showMessageDialog(null, "Ulo\u017Een\u00E9", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.INFORMATION_MESSAGE);
 				}catch(Exception e1){
 					JOptionPane.showMessageDialog(null, "Chyba pri ukladan\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);

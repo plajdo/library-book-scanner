@@ -1,5 +1,6 @@
 package io.github.shardbytes.lbs.gui.swing;
 
+import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.datareader.Generator;
 import io.github.shardbytes.lbs.event.TableRefreshEvent;
@@ -23,7 +24,7 @@ public class AddPerson extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
+	private JComboBox<String> triedaField;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	
@@ -53,9 +54,12 @@ public class AddPerson extends JInternalFrame {
 		JLabel lblAutorKnihy = new JLabel("Trieda:");
 		getContentPane().add(lblAutorKnihy, "cell 0 2,alignx trailing");
 		
-		textField_2 = new JTextField();
-		getContentPane().add(textField_2, "cell 1 2,growx");
-		textField_2.setColumns(10);
+		triedaField = new JComboBox<String>();
+		getContentPane().add(triedaField, "cell 1 2,growx");
+		ClassDatabase.Companion.getInstance().getClassList().forEach((group) -> {
+			triedaField.addItem(group.getName());
+		});
+		triedaField.setEditable(false);
 		
 		JSeparator separator = new JSeparator();
 		getContentPane().add(separator, "cell 0 4 2 1,grow");
@@ -67,11 +71,11 @@ public class AddPerson extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u010Ditate\u013Ea do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(textField_2.getText().isEmpty())){
+				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(triedaField.getSelectedItem().toString().isEmpty())){
 					if(isInteger(textField.getText())){
 						Person np = new Person(textField.getText());
 						np.setName(textField_1.getText());
-						np.setGroup(textField_2.getText());
+						np.setGroup(triedaField.getSelectedItem().toString());
 						db.persons.put(textField.getText(), np);
 						btnPotvrdiAPrida.setEnabled(false);
 						

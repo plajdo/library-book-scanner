@@ -4,6 +4,7 @@ import com.github.sarxos.webcam.Webcam;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
+import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
@@ -32,6 +33,7 @@ public class Load{
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
+	private static ClassDatabase cdb = ClassDatabase.Companion.getInstance();
 	private static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
 	/*
@@ -81,6 +83,11 @@ public class Load{
 		
 	}
 	
+	/*
+	 * TODO: Save all databases into one file (zip maybe? unzip on startup and zip on exit),
+	 * so they can be transferred more easily and so this program uses only one startup
+	 * argument instead of 4 (two are not finished - ClassDatabase and WebcamOptimise).
+	 */
 	public static void main(String[] args){
 		begin(args[0], args[1]);
 	}
@@ -96,6 +103,9 @@ public class Load{
 		
 		DATABASE_PATH = db_path;
 		B_DATABASE_PATH = b_db_path;
+		/*
+		 * TODO: GROUP_DATABASE_PATH?
+		 */
 		
 		TermUtils.init();
 		if(System.console() == null){
@@ -108,6 +118,7 @@ public class Load{
 		TermUtils.println("Loading databases");
 		db.load(DATABASE_PATH);
 		bdb.load(B_DATABASE_PATH);
+		cdb.load();
 		
 		splashProgress(40);
 		splashText("Initialisation");
@@ -181,6 +192,7 @@ public class Load{
 		try{
 			db.save(DATABASE_PATH);
 			bdb.save(B_DATABASE_PATH);
+			cdb.save();
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 		}
@@ -246,10 +258,9 @@ public class Load{
 	
 	public static void writeBoolean(boolean b, File f){
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))){
-			
 			oos.writeBoolean(b);
 		}catch(IOException e){
-			TermUtils.printerr("An IOException occured at Load.java::writeBoolean(boolean, File)");
+			TermUtils.printerr(e.toString());
 		}
 		
 	}
