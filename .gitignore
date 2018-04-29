@@ -9,3 +9,5 @@ out/
 *.xls
 .DS_Store
 *.json
+resources/
+library-book-scanner-launcher/
