@@ -28,7 +28,7 @@ class ClassDatabase private constructor(){
 			var jsonObject = JSONObject(textRead)
 			var jsonArray: JSONArray = jsonObject.getJSONArray("groups")
 
-			for(i in 0 until jsonArray.length() - 1){
+			for(i in 0..jsonArray.length() - 1){
 				classList.add(Group(jsonArray.get(i).toString()))
 			}
 			
