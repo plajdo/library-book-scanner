@@ -25,10 +25,10 @@ class ClassDatabase private constructor(){
 	fun load(){
 		try{
 			var textRead: String = File("data" + File.separator + "groupList.json").readText()
-			var jsonObject: JSONObject = JSONObject(textRead)
+			var jsonObject = JSONObject(textRead)
 			var jsonArray: JSONArray = jsonObject.getJSONArray("groups")
 
-			for(i in 0..jsonArray.length() - 1){
+			for(i in 0 until jsonArray.length() - 1){
 				classList.add(Group(jsonArray.get(i).toString()))
 			}
 			
@@ -40,18 +40,18 @@ class ClassDatabase private constructor(){
 	}
 	
 	fun save(){
-		var jsonObject: JSONObject = JSONObject()
-		var jsonArray: JSONArray = JSONArray()
+		var jsonObject = JSONObject()
+		var jsonArray = JSONArray()
 		when(classList.size){
 			0 -> {}
 			else -> {
-				for(i in 0..classList.size - 1){
-						jsonArray.put(classList.get(i).getName())
+				for(i in 0..classList.size - 1){ 
+					jsonArray.put(classList.get(i).getName())
 				}
 			}
 		}
 		jsonObject.put("groups", jsonArray)
-		var writer: PrintWriter = PrintWriter("data" + File.separator + "groupList.json")
+		var writer = PrintWriter("data" + File.separator + "groupList.json")
 		writer.println(jsonObject.toString())
 		writer.close()
 		
