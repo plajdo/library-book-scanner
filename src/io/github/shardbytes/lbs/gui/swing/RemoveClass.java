@@ -13,8 +13,6 @@ import javax.swing.ListSelectionModel;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.objects.Group;
 import net.miginfocom.swing.MigLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class RemoveClass extends JInternalFrame {
 	
@@ -24,7 +22,7 @@ public class RemoveClass extends JInternalFrame {
 	private ClassDatabase cdb = ClassDatabase.Companion.getInstance();
 	
 	public RemoveClass() {
-		setTitle("Odstru00E1ni\u0165 triedu");
+		setTitle("Odstr\u00E1ni\u0165 triedu");
 		setClosable(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][grow][]"));
@@ -35,16 +33,14 @@ public class RemoveClass extends JInternalFrame {
 		list = new JList<String>();
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane scroll = new JScrollPane();
+		list.setModel(listModel);
+		JScrollPane scroll = new JScrollPane(list);
 		getContentPane().add(scroll, "cell 0 1,grow");
 		
 		JButton btnRemove = new JButton("Odstr\u00E1ni\u0165");
-		btnRemove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				cdb.getClassList().remove(list.getSelectedIndex());
-				list.remove(list.getSelectedIndex());
-				refreshList(listModel, cdb.getClassList());
-			}
+		btnRemove.addActionListener(e -> {
+			cdb.getClassList().remove(list.getSelectedIndex());
+			refreshList(listModel, cdb.getClassList());
 		});
 		getContentPane().add(btnRemove, "cell 0 2");
 		

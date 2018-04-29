@@ -22,15 +22,13 @@ public class MainMenu{
 	private ClassDatabase cdb = ClassDatabase.Companion.getInstance();
 	
 	public static void open() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainMenu window = new MainMenu();
-					window.frmGymnziumLipany.setLocationRelativeTo(null);
-					window.frmGymnziumLipany.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> {
+			try {
+				MainMenu window = new MainMenu();
+				window.frmGymnziumLipany.setLocationRelativeTo(null);
+				window.frmGymnziumLipany.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -235,6 +233,12 @@ public class MainMenu{
 			}
 		});
 		mnTrieda.add(mntmPridatTriedu);
+		
+		JMenuItem menuItemOdstranitTriedu = new JMenuItem("Odstr\u00E1ni\u0165 triedu");
+		menuItemOdstranitTriedu.addActionListener(e -> {
+			openRemoveClass();
+		});
+		mnTrieda.add(menuItemOdstranitTriedu);
 		
 		JMenu mnIn = new JMenu("In\u00E9");
 		menuBar.add(mnIn);
@@ -467,6 +471,16 @@ public class MainMenu{
 		desktopPane.add(ac);
 		try{
 			ac.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
+	
+	private void openRemoveClass(){
+		RemoveClass rc = new RemoveClass();
+		desktopPane.add(rc);
+		try {
+			rc.setSelected(true);
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}
