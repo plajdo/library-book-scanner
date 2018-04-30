@@ -19,7 +19,7 @@ public class AddClass extends JInternalFrame{
 	private JTextField textField;
 	private JList<String> list;
 	
-	private ClassDatabase cdb = ClassDatabase.Companion.getInstance();
+	private ClassDatabase cdb = ClassDatabase.getInstance();
 	
 	public AddClass() {
 		setTitle("Prida\u0165 triedu");

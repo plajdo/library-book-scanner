@@ -19,7 +19,7 @@ public class MainMenu{
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
 	private BorrowDatabase bdb = BorrowDatabase.getInstance();
-	private ClassDatabase cdb = ClassDatabase.Companion.getInstance();
+	private ClassDatabase cdb = ClassDatabase.getInstance();
 	
 	public static void open() {
 		EventQueue.invokeLater(() -> {
