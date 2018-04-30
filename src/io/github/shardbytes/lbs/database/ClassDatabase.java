@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,34 +17,22 @@ public class ClassDatabase{
 	
 	private static ClassDatabase instance;
 	
-	private ArrayList<Group> classList;
-	private ArrayList<String> groupNames;
-	private int groupNumber;
+	private HashMap<String, ArrayList<Group>> classList;
 	
 	static{
 		instance = new ClassDatabase();
 	}
 	
 	private ClassDatabase(){
-		classList = new ArrayList<Group>();
-		groupNames = new ArrayList<String>();
-		groupNumber = 0;
+		classList = new HashMap<>();
 	}
 	
 	public static ClassDatabase getInstance(){
 		return instance;
 	}
 	
-	public ArrayList<Group> getClassList(){
+	public HashMap<String, ArrayList<Group>> getClassList(){
 		return classList;
-	}
-	
-	public ArrayList<String> getGroupNames(){
-		return groupNames;
-	}
-	
-	public int getGroupNumber(){
-		return groupNumber;
 	}
 	
 	public void load(){
@@ -53,28 +42,49 @@ public class ClassDatabase{
 				sb.append(line);
 			});
 			JSONObject obj = new JSONObject(sb.toString());
-			JSONArray arr = obj.getJSONArray("groups");
+			JSONArray namesArr = obj.names();
+			ArrayList<String> names = new ArrayList<String>();
 			
-			for(int i = 0; i < arr.length() - 1; i++){
-				classList.add(new Group(arr.get(i).toString()));
-			}
+			namesArr.forEach((name) -> {
+				names.add(name.toString());
+			});
 			
-		}catch(IOException e){
-			e.printStackTrace();
+			classList.clear();
+			
+			names.forEach((name) -> {
+				ArrayList<Group> arg = new ArrayList<Group>();
+				obj.getJSONArray(name).forEach((group) -> {
+					arg.add(new Group(group.toString()));
+					
+				});
+				classList.put(name, arg);
+				
+			});
+			
+		}catch(Exception e){
+			TermUtils.printerr("Cannot load class database");
 		}
 		
 	}
 	
 	public void save(){
 		JSONObject obj = new JSONObject();
-		JSONArray arr = new JSONArray();
-		if(classList.size() != 0){
-			for(Group g : classList){
-				arr.put(g.getName());
-			}
+		
+		if(!classList.isEmpty()){
+			classList.forEach((name, arl) -> {
+				if(!arl.isEmpty()){
+					JSONArray arr = new JSONArray();
+					arl.forEach((group) -> {
+						arr.put(group.getName());
+						
+					});
+					obj.put(name, arr);
+					
+				}
+				
+			});
 			
 		}
-		obj.put("groups", arr);
 		
 		try(PrintWriter writer = new PrintWriter("data" + File.separator + "groupList.json")){
 			writer.println(obj.toString());
