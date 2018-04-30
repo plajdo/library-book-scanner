@@ -240,6 +240,12 @@ public class MainMenu{
 		});
 		mnTrieda.add(menuItemOdstranitTriedu);
 		
+		JMenuItem menuItemEditTriedu = new JMenuItem("edit tireda");
+		menuItemEditTriedu.addActionListener((e) -> {
+			openEditClass();
+		});
+		mnTrieda.add(menuItemEditTriedu);
+		
 		JMenu mnIn = new JMenu("In\u00E9");
 		menuBar.add(mnIn);
 		
@@ -479,8 +485,18 @@ public class MainMenu{
 	private void openRemoveClass(){
 		RemoveClass rc = new RemoveClass();
 		desktopPane.add(rc);
-		try {
+		try{
 			rc.setSelected(true);
+		}catch(PropertyVetoException e1){
+			e1.printStackTrace();
+		}
+	}
+	
+	private void openEditClass(){
+		EditClass ec = new EditClass();
+		desktopPane.add(ec);
+		try{
+			ec.setSelected(true);
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}
