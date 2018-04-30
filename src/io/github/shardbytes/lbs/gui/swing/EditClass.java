@@ -29,6 +29,8 @@ public class EditClass extends JInternalFrame{
 	private JTextField textField;
 	private JButton btnNovyRad;
 	
+	private int num = 0;
+	
 	public EditClass() {
 		setMaximizable(true);
 		setIconifiable(true);
@@ -89,14 +91,13 @@ public class EditClass extends JInternalFrame{
 		table.setModel(tblModel);
 		
 		cdb.getClassList().forEach((columnName, columnData) -> {
-			Group[] groupData = new Group[cdb.getClassList().size()];
-			columnData.toArray(groupData);
+			String[] data = new String[columnData.size()];
+			columnData.forEach((group) -> {
+				data[num] = group.getName();
+				num++;
+			});
+			num = 0;
 			
-			String[] data = new String[groupData.length];
-			for(int i = 0; i < groupData.length; i++){
-				data[i] = groupData[i].getName();
-				
-			}
 			tblModel.addColumn(columnName, data);
 			
 		});
