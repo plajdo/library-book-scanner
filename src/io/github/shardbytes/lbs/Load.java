@@ -33,7 +33,7 @@ public class Load{
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
-	private static ClassDatabase cdb = ClassDatabase.Companion.getInstance();
+	private static ClassDatabase cdb = ClassDatabase.getInstance();
 	private static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
 	/*

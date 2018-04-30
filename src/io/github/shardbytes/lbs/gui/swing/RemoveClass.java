@@ -19,7 +19,7 @@ public class RemoveClass extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JList<String> list;
 	
-	private ClassDatabase cdb = ClassDatabase.Companion.getInstance();
+	private ClassDatabase cdb = ClassDatabase.getInstance();
 	
 	public RemoveClass() {
 		setTitle("Odstr\u00E1ni\u0165 triedu");

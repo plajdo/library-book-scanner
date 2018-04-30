@@ -56,7 +56,7 @@ public class AddPerson extends JInternalFrame {
 		
 		triedaField = new JComboBox<String>();
 		getContentPane().add(triedaField, "cell 1 2,growx");
-		ClassDatabase.Companion.getInstance().getClassList().forEach((group) -> {
+		ClassDatabase.getInstance().getClassList().forEach((group) -> {
 			triedaField.addItem(group.getName());
 		});
 		triedaField.setEditable(false);
