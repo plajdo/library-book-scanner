@@ -12,9 +12,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import io.github.shardbytes.lbs.database.ClassDatabase;
+import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Group;
 import net.miginfocom.swing.MigLayout;
 
@@ -42,6 +45,7 @@ public class EditClass extends JInternalFrame{
 		
 		table = new JTable();
 		table.setRowSelectionAllowed(false);
+		
 		scrollPane = new JScrollPane(table);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -99,6 +103,19 @@ public class EditClass extends JInternalFrame{
 			num = 0;
 			
 			tblModel.addColumn(columnName, data);
+			
+		});
+		
+		tblModel.addRow(new Object[]{
+				"dsadsa"
+		});
+		
+		tblModel.addTableModelListener(new TableModelListener(){
+			@Override
+			public void tableChanged(TableModelEvent e){
+				tblModel.get
+				
+			}
 			
 		});
 		
