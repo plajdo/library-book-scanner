@@ -1,8 +1,6 @@
 package io.github.shardbytes.lbs.gui.swing;
 
 import io.github.shardbytes.lbs.database.LBSDatabase;
-import io.github.shardbytes.lbs.event.TableRefreshEvent;
-import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.objects.Person;
 
 import javax.swing.*;
@@ -15,10 +13,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class ListAllPersons extends JInternalFrame{
+class ListAllPersons extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTable table;
@@ -28,7 +24,7 @@ public class ListAllPersons extends JInternalFrame{
 	private LBSDatabase db = LBSDatabase.getInstance();
 	private JTextField textField;
 	
-	public ListAllPersons(){
+	ListAllPersons(){
 		setIconifiable(true);
 		setClosable(true);
 		setResizable(true);
@@ -45,7 +41,7 @@ public class ListAllPersons extends JInternalFrame{
 				Point point = e.getPoint();
 				int row = table.rowAtPoint(point);
 				if(e.getClickCount() == 2 && row != -1){
-					PersonInfo pi = new PersonInfo(db.persons.get(table.getModel().getValueAt(row, 0)));
+					PersonInfo pi = new PersonInfo(db.persons.get(table.getModel().getValueAt(row, 0))); //TODO: test .toString as suspicious call
 					MainMenu.getDesktopPane().add(pi);
 					try{
 						pi.setSelected(true);
@@ -78,68 +74,17 @@ public class ListAllPersons extends JInternalFrame{
 		table.setModel(tblModel);
 		
 		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				refreshTable(textField.getText());
-			}
-		});
+		textField.addActionListener(e -> refreshTable(textField.getText()));
 		getContentPane().add(textField, BorderLayout.NORTH);
 		textField.setColumns(10);
 		
-		AddBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		RemoveBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		BorrowBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		RemovePerson.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		AddPerson.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		ReturnBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
+		AddBook.addDataDialogListener(evt -> refreshTable());
+		RemoveBook.addDataDialogListener(evt -> refreshTable());
+		BorrowBook.addDataDialogListener(evt -> refreshTable());
+		RemovePerson.addDataDialogListener(evt -> refreshTable());
+		AddPerson.addDataDialogListener(evt -> refreshTable());
+		ReturnBook.addDataDialogListener(evt -> refreshTable());
+		
 		this.addComponentListener(new ComponentListener(){
 			
 			@Override

@@ -9,9 +9,9 @@ import java.io.IOException;
 public class ImageDesktopPane extends JDesktopPane
 {
 	private static final long serialVersionUID = 1L;
-	BufferedImage backgroundImage;
+	private BufferedImage backgroundImage;
     
-    public ImageDesktopPane()
+    ImageDesktopPane()
     {
         try {
             backgroundImage = ImageIO.read(getClass().getResourceAsStream("/res/background.jpg"));

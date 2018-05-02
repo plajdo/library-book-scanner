@@ -60,6 +60,7 @@ public class ClassDatabase{
 				classList.put(name, arg);
 				
 			});
+			TermUtils.println("Class database loaded");
 			
 		}catch(Exception e){
 			TermUtils.printerr("Cannot load class database");
@@ -92,6 +93,7 @@ public class ClassDatabase{
 			TermUtils.printerr("Cannot save class database");
 			e.printStackTrace();
 		}
+		TermUtils.println("Class database saved");
 		
 	}
 	

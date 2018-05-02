@@ -91,7 +91,7 @@ public class Export extends JInternalFrame{
 					}
 					if(chckbxZoznamVpoiiek.isSelected()){
 						try{
-							ArrayList<String> groupsList = new ArrayList<String>();
+							ArrayList<String> groupsList = new ArrayList<>();
 							bdb.borrowings.forEach((group, map) -> {groupsList.add(group);});
 							Object[] groups = groupsList.toArray();
 							

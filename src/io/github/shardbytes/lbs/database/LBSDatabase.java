@@ -32,10 +32,7 @@ public class LBSDatabase
 	// ! Everything will be parsed when needed, wont keep common document or anything, this is pure converter from xml to Map
 
 
-	// FIELDS
-	private DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	private DocumentBuilder dBuilder;
-	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	private Transformer transformer;
 
 	// THE MAIN DATABASE MAP OBJECT REFERENCES, TO BE USED EVERYWHERE WHERE DATABASE IS NEEDED
@@ -54,7 +51,10 @@ public class LBSDatabase
 		// initialize factories and similar stuff required for parsing
 		try
 		{
+			// FIELDS
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			dBuilder = dbFactory.newDocumentBuilder();
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			transformer = transformerFactory.newTransformer();
 			
 			// set indentation so it doesn't look like shit
@@ -213,15 +213,10 @@ public class LBSDatabase
 	}
 
 	public void reset(){
-		Comparator<String> numberComparator = new Comparator<String>(){
-
-			@Override
-			public int compare(String o1, String o2) {
-				int i1 = Integer.parseInt(o1.split("/")[0]);
-				int i2 = Integer.parseInt(o2.split("/")[0]);
-				return i1 - i2;
-			}
-			
+		Comparator<String> numberComparator = (o1, o2) -> {
+			int i1 = Integer.parseInt(o1.split("/")[0]);
+			int i2 = Integer.parseInt(o2.split("/")[0]);
+			return i1 - i2;
 		};
 		
 		books = new TreeMap<>(numberComparator);

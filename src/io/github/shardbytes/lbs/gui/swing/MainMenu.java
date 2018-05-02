@@ -33,11 +33,11 @@ public class MainMenu{
 		});
 	}
 	
-	public MainMenu() {
+	private MainMenu() {
 		initialize();
 	}
 
-	public void closeWindow()
+	private void closeWindow()
 	{
 		frmGymnziumLipany.dispatchEvent(new WindowEvent(frmGymnziumLipany, WindowEvent.WINDOW_CLOSING));
 	}
@@ -78,26 +78,20 @@ public class MainMenu{
 		
 		JMenuItem mntmUkoni = new JMenuItem("Ukon\u010Di\u0165");
 		mntmUkoni.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
-		mntmUkoni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				closeWindow();
-			}
-		});
+		mntmUkoni.addActionListener(e -> closeWindow());
 		mnSbor.add(mntmUkoni);
 		
 		JMenuItem mntmUloi = new JMenuItem("Ulo\u017Ei\u0165");
 		mntmUloi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-		mntmUloi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TermUtils.println("Saving database");
-				try{
-					db.save(Load.DATABASE_PATH);
-					bdb.save(Load.B_DATABASE_PATH);
-					cdb.save();
-					JOptionPane.showMessageDialog(null, "Ulo\u017Een\u00E9", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.INFORMATION_MESSAGE);
-				}catch(Exception e1){
-					JOptionPane.showMessageDialog(null, "Chyba pri ukladan\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
-				}
+		mntmUloi.addActionListener(e -> {
+			TermUtils.println("Saving database");
+			try{
+				db.save(Load.DATABASE_PATH);
+				bdb.save(Load.B_DATABASE_PATH);
+				cdb.save();
+				JOptionPane.showMessageDialog(null, "Ulo\u017Een\u00E9", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.INFORMATION_MESSAGE);
+			}catch(Exception e1){
+				JOptionPane.showMessageDialog(null, "Chyba pri ukladan\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
@@ -106,13 +100,11 @@ public class MainMenu{
 		mnSbor.add(mntmUloi);
 		
 		JMenuItem mntmZahodiZmeny = new JMenuItem("Zahodi\u0165 zmeny");
-		mntmZahodiZmeny.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Zahodi\u0165 a ukon\u010Di\u0165?", "Zahodi\u0165 zmeny?", JOptionPane.YES_NO_OPTION);
-				if(dialogResult == JOptionPane.YES_OPTION){
-					TermUtils.println("Exiting LBS");
-					System.exit(0);
-				}
+		mntmZahodiZmeny.addActionListener(e -> {
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Zahodi\u0165 a ukon\u010Di\u0165?", "Zahodi\u0165 zmeny?", JOptionPane.YES_NO_OPTION);
+			if(dialogResult == JOptionPane.YES_OPTION){
+				TermUtils.println("Exiting LBS");
+				System.exit(0);
 			}
 		});
 		mnSbor.add(mntmZahodiZmeny);
@@ -123,48 +115,27 @@ public class MainMenu{
 		JMenuItem mntmPridaKnihu = new JMenuItem("Prida\u0165 knihu");
 		mnKniha_1.add(mntmPridaKnihu);
 		mntmPridaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
-		mntmPridaKnihu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				openAddBook();
-			}
-		});
+		mntmPridaKnihu.addActionListener(e -> openAddBook());
 		
 		JMenuItem mntmOdstrniKnihu = new JMenuItem("Odstr\u00E1ni\u0165 knihu");
-		mntmOdstrniKnihu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openRemoveBook();
-			}
-			
-		});
+		mntmOdstrniKnihu.addActionListener(e -> openRemoveBook());
 		mnKniha_1.add(mntmOdstrniKnihu);
 		mntmOdstrniKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		
 		JMenuItem mntmPridaKnihy = new JMenuItem("Prida\u0165 knihy");
-		mntmPridaKnihy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openAddBooks();
-			}
-		});
+		mntmPridaKnihy.addActionListener(e -> openAddBooks());
 		mnKniha_1.add(mntmPridaKnihy);
 		
 		JSeparator separator_1 = new JSeparator();
 		mnKniha_1.add(separator_1);
 		
 		JMenuItem mntmVypoiaKnihu = new JMenuItem("Vypo\u017Ei\u010Da\u0165 knihu");
-		mntmVypoiaKnihu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openBorrowBook();
-			}
-		});
+		mntmVypoiaKnihu.addActionListener(e -> openBorrowBook());
 		mntmVypoiaKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mnKniha_1.add(mntmVypoiaKnihu);
 		
 		JMenuItem mntmVrtiKnihu = new JMenuItem("Vr\u00E1ti\u0165 knihu");
-		mntmVrtiKnihu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openReturnBook();
-			}
-		});
+		mntmVrtiKnihu.addActionListener(e -> openReturnBook());
 		mntmVrtiKnihu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		mnKniha_1.add(mntmVrtiKnihu);
 		
@@ -172,20 +143,12 @@ public class MainMenu{
 		mnKniha_1.add(separator_2);
 		
 		JMenuItem mntmZoznamKnh = new JMenuItem("Zoznam kn\u00EDh");
-		mntmZoznamKnh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openListAllBooks();
-			}
-		});
+		mntmZoznamKnh.addActionListener(e -> openListAllBooks());
 		mntmZoznamKnh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		mnKniha_1.add(mntmZoznamKnh);
 		
 		JMenuItem mntmKnihyNaVrtenie = new JMenuItem("Knihy na vr\u00E1tenie");
-		mntmKnihyNaVrtenie.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openBooksToReturn();
-			}
-		});
+		mntmKnihyNaVrtenie.addActionListener(e -> openBooksToReturn());
 		mntmKnihyNaVrtenie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, InputEvent.SHIFT_MASK));
 		mnKniha_1.add(mntmKnihyNaVrtenie);
 		
@@ -195,19 +158,10 @@ public class MainMenu{
 		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u010Ditate\u013Ea");
 		mntudent.add(mntmPridaiaka);
 		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
-		mntmPridaiaka.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openAddStudent();
-			}
-			
-		});
+		mntmPridaiaka.addActionListener(e -> openAddStudent());
 		
 		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 \u010Ditate\u013Ea");
-		mntmOdstrniiaka.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openRemovePerson();
-			}
-		});
+		mntmOdstrniiaka.addActionListener(e -> openRemovePerson());
 		mntudent.add(mntmOdstrniiaka);
 		mntmOdstrniiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		
@@ -215,11 +169,7 @@ public class MainMenu{
 		mntudent.add(separator_3);
 		
 		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam \u010Ditate\u013Eov");
-		mntmZoznamtudentov.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openListAllStudents();
-			}
-		});
+		mntmZoznamtudentov.addActionListener(e -> openListAllStudents());
 		mntmZoznamtudentov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
 		mntudent.add(mntmZoznamtudentov);
 		
@@ -227,23 +177,15 @@ public class MainMenu{
 		menuBar.add(mnTrieda);
 		
 		JMenuItem mntmPridatTriedu = new JMenuItem("Prida\u0165 triedu");
-		mntmPridatTriedu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				openAddNewClass();
-			}
-		});
+		mntmPridatTriedu.addActionListener(e -> openAddNewClass());
 		mnTrieda.add(mntmPridatTriedu);
 		
 		JMenuItem menuItemOdstranitTriedu = new JMenuItem("Odstr\u00E1ni\u0165 triedu");
-		menuItemOdstranitTriedu.addActionListener(e -> {
-			openRemoveClass();
-		});
+		menuItemOdstranitTriedu.addActionListener(e -> openRemoveClass());
 		mnTrieda.add(menuItemOdstranitTriedu);
 		
 		JMenuItem menuItemEditTriedu = new JMenuItem("edit tireda");
-		menuItemEditTriedu.addActionListener((e) -> {
-			openEditClass();
-		});
+		menuItemEditTriedu.addActionListener(e -> openEditClass());
 		mnTrieda.add(menuItemEditTriedu);
 		
 		JMenu mnIn = new JMenu("In\u00E9");
@@ -256,17 +198,9 @@ public class MainMenu{
 		mnVymaza.add(mntmVymazatDatabazu);
 		
 		JMenuItem mntmVymazaDatabzuVpoiiek = new JMenuItem("Vymaza\u0165 datab\u00E1zu v\u00FDpo\u017Ei\u010Diek");
-		mntmVymazaDatabzuVpoiiek.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Load.resetBorrowing();
-			}
-		});
+		mntmVymazaDatabzuVpoiiek.addActionListener(e -> Load.resetBorrowing());
 		mnVymaza.add(mntmVymazaDatabzuVpoiiek);
-		mntmVymazatDatabazu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Load.resetDatabase();
-			}
-		});
+		mntmVymazatDatabazu.addActionListener(e -> Load.resetDatabase());
 		
 		JSeparator separator = new JSeparator();
 		mnIn.add(separator);
@@ -275,7 +209,7 @@ public class MainMenu{
 		mnIn.add(mnNastavenia);
 		
 		JCheckBoxMenuItem chckbxmntmOptimalizovaKameru = new JCheckBoxMenuItem("Optimalizovať kameru");
-		chckbxmntmOptimalizovaKameru.addActionListener((e) -> {
+		chckbxmntmOptimalizovaKameru.addActionListener(e -> {
 			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
 			Load.writeBoolean(Load.webcamOptimise, new File("data" + File.separator + "webcamSettings.ser"));
 			JOptionPane.showMessageDialog(null, "LBS je potrebn\u00E9 re\u0161tartova\u0165", "Zmena nastaven\u00ED", JOptionPane.INFORMATION_MESSAGE);
@@ -288,18 +222,10 @@ public class MainMenu{
 		mnIn.add(separator_5);
 		
 		JMenuItem mntmExportova = new JMenuItem("Exportova\u0165 datab\u00E1zu");
-		mntmExportova.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openExportMenu();
-			}
-		});
+		mntmExportova.addActionListener(e -> openExportMenu());
 		
 		JMenuItem mntmZoznamVpoiiek = new JMenuItem("Zoznam výpožičiek");
-		mntmZoznamVpoiiek.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openBorrowingsList();
-			}
-		});
+		mntmZoznamVpoiiek.addActionListener(e -> openBorrowingsList());
 		mnIn.add(mntmZoznamVpoiiek);
 		mnIn.add(mntmExportova);
 		
@@ -340,7 +266,7 @@ public class MainMenu{
 				break;
 			}
 			
-		}catch(NullPointerException e){
+		}catch(NullPointerException ignored){
 			
 		}
 		
@@ -502,7 +428,7 @@ public class MainMenu{
 		}
 	}
 
-	public static JDesktopPane getDesktopPane() {
+	static JDesktopPane getDesktopPane() {
 		return desktopPane;
 	}
 }
