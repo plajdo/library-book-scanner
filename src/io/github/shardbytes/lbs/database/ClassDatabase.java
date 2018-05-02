@@ -38,25 +38,18 @@ public class ClassDatabase{
 	public void load(){
 		StringBuilder sb = new StringBuilder();
 		try{
-			Files.lines(new File("data" + File.separator + "groupList.json").toPath()).forEach((line) -> {
-				sb.append(line);
-			});
+			Files.lines(new File("data" + File.separator + "groupList.json").toPath()).forEach(sb::append);
 			JSONObject obj = new JSONObject(sb.toString());
 			JSONArray namesArr = obj.names();
-			ArrayList<String> names = new ArrayList<String>();
+			ArrayList<String> names = new ArrayList<>();
 			
-			namesArr.forEach((name) -> {
-				names.add(name.toString());
-			});
+			namesArr.forEach((name) -> names.add(name.toString()));
 			
 			classList.clear();
 			
 			names.forEach((name) -> {
-				ArrayList<Group> arg = new ArrayList<Group>();
-				obj.getJSONArray(name).forEach((group) -> {
-					arg.add(new Group(group.toString()));
-					
-				});
+				ArrayList<Group> arg = new ArrayList<>();
+				obj.getJSONArray(name).forEach((group) -> arg.add(new Group(group.toString())));
 				classList.put(name, arg);
 				
 			});
@@ -76,7 +69,10 @@ public class ClassDatabase{
 				if(!arl.isEmpty()){
 					JSONArray arr = new JSONArray();
 					arl.forEach((group) -> {
-						arr.put(group.getName());
+						if(!group.getName().equals("null")){	//TODO: NullPointerException wtf
+							arr.put(group.getName());
+							
+						}
 						
 					});
 					obj.put(name, arr);

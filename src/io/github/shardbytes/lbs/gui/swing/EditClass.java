@@ -2,6 +2,7 @@ package io.github.shardbytes.lbs.gui.swing;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -26,7 +27,8 @@ class EditClass extends JInternalFrame{
 	private JTextField textField;
 
 	private int num = 0;
-	
+	private TableModelListener tml;
+
 	EditClass(){
 		setMaximizable(true);
 		setIconifiable(true);
@@ -50,7 +52,7 @@ class EditClass extends JInternalFrame{
 		};
 		table.setModel(tblModel);
 
-		TableModelListener tml = (e) -> {
+		tml = (e) -> {
 			for(int i = 0; i < tblModel.getColumnCount(); i++){
 				ArrayList<Group> arls = new ArrayList<>();
 				for(int j = 0; j < tblModel.getRowCount(); j++){
@@ -61,6 +63,7 @@ class EditClass extends JInternalFrame{
 
 			}
 			cdb.save();
+			refreshTable();
 
 		};
 		tblModel.addTableModelListener(tml);
@@ -80,7 +83,6 @@ class EditClass extends JInternalFrame{
 			if(!textField.getText().isEmpty()){
 				cdb.getClassList().put(textField.getText(), new ArrayList<>());
 				textField.setText("");
-				System.out.println("cdb.getClassList().toString() = " + cdb.getClassList().toString());
 				refreshTable();
 				
 			}else{
@@ -110,6 +112,21 @@ class EditClass extends JInternalFrame{
 			
 		});
 		
+		ArrayList<Object> arlo = new ArrayList<>();
+		try{
+			for(int i = 0; i < tblModel.getColumnCount(); i++){
+				arlo.add(tblModel.getValueAt(tblModel.getRowCount() - 1, i));
+
+			}
+
+			if(!arlo.stream().noneMatch(Objects::nonNull)){
+				tblModel.addRow((Object[])null);
+			}
+			
+		}catch(Exception ignored){
+			tblModel.addRow((Object[])null);
+		}
+		
 	}
 	
 	private void clearStuffFromTable(){
@@ -118,8 +135,10 @@ class EditClass extends JInternalFrame{
 	}
 	
 	private void refreshTable(){
+		tblModel.removeTableModelListener(tml);
 		clearStuffFromTable();
 		addStuffToTable();
+		tblModel.addTableModelListener(tml);
 	}
 
 }
