@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,21 +17,21 @@ public class ClassDatabase{
 	
 	private static ClassDatabase instance;
 	
-	private HashMap<String, ArrayList<Group>> classList;
+	private TreeMap<String, ArrayList<Group>> classList;
 	
 	static{
 		instance = new ClassDatabase();
 	}
 	
 	private ClassDatabase(){
-		classList = new HashMap<>();
+		classList = new TreeMap<>();
 	}
 	
 	public static ClassDatabase getInstance(){
 		return instance;
 	}
 	
-	public HashMap<String, ArrayList<Group>> getClassList(){
+	public TreeMap<String, ArrayList<Group>> getClassList(){
 		return classList;
 	}
 	
@@ -67,16 +67,21 @@ public class ClassDatabase{
 		if(!classList.isEmpty()){
 			classList.forEach((name, arl) -> {
 				if(!arl.isEmpty()){
-					JSONArray arr = new JSONArray();
-					arl.forEach((group) -> {
-						if(!group.getName().equals("null")){
-							arr.put(group.getName());
-							
-						}
+					if(!arl.stream().allMatch(ClassDatabase::isGroupNullOrEmpty)){
+						JSONArray arr = new JSONArray();
+						arl.forEach((group) -> {
+							if(!(group.getName() == null)){
+								if(!group.getName().isEmpty()){
+									arr.put(group.getName());
+									
+								}
+								
+							}
+						});
+						obj.put(name, arr);
 						
-					});
-					obj.put(name, arr);
-					
+					}
+				
 				}
 				
 			});
@@ -91,6 +96,11 @@ public class ClassDatabase{
 		}
 		TermUtils.println("Class database saved");
 		
+	}
+	
+	private static boolean isGroupNullOrEmpty(Object o){
+		Group test = (Group)o;
+		return test.getName() == null || test.getName().isEmpty();
 	}
 	
 }
