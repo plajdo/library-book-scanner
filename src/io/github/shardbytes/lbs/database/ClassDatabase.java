@@ -69,7 +69,7 @@ public class ClassDatabase{
 				if(!arl.isEmpty()){
 					JSONArray arr = new JSONArray();
 					arl.forEach((group) -> {
-						if(!group.getName().equals("null")){	//TODO: NullPointerException wtf
+						if(!group.getName().equals("null")){
 							arr.put(group.getName());
 							
 						}
