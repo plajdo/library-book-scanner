@@ -176,14 +176,6 @@ public class MainMenu{
 		JMenu mnTrieda = new JMenu("Trieda");
 		menuBar.add(mnTrieda);
 		
-		JMenuItem mntmPridatTriedu = new JMenuItem("Prida\u0165 triedu");
-		mntmPridatTriedu.addActionListener(e -> openAddNewClass());
-		mnTrieda.add(mntmPridatTriedu);
-		
-		JMenuItem menuItemOdstranitTriedu = new JMenuItem("Odstr\u00E1ni\u0165 triedu");
-		menuItemOdstranitTriedu.addActionListener(e -> openRemoveClass());
-		mnTrieda.add(menuItemOdstranitTriedu);
-		
 		JMenuItem menuItemEditTriedu = new JMenuItem("edit tireda");
 		menuItemEditTriedu.addActionListener(e -> openEditClass());
 		mnTrieda.add(menuItemEditTriedu);
@@ -393,26 +385,6 @@ public class MainMenu{
 		desktopPane.add(bl);
 		try{
 			bl.setSelected(true);
-		}catch(PropertyVetoException e1){
-			e1.printStackTrace();
-		}
-	}
-	
-	private void openAddNewClass(){
-		AddClass ac = new AddClass();
-		desktopPane.add(ac);
-		try{
-			ac.setSelected(true);
-		}catch(PropertyVetoException e1){
-			e1.printStackTrace();
-		}
-	}
-	
-	private void openRemoveClass(){
-		RemoveClass rc = new RemoveClass();
-		desktopPane.add(rc);
-		try{
-			rc.setSelected(true);
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}

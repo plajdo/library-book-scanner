@@ -11,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,9 +36,9 @@ class EditClass extends JInternalFrame{
 		setIconifiable(true);
 		setResizable(true);
 		setTitle("Upravi\u0165 triedy");
-		setClosable(true);
+		setClosable(false);
 		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new MigLayout("", "[grow][]", "[][][grow]"));
+		getContentPane().setLayout(new MigLayout("", "[grow]", "[][grow]"));
 
 		JTable table = new JTable();
 		table.setRowSelectionAllowed(false);
@@ -62,7 +64,6 @@ class EditClass extends JInternalFrame{
 				cdb.getClassList().put(tblModel.getColumnName(i), arls);
 
 			}
-			cdb.save();
 			refreshTable();
 
 		};
@@ -72,7 +73,7 @@ class EditClass extends JInternalFrame{
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(getWidth(), getHeight() - 30));
-		getContentPane().add(scrollPane, "cell 0 2,grow");
+		getContentPane().add(scrollPane, "cell 0 1,grow");
 		
 		textField = new JTextField();
 		getContentPane().add(textField, "flowx,cell 0 0,growx");
@@ -87,11 +88,19 @@ class EditClass extends JInternalFrame{
 				
 			}else{
 				JOptionPane.showMessageDialog(null, "Nezadali ste \u017Eiadny n\u00E1zov.", "Chyba", JOptionPane.ERROR_MESSAGE);
-				
 			}
 			
 		});
 		getContentPane().add(btnNovyRad, "cell 0 0");
+		
+		JButton btnExit = new JButton("Dokon\u010Di\u0165");
+		btnExit.addActionListener((event) -> {
+			setVisible(false);
+			cdb.save();
+			cdb.load();
+			dispose();
+		});
+		getContentPane().add(btnExit, "cell 0 0");
 		
 		addStuffToTable();
 		
@@ -119,11 +128,11 @@ class EditClass extends JInternalFrame{
 
 			}
 
-			if(!arlo.stream().noneMatch(Objects::nonNull)){
+			if(arlo.stream().anyMatch(Objects::nonNull)){
 				tblModel.addRow((Object[])null);
 			}
 			
-		}catch(Exception ignored){
+		}catch(Exception e){
 			tblModel.addRow((Object[])null);
 		}
 		
