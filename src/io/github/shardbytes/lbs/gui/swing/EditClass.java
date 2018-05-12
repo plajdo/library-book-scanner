@@ -11,8 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -125,7 +123,6 @@ class EditClass extends JInternalFrame{
 		try{
 			for(int i = 0; i < tblModel.getColumnCount(); i++){
 				arlo.add(tblModel.getValueAt(tblModel.getRowCount() - 1, i));
-
 			}
 
 			if(arlo.stream().anyMatch(Objects::nonNull)){

@@ -176,9 +176,13 @@ public class MainMenu{
 		JMenu mnTrieda = new JMenu("Trieda");
 		menuBar.add(mnTrieda);
 		
-		JMenuItem menuItemEditTriedu = new JMenuItem("edit tireda");
+		JMenuItem menuItemEditTriedu = new JMenuItem("Upravi\u0165 zoznam tried");
 		menuItemEditTriedu.addActionListener(e -> openEditClass());
 		mnTrieda.add(menuItemEditTriedu);
+		
+		JMenuItem menuItemAdvanceClass = new JMenuItem("class advance");
+		menuItemAdvanceClass.addActionListener(e -> openAdvanceClass());
+		mnTrieda.add(menuItemAdvanceClass);
 		
 		JMenu mnIn = new JMenu("In\u00E9");
 		menuBar.add(mnIn);
@@ -398,6 +402,10 @@ public class MainMenu{
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}
+	}
+	
+	private void openAdvanceClass(){
+		JOptionPane.showMessageDialog(null, "message", "title", JOptionPane.WARNING_MESSAGE);
 	}
 
 	static JDesktopPane getDesktopPane() {
