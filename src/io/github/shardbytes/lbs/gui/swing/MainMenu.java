@@ -5,6 +5,7 @@ import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
+import io.github.shardbytes.lbs.objects.Group;
 
 import javax.swing.*;
 import java.awt.*;
@@ -405,7 +406,14 @@ public class MainMenu{
 	}
 	
 	private void openAdvanceClass(){
-		JOptionPane.showMessageDialog(null, "message", "title", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(null, "dis ain't got no reverse!", "classadvance", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(null, "you sure m8?", "achtung blyat", JOptionPane.WARNING_MESSAGE);
+		db.persons.forEach((id, dude) -> {
+			if(){
+			
+			}
+		});
+		
 	}
 
 	static JDesktopPane getDesktopPane() {
