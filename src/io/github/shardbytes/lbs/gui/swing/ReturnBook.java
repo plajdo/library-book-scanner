@@ -118,7 +118,7 @@ public class ReturnBook extends JInternalFrame{
 									b.setBorrowedTime(0);
 									b.setBorrowedUntilTime(0);
 
-									BorrowEntry tempentry = bdb.borrowings.get(p.getGroup()).get(b.getCurrentBorrowEntryID());
+									BorrowEntry tempentry = bdb.borrowings.get(p.getGroup().getName()).get(b.getCurrentBorrowEntryID());
 									tempentry.setReturnDate(new Date().getTime()); // set the return date of this book in entry
 									b.setCurrentBorrowEntryID(0); // unlink the book to entry
 									

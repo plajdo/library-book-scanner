@@ -1,13 +1,14 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import com.sun.codemodel.internal.JOp;
-import com.sun.xml.internal.xsom.impl.Ref;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.Load;
+import io.github.shardbytes.lbs.event.TableRefreshEvent;
+import io.github.shardbytes.lbs.event.TableRefreshEventListener;
+import io.github.shardbytes.lbs.event.TableRefreshEventOperation;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
-import io.github.shardbytes.lbs.objects.Group;
+import io.github.shardbytes.lbs.objects.Person;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
@@ -21,13 +22,15 @@ import javax.swing.KeyStroke;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.JobAttributes;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MainMenu{
 	
@@ -37,6 +40,8 @@ public class MainMenu{
 	private LBSDatabase db = LBSDatabase.getInstance();
 	private BorrowDatabase bdb = BorrowDatabase.getInstance();
 	private ClassDatabase cdb = ClassDatabase.getInstance();
+	
+	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
 	public static void open() {
 		EventQueue.invokeLater(() -> {
@@ -193,11 +198,11 @@ public class MainMenu{
 		JMenu mnTrieda = new JMenu("Trieda");
 		menuBar.add(mnTrieda);
 		
-		JMenuItem menuItemEditTriedu = new JMenuItem("Upravi\u0165 zoznam tried");
+		JMenuItem menuItemEditTriedu = new JMenuItem("Zoznam tried");
 		menuItemEditTriedu.addActionListener(e -> openEditClass());
 		mnTrieda.add(menuItemEditTriedu);
 		
-		JMenuItem menuItemAdvanceClass = new JMenuItem("class advance");
+		JMenuItem menuItemAdvanceClass = new JMenuItem("Posun\u00FA\u0165 triedy");
 		menuItemAdvanceClass.addActionListener(e -> openAdvanceClass());
 		mnTrieda.add(menuItemAdvanceClass);
 		
@@ -210,8 +215,13 @@ public class MainMenu{
 		JMenuItem mntmVymazatDatabazu = new JMenuItem("Vymaza\u0165 datab\u00E1zu kn\u00EDh");
 		mnVymaza.add(mntmVymazatDatabazu);
 		
+		JMenuItem mntmVymazatOsoby = new JMenuItem("Vymaza\u0165 datab\u00E1zu pou\u017E\u00EDvate\u013Eov");
+		mntmVymazatOsoby.addActionListener(e -> Load.resetUsers());
+		mnVymaza.add(mntmVymazatOsoby);
+		
 		JMenuItem mntmVymazaDatabzuVpoiiek = new JMenuItem("Vymaza\u0165 datab\u00E1zu v\u00FDpo\u017Ei\u010Diek");
 		mntmVymazaDatabzuVpoiiek.addActionListener(e -> Load.resetBorrowing());
+		
 		mnVymaza.add(mntmVymazaDatabzuVpoiiek);
 		mntmVymazatDatabazu.addActionListener(e -> Load.resetDatabase());
 		
@@ -221,7 +231,7 @@ public class MainMenu{
 		JMenu mnNastavenia = new JMenu("Nastavenia");
 		mnIn.add(mnNastavenia);
 		
-		JCheckBoxMenuItem chckbxmntmOptimalizovaKameru = new JCheckBoxMenuItem("Optimalizovať kameru");
+		JCheckBoxMenuItem chckbxmntmOptimalizovaKameru = new JCheckBoxMenuItem("Optimalizova\u0165 kameru");
 		chckbxmntmOptimalizovaKameru.addActionListener(e -> {
 			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
 			Load.writeBoolean(Load.webcamOptimise, new File("data" + File.separator + "webcamSettings.ser"));
@@ -424,8 +434,19 @@ public class MainMenu{
 	private void openAdvanceClass(){
 		if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "dis ain't got no reverse!", "classadvance", JOptionPane.WARNING_MESSAGE)){
 			if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "you sure m8?", "achtung blyat", JOptionPane.WARNING_MESSAGE)){
+				
+				db.persons.entrySet().removeIf(MainMenu::removePersonCondition);
+				
 				db.persons.forEach((id, dude) -> {
-					dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
+					System.out.println("dude.getGroup().getName() before = " + dude.getGroup().getName());
+					try{
+						dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
+					}catch(IndexOutOfBoundsException e){
+						db.persons.remove(dude.getID());
+						dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+					}
+					
+					System.out.println("dude.getGroup().getName() after = " + dude.getGroup().getName());
 					
 				});
 				
@@ -438,4 +459,34 @@ public class MainMenu{
 	static JDesktopPane getDesktopPane() {
 		return desktopPane;
 	}
+	
+	public static void addDataDialogListener(TableRefreshEventListener trel){
+		if(!listeners.contains(trel)){
+			listeners.add(trel);
+		}
+	}
+	
+	public static void removeDataDialogListener(TableRefreshEventListener trel){
+		listeners.remove(trel);
+	}
+	
+	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
+		for(TableRefreshEventListener trel: listeners){
+			trel.handleTableRefreshEvent(evt);
+			
+		}
+		
+	}
+	
+	@SuppressWarnings("unused")
+	private static boolean removePersonCondition(Map.Entry<String, Person> entry){
+		try{
+			int i = ClassDatabase.getInstance().getClassList().get(entry.getValue().getGroup().getCategory()).indexOf(entry.getValue().getGroup()) + 1;
+		}catch(Exception e){
+			return true;
+		}
+		return false;
+		
+	}
+	
 }

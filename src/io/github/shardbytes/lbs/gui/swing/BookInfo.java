@@ -3,6 +3,8 @@ package io.github.shardbytes.lbs.gui.swing;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JInternalFrame;
+
+import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -107,6 +109,9 @@ public class BookInfo extends JInternalFrame{
 			refresh(b);
 		});
 		BorrowBook.addDataDialogListener((TableRefreshEventListener) -> {
+			refresh(b);
+		});
+		MainMenu.addDataDialogListener((TableRefreshEventListener) -> {
 			refresh(b);
 		});
 

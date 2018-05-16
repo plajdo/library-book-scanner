@@ -57,6 +57,14 @@ public class PersonInfo extends JInternalFrame {
 		
 		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> refreshList(model, p, list, lblVypoianKnihy));
 		BorrowBook.addDataDialogListener((TableRefreshEventListener) -> refreshList(model, p, list, lblVypoianKnihy));
+		MainMenu.addDataDialogListener(trel -> {
+			try{
+				refreshList(model, p, list, lblVypoianKnihy);
+			}catch(Exception e){
+				dispose();
+			}
+			
+		});
 		
 		refreshList(model, p, list, lblVypoianKnihy);
 		

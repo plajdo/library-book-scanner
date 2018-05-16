@@ -137,6 +137,9 @@ public class ListAllBooks extends JInternalFrame{
 			}
 			
 		});
+		MainMenu.addDataDialogListener(trel -> {
+			refreshTable();
+		});
 		this.addComponentListener(new ComponentListener(){
 			
 			@Override
