@@ -6,6 +6,7 @@ import io.github.shardbytes.lbs.datareader.Generator;
 import io.github.shardbytes.lbs.event.TableRefreshEvent;
 import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.event.TableRefreshEventOperation;
+import io.github.shardbytes.lbs.objects.Group;
 import io.github.shardbytes.lbs.objects.Person;
 import net.miginfocom.swing.MigLayout;
 
@@ -58,7 +59,7 @@ public class AddPerson extends JInternalFrame {
 		getContentPane().add(triedaField, "cell 1 2,growx");
 		ClassDatabase.getInstance().getClassList().forEach((name, group) -> {
 			group.forEach(groupButActuallyClassBecauseJavaKeywordsSuckInThisCase -> {
-				triedaField.addItem(groupButActuallyClassBecauseJavaKeywordsSuckInThisCase.getName());
+				triedaField.addItem(groupButActuallyClassBecauseJavaKeywordsSuckInThisCase.toString());
 			});
 		});
 		triedaField.setEditable(false);
@@ -77,7 +78,7 @@ public class AddPerson extends JInternalFrame {
 					if(isInteger(textField.getText())){
 						Person np = new Person(textField.getText());
 						np.setName(textField_1.getText());
-						np.setGroup(triedaField.getSelectedItem().toString());
+						np.setGroup(Group.fromString((String)triedaField.getSelectedItem()));
 						db.persons.put(textField.getText(), np);
 						btnPotvrdiAPrida.setEnabled(false);
 						

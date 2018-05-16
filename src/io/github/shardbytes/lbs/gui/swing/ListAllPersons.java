@@ -114,7 +114,7 @@ class ListAllPersons extends JInternalFrame{
 	private void addStuffToTable(){
 		db.persons.keySet().forEach((key) -> {
 			Person p = db.persons.get(key);
-			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
+			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
 		});
 		
 	}
@@ -123,11 +123,11 @@ class ListAllPersons extends JInternalFrame{
 		db.persons.keySet().forEach((key) -> {
 			Person p = db.persons.get(key);
 			if(p.getName().contains(search)){
-				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
-			}else if(p.getGroup().contains(search)){
-				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
+				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
+			}else if(p.getGroup().getName().contains(search)){
+				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
 			}else if(p.getID().contains(search)){
-				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup(), p.getBookCount()});
+				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
 			}
 		});
 	}

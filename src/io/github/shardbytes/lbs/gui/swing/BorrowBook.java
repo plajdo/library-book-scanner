@@ -177,7 +177,7 @@ public class BorrowBook extends JInternalFrame {
 										b.setBorrowedTime(((Date)datePicker2.getModel().getValue()).getTime());
 										b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
 
-										BorrowEntry tempentry = bdb.safeAdd(per.getGroup());
+										BorrowEntry tempentry = bdb.safeAdd(per.getGroup().getName());
 										tempentry.setBorrowDate(b.getBorrowedTime());
 										tempentry.setBookID(b.getID());
 										tempentry.setBorrowerCompleteName(per.getName() + " - " + per.getID());
@@ -220,7 +220,7 @@ public class BorrowBook extends JInternalFrame {
 							Person tempperson = db.persons.get(tempid);
 							textField_3.setText(tempid);
 							textField_4.setText(tempperson.getName());
-							textField_5.setText(tempperson.getGroup());
+							textField_5.setText(tempperson.getGroup().getName());
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField_3.setText("Chyba");
 							textField_4.setText("Chyba");

@@ -315,12 +315,12 @@ public class Table{
 			if((row % 2) == 1){
 				cellEntryA = new Label(0, getRow(), person.getID(), greenCellFormat);
 				cellEntryB = new Label(1, getRow(), person.getName(), greenCellFormat);
-				cellEntryC = new Label(2, getRow(), person.getGroup(), greenCellFormat);
+				cellEntryC = new Label(2, getRow(), person.getGroup().getName(), greenCellFormat);
 				cellEntryD = new Label(3, getRow(), person.getBookCount(), greenCellFormat);
 			}else{
 				cellEntryA = new Label(0, getRow(), person.getID(), normalCellFormat);
 				cellEntryB = new Label(1, getRow(), person.getName(), normalCellFormat);
-				cellEntryC = new Label(2, getRow(), person.getGroup(), normalCellFormat);
+				cellEntryC = new Label(2, getRow(), person.getGroup().getName(), normalCellFormat);
 				cellEntryD = new Label(3, getRow(), person.getBookCount(), normalCellFormat);				
 			}
 			

@@ -49,7 +49,7 @@ public class ClassDatabase{
 			
 			names.forEach((name) -> {
 				ArrayList<Group> arg = new ArrayList<>();
-				obj.getJSONArray(name).forEach((group) -> arg.add(new Group(group.toString())));
+				obj.getJSONArray(name).forEach((group) -> arg.add(new Group(group.toString(), name)));
 				classList.put(name, arg);
 				
 			});

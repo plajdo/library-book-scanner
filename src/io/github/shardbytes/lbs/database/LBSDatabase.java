@@ -2,6 +2,7 @@ package io.github.shardbytes.lbs.database;
 
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Book;
+import io.github.shardbytes.lbs.objects.Group;
 import io.github.shardbytes.lbs.objects.Person;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -143,7 +144,7 @@ public class LBSDatabase
 			Person p = new Person(personid); // new person object, reference passed to db maps
 			
 			p.setID(personid);
-			p.setGroup(e.getAttribute("group"));
+			p.setGroup(Group.decodeString(e.getAttribute("group")));
 			p.setName(e.getAttribute("name"));
 			p.setBookCount(e.getAttribute("books"));
 			
@@ -193,7 +194,7 @@ public class LBSDatabase
 			
 			el_p.setAttribute("id", p.getID());
 			el_p.setAttribute("name", p.getName());
-			el_p.setAttribute("group", p.getGroup());
+			el_p.setAttribute("group", p.getGroup().encodeString());
 			el_p.setAttribute("books", p.getBookCount());
 		}
 		

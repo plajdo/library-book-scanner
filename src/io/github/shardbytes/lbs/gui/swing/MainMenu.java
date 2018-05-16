@@ -1,10 +1,13 @@
 package io.github.shardbytes.lbs.gui.swing;
 
+import com.sun.codemodel.internal.JOp;
+import com.sun.xml.internal.xsom.impl.Ref;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
+import io.github.shardbytes.lbs.objects.Group;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
@@ -18,6 +21,7 @@ import javax.swing.KeyStroke;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.JobAttributes;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -418,13 +422,16 @@ public class MainMenu{
 	}
 	
 	private void openAdvanceClass(){
-		JOptionPane.showMessageDialog(null, "dis ain't got no reverse!", "classadvance", JOptionPane.WARNING_MESSAGE);
-		JOptionPane.showMessageDialog(null, "you sure m8?", "achtung blyat", JOptionPane.WARNING_MESSAGE);
-		db.persons.forEach((id, dude) -> {
-			if(){
-			
+		if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "dis ain't got no reverse!", "classadvance", JOptionPane.WARNING_MESSAGE)){
+			if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "you sure m8?", "achtung blyat", JOptionPane.WARNING_MESSAGE)){
+				db.persons.forEach((id, dude) -> {
+					dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
+					
+				});
+				
 			}
-		});
+			
+		}
 		
 	}
 
