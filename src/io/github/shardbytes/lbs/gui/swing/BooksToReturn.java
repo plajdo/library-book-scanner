@@ -136,6 +136,9 @@ public class BooksToReturn extends JInternalFrame{
 			}
 			
 		});
+		MainMenu.addDataDialogListener(trel -> {
+			refreshTable();
+		});
 		this.addComponentListener(new ComponentListener(){
 			
 			@Override

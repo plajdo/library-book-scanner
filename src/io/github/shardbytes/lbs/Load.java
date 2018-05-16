@@ -22,7 +22,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 public class Load{
 	
@@ -47,11 +48,31 @@ public class Load{
 			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
 			if(dialog2Result == JOptionPane.YES_OPTION){
 				try{
-					db.reset();
+					db.resetBook();
 					db.save(DATABASE_PATH);
 				}catch (Exception e){
 					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
 					e.printStackTrace();
+				}finally{
+					System.exit(0);
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	public static void resetUsers(){
+		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+			if(dialog2Result == JOptionPane.YES_OPTION){
+				try{
+					db.resetPerson();
+					db.save(DATABASE_PATH);
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
 				}finally{
 					System.exit(0);
 				}
@@ -97,7 +118,7 @@ public class Load{
 	 * @param db_path Path to the main database file
 	 * @param b_db_path Path and name of the second database file
 	 */
-	public static void begin(String db_path, String b_db_path){
+	private static void begin(String db_path, String b_db_path){
 		splashProgress(0);
 		splashText("Pre-Initialisation");
 		

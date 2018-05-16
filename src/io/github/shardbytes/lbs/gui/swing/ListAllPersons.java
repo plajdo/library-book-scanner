@@ -84,6 +84,7 @@ class ListAllPersons extends JInternalFrame{
 		RemovePerson.addDataDialogListener(evt -> refreshTable());
 		AddPerson.addDataDialogListener(evt -> refreshTable());
 		ReturnBook.addDataDialogListener(evt -> refreshTable());
+		MainMenu.addDataDialogListener(trel -> refreshTable());
 		
 		this.addComponentListener(new ComponentListener(){
 			

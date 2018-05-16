@@ -1,6 +1,7 @@
 package io.github.shardbytes.lbs.gui.swing;
 
 import javax.swing.JInternalFrame;
+
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 
@@ -55,6 +56,10 @@ public class BorrowingsList extends JInternalFrame {
 			refreshList(model, comboBox.getSelectedItem().toString());
 		});
 		getContentPane().add(comboBox, "cell 1 0,growx");
+		
+		BorrowBook.addDataDialogListener(trel -> refreshList(model, comboBox.getSelectedItem().toString()));
+		ReturnBook.addDataDialogListener(trel -> refreshList(model, comboBox.getSelectedItem().toString()));
+		MainMenu.addDataDialogListener(trel -> refreshList(model, comboBox.getSelectedItem().toString()));
 		
 		addStuffToList(model, comboBox.getSelectedItem().toString());
 		

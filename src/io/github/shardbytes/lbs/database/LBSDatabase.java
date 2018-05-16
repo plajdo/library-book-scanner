@@ -213,7 +213,7 @@ public class LBSDatabase
 		
 	}
 
-	public void reset(){
+	private void reset(){
 		Comparator<String> numberComparator = (o1, o2) -> {
 			int i1 = Integer.parseInt(o1.split("/")[0]);
 			int i2 = Integer.parseInt(o2.split("/")[0]);
@@ -222,7 +222,27 @@ public class LBSDatabase
 		
 		books = new TreeMap<>(numberComparator);
 		persons = new TreeMap<>(numberComparator);
+		
 	}
-
+	
+	public void resetBook(){
+		Comparator<String> numberComparator = (o1, o2) -> {
+			int i1 = Integer.parseInt(o1.split("/")[0]);
+			int i2 = Integer.parseInt(o2.split("/")[0]);
+			return i1 - i2;
+		};
+		books = new TreeMap<>(numberComparator);
+		
+	}
+	
+	public void resetPerson(){
+		Comparator<String> numberComparator = (o1, o2) -> {
+			int i1 = Integer.parseInt(o1.split("/")[0]);
+			int i2 = Integer.parseInt(o2.split("/")[0]);
+			return i1 - i2;
+		};
+		persons = new TreeMap<>(numberComparator);
+		
+	}
 
 }
