@@ -141,7 +141,7 @@ public class BookInfo extends JInternalFrame{
 			textField_7.setEnabled(true);
 			
 			textField_4.setText(p.getName());
-			textField_5.setText(p.getGroup());
+			textField_5.setText(p.getGroup().getName());
 			textField_6.setText(sdf.format(b.getBorrowedTime()));
 			textField_7.setText(sdf.format(b.getBorrowedUntilTime()));
 		}
