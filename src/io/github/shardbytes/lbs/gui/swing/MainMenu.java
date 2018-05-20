@@ -29,6 +29,7 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -432,23 +433,23 @@ public class MainMenu{
 	}
 	
 	private void openAdvanceClass(){
-		if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "dis ain't got no reverse!", "classadvance", JOptionPane.WARNING_MESSAGE)){
-			if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "you sure m8?", "achtung blyat", JOptionPane.WARNING_MESSAGE)){
-				
-				db.persons.entrySet().removeIf(MainMenu::removePersonCondition);
+		if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "T\u00E1to oper\u00E1cia sa ned\u00E1 vr\u00E1ti\u0165!", "Posun\u00FA\u0165 triedy", JOptionPane.OK_CANCEL_OPTION)){
+			if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Posun\u00FA\u0165 triedy", JOptionPane.OK_CANCEL_OPTION)){
+				ArrayList<Person> arp = new ArrayList<>();
 				
 				db.persons.forEach((id, dude) -> {
 					System.out.println("dude.getGroup().getName() before = " + dude.getGroup().getName());
 					try{
 						dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
 					}catch(IndexOutOfBoundsException e){
-						db.persons.remove(dude.getID());
-						dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+						arp.add(dude);
 					}
 					
 					System.out.println("dude.getGroup().getName() after = " + dude.getGroup().getName());
 					
 				});
+				
+				arp.forEach(typek -> );
 				
 			}
 			
@@ -466,11 +467,7 @@ public class MainMenu{
 		}
 	}
 	
-	public static void removeDataDialogListener(TableRefreshEventListener trel){
-		listeners.remove(trel);
-	}
-	
-	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
+	private static void dispatchTableRefreshEvent(TableRefreshEvent evt){
 		for(TableRefreshEventListener trel: listeners){
 			trel.handleTableRefreshEvent(evt);
 			
@@ -478,15 +475,10 @@ public class MainMenu{
 		
 	}
 	
-	@SuppressWarnings("unused")
-	private static boolean removePersonCondition(Map.Entry<String, Person> entry){
-		try{
-			int i = ClassDatabase.getInstance().getClassList().get(entry.getValue().getGroup().getCategory()).indexOf(entry.getValue().getGroup()) + 1;
-		}catch(Exception e){
-			return true;
-		}
-		return false;
-		
+	private static <K, V> void getValue(Map<K, V> map, V val){
+		map.forEach((key, value) -> {
+			
+		});
 	}
 	
 }
