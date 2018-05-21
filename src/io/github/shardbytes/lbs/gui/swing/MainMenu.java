@@ -452,6 +452,10 @@ public class MainMenu{
 					
 				});
 				
+				/*
+				 * TODO: HashSet sa nedá castovať do Stringu, získať prvý element v sete, ak nie je prázdny,
+				 * ak je prázdny, hľadať kde sa stala chyba, resp. vyhodiť fancy error message :D
+				 */
 				arp.forEach(typek -> db.persons.remove(getKeys(db.persons, typek)));
 				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 				
