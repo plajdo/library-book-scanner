@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MainMenu{
 	
@@ -449,7 +452,8 @@ public class MainMenu{
 					
 				});
 				
-				arp.forEach(typek -> );
+				arp.forEach(typek -> db.persons.remove(getKeys(db.persons, typek)));
+				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 				
 			}
 			
@@ -475,10 +479,12 @@ public class MainMenu{
 		
 	}
 	
-	private static <K, V> void getValue(Map<K, V> map, V val){
-		map.forEach((key, value) -> {
-			
-		});
+	private static <K, V> Set<K> getKeys(Map<K, V> map, V val){
+		return map.entrySet().stream()
+				.filter(e -> Objects.equals(e.getValue(), val))
+				.map(Map.Entry::getKey)
+				.collect(Collectors.toSet());
+		
 	}
 	
 }
