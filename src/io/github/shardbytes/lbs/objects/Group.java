@@ -32,6 +32,9 @@ public class Group{
 		return new String(encoded);
 	}
 	
+	/*
+	 * TODO: Opraviť celé toto s Base64 lebo for some reason to nefunguje
+	 */
 	public static Group decodeString(String inputString){
 		byte[] decoded = Base64.getDecoder().decode(inputString.getBytes());
 		String str = new String(decoded);
