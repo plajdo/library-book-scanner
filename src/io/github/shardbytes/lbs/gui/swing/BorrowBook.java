@@ -10,6 +10,7 @@ import io.github.shardbytes.lbs.event.DataDialogEventOperation;
 import io.github.shardbytes.lbs.event.TableRefreshEvent;
 import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.event.TableRefreshEventOperation;
+import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Book;
 import io.github.shardbytes.lbs.objects.Person;
 import net.miginfocom.swing.MigLayout;
@@ -201,10 +202,12 @@ public class BorrowBook extends JInternalFrame {
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID \u010Ditate\u013Ea a d\u00E1tumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
-				}catch(NullPointerException e1){
-
+				}catch(NullPointerException ignored){
+					TermUtils.printerr("NullPointerException at "#1");
 				}
+				
 			}
+			
 		});
 		panel.add(btnPotvrdi, "cell 2 0,growx,aligny center");
 
