@@ -31,6 +31,8 @@ public class Load{
 	
 	public static String DATABASE_PATH;
 	public static String B_DATABASE_PATH;
+	public static String C_DATABASE_PATH;
+	public static String WEBCAM_OPTIMIZE_PATH;
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
@@ -107,26 +109,27 @@ public class Load{
 	/*
 	 * TODO: Save all databases into one file (zip maybe? unzip on startup and zip on exit),
 	 * so they can be transferred more easily and so this program uses only one startup
-	 * argument instead of 4 (two are not finished - ClassDatabase and WebcamOptimise).
+	 * argument instead of 4.
 	 */
 	public static void main(String[] args){
-		begin(args[0], args[1]);
+		begin(args[0], args[1], args[2], args[3]);
 	}
 	
 	/**
 	 * Method that loads everything and starts the GUI.
 	 * @param db_path Path to the main database file
-	 * @param b_db_path Path and name of the second database file
+	 * @param b_db_path Path to the of the second database file
+	 * @param c_db_path Path to the class database file
+	 * @param wob_path Path to the settings file
 	 */
-	private static void begin(String db_path, String b_db_path){
+	private static void begin(String db_path, String b_db_path, String c_db_path, String wob_path){
 		splashProgress(0);
 		splashText("Pre-Initialisation");
 		
 		DATABASE_PATH = db_path;
 		B_DATABASE_PATH = b_db_path;
-		/*
-		 * TODO: GROUP_DATABASE_PATH?
-		 */
+		C_DATABASE_PATH = c_db_path;
+		WEBCAM_OPTIMIZE_PATH = wob_path;
 		
 		TermUtils.init();
 		if(System.console() == null){
@@ -155,6 +158,7 @@ public class Load{
 					saveDatabase();
 				}catch(InterruptedException e){
 					TermUtils.println("Autosave thread " + t.getName() + " stopped");
+					break;
 				}
 			}
 		};
@@ -163,7 +167,7 @@ public class Load{
 		as.start();
 		
 		TermUtils.println("Loading configs");
-		webcamOptimise = readBoolean(new File("data" + File.separator + "webcamSettings.ser"));
+		webcamOptimise = readBoolean(new File(WEBCAM_OPTIMIZE_PATH));
 		
 		splashProgress(60);
 		splashText("Post-Initialisation");
