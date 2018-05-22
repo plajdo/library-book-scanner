@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -201,9 +202,17 @@ public class Load{
 		splashProgress(80);
 		splashText("Post-Initialisation");
 		
-		if(webcamOptimise){
-			Webcam w = Webcam.getDefault();
-			w.open();
+		try{
+			if(webcamOptimise){
+				Webcam w = Webcam.getDefault();
+				w.open();
+				w.getImage();
+			}
+			
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Pripojte webkameru.", "Chyba", JOptionPane.ERROR_MESSAGE);
+			webcamOptimise = false;
+			writeBoolean(webcamOptimise, new File(WEBCAM_OPTIMIZE_PATH));
 		}
 		
 		MainMenu.open();
