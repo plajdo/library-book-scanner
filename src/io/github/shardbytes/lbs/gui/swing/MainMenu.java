@@ -29,7 +29,6 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -238,7 +237,7 @@ public class MainMenu{
 		JCheckBoxMenuItem chckbxmntmOptimalizovaKameru = new JCheckBoxMenuItem("Optimalizova\u0165 kameru");
 		chckbxmntmOptimalizovaKameru.addActionListener(e -> {
 			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
-			Load.writeBoolean(Load.webcamOptimise, new File("data" + File.separator + "webcamSettings.ser"));
+			Load.writeBoolean(Load.webcamOptimise, new File(Load.WEBCAM_OPTIMIZE_PATH));
 			JOptionPane.showMessageDialog(null, "LBS je potrebn\u00E9 re\u0161tartova\u0165", "Zmena nastaven\u00ED", JOptionPane.INFORMATION_MESSAGE);
 			System.exit(0);
 		});
@@ -441,22 +440,29 @@ public class MainMenu{
 				ArrayList<Person> arp = new ArrayList<>();
 				
 				db.persons.forEach((id, dude) -> {
-					System.out.println("dude.getGroup().getName() before = " + dude.getGroup().getName());
-					try{
-						dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
-					}catch(IndexOutOfBoundsException e){
-						arp.add(dude);
-					}
+					int classesInGroupCount = cdb.getClassList().get(dude.getGroup().getCategory()).size();
+					int dudesGroup = cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1;
 					
-					System.out.println("dude.getGroup().getName() after = " + dude.getGroup().getName());
+					if(dudesGroup > classesInGroupCount){
+						arp.add(dude);
+					}else{
+						dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
+					}
 					
 				});
 				
-				/*
-				 * TODO: HashSet sa nedá castovať do Stringu, získať prvý element v sete, ak nie je prázdny,
-				 * ak je prázdny, hľadať kde sa stala chyba, resp. vyhodiť fancy error message :D
-				 */
-				arp.forEach(typek -> db.persons.remove(getKeys(db.persons, typek)));
+				arp.forEach(typek -> {
+					String[] keys = getKeys(db.persons, typek).toArray(new String[0]);
+					
+					if(keys.length > 0){
+						for(String key : keys){
+							db.persons.remove(key);
+						}
+						
+					}
+					
+				});
+				TermUtils.println("All classes advanced");
 				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 				
 			}
@@ -478,7 +484,6 @@ public class MainMenu{
 	private static void dispatchTableRefreshEvent(TableRefreshEvent evt){
 		for(TableRefreshEventListener trel: listeners){
 			trel.handleTableRefreshEvent(evt);
-			
 		}
 		
 	}
@@ -488,7 +493,6 @@ public class MainMenu{
 				.filter(e -> Objects.equals(e.getValue(), val))
 				.map(Map.Entry::getKey)
 				.collect(Collectors.toSet());
-		
 	}
 	
 }

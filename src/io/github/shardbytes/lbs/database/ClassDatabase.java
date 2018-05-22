@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import io.github.shardbytes.lbs.Load;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ public class ClassDatabase{
 	public void load(){
 		StringBuilder sb = new StringBuilder();
 		try{
-			Files.lines(new File("data" + File.separator + "groupList.json").toPath()).forEach(sb::append);
+			Files.lines(new File(Load.C_DATABASE_PATH).toPath()).forEach(sb::append);
 			JSONObject obj = new JSONObject(sb.toString());
 			JSONArray namesArr = obj.names();
 			ArrayList<String> names = new ArrayList<>();
@@ -88,7 +89,7 @@ public class ClassDatabase{
 			
 		}
 		
-		try(PrintWriter writer = new PrintWriter("data" + File.separator + "groupList.json")){
+		try(PrintWriter writer = new PrintWriter(Load.C_DATABASE_PATH)){
 			writer.println(obj.toString());
 		}catch(IOException e){
 			TermUtils.printerr("Cannot save class database");
