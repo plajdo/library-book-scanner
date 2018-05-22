@@ -3,8 +3,10 @@ package io.github.shardbytes.lbs.database;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.TreeMap;
 
 import io.github.shardbytes.lbs.Load;
@@ -44,6 +46,12 @@ public class ClassDatabase{
 			JSONArray namesArr = obj.names();
 			ArrayList<String> names = new ArrayList<>();
 			
+			System.out.println("namesArr = " + namesArr);
+			
+			for(Object o : namesArr){
+				System.out.println("o = " + o);
+				System.out.println("o.toString() = " + o.toString());
+			}
 			namesArr.forEach((name) -> names.add(name.toString()));
 			
 			classList.clear();
@@ -57,6 +65,7 @@ public class ClassDatabase{
 			TermUtils.println("Class database loaded");
 			
 		}catch(Exception e){
+			e.printStackTrace();
 			TermUtils.printerr("Cannot load class database");
 		}
 		

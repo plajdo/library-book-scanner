@@ -74,6 +74,9 @@ public class AddPerson extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u010Ditate\u013Ea do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				/*
+				 * TODO: Chyba keď nebola vybratá trieda blyat
+				 */
 				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(triedaField.getSelectedItem().toString().isEmpty())){
 					if(isInteger(textField.getText())){
 						Person np = new Person(textField.getText());
