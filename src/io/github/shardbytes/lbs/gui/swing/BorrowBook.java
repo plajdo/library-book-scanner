@@ -203,7 +203,7 @@ public class BorrowBook extends JInternalFrame {
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID \u010Ditate\u013Ea a d\u00E1tumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}catch(NullPointerException ignored){
-					TermUtils.printerr("NullPointerException at "#1");
+					TermUtils.printerr("NullPointerException at #1");
 				}
 				
 			}

@@ -27,18 +27,11 @@ public class Group{
 	}
 	
 	public String encodeString(){
-		String str = this.groupName + "\u25A1" + this.groupGroup;
-		byte[] encoded = Base64.getEncoder().encode(str.getBytes());
-		return new String(encoded);
+		return this.groupName + "\u25A1" + this.groupGroup;
 	}
 	
-	/*
-	 * TODO: Opraviť celé toto s Base64 lebo for some reason to nefunguje
-	 */
 	public static Group decodeString(String inputString){
-		byte[] decoded = Base64.getDecoder().decode(inputString.getBytes());
-		String str = new String(decoded);
-		String[] stuff = str.split("\u25A1");
+		String[] stuff = inputString.split("\u25A1");
 		return new Group(stuff[0], stuff[1]);
 		
 	}
