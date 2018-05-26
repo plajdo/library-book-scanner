@@ -27,15 +27,12 @@ import java.util.TreeMap;
 public class BorrowDatabase
 {
 
-	// FIELDS
-	private DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	private DocumentBuilder dBuilder;
-	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	private Transformer transformer;
 
 	// <groupID, <entryID, entry>>
 	public volatile Map<String, Map<Long, BorrowEntry>> borrowings;
-	public volatile long iterator;
+	private volatile long iterator;
 
 	// singleton pattern CONSTRUCTOR
 	private static BorrowDatabase instance = new BorrowDatabase();
@@ -49,7 +46,10 @@ public class BorrowDatabase
 		// initialize factories and similar stuff required for parsing
 		try
 		{
+			// FIELDS
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			dBuilder = dbFactory.newDocumentBuilder();
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			transformer = transformerFactory.newTransformer();
 			
 			// set indentation so it doesn't look like shit
@@ -200,7 +200,7 @@ public class BorrowDatabase
 
 	}
 
-	public BorrowEntry safeAdd(String groupID) { // use this to add entries , returns the id of entry
+	public synchronized BorrowEntry safeAdd(String groupID) { // use this to add entries , returns the id of entry
 		iterator++;
 
 		BorrowEntry e = new BorrowEntry(iterator);

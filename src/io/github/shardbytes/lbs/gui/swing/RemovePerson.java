@@ -83,7 +83,9 @@ public class RemovePerson extends JInternalFrame {
 	public static void dispatchTableRefreshEvent(TableRefreshEvent evt){
 		for(TableRefreshEventListener trel: listeners){
 			trel.handleTableRefreshEvent(evt);
+			
 		}
+		
 	}
 	
 }

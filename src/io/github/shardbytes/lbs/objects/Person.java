@@ -2,8 +2,9 @@ package io.github.shardbytes.lbs.objects;
 
 public class Person {
 	
-	private String ID, name, group; // group is for example class or teachers or sum shit
+	private String ID, name; // group is for example class or teachers or sum shit
 	private int bookCount;
+	private Group group;
 	
 	public Person(String id){
 		this.ID = id;
@@ -13,13 +14,13 @@ public class Person {
 	public String getName() {
 		return name;
 	}
-	public String getGroup() {
+	public Group getGroup() {
 		return group;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setGroup(String group) {
+	public void setGroup(Group group) {
 		this.group = group;
 	}
 	public void addBookCount(){

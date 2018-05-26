@@ -4,6 +4,7 @@ import com.github.sarxos.webcam.Webcam;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
+import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
@@ -21,17 +22,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 public class Load{
 	
-	public static final String VERSION = "v1.1.2";
+	public static final String VERSION = "v1.2.0";
 	
 	public static String DATABASE_PATH;
 	public static String B_DATABASE_PATH;
+	public static String C_DATABASE_PATH;
+	public static String WEBCAM_OPTIMIZE_PATH;
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
+	private static ClassDatabase cdb = ClassDatabase.getInstance();
 	private static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
 	/*
@@ -45,11 +50,31 @@ public class Load{
 			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
 			if(dialog2Result == JOptionPane.YES_OPTION){
 				try{
-					db.reset();
+					db.resetBook();
 					db.save(DATABASE_PATH);
 				}catch (Exception e){
 					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
 					e.printStackTrace();
+				}finally{
+					System.exit(0);
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	public static void resetUsers(){
+		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+			if(dialog2Result == JOptionPane.YES_OPTION){
+				try{
+					db.resetPerson();
+					db.save(DATABASE_PATH);
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
 				}finally{
 					System.exit(0);
 				}
@@ -81,21 +106,30 @@ public class Load{
 		
 	}
 	
+	/*
+	 * TODO: Save all databases into one file (zip maybe? unzip on startup and zip on exit),
+	 * so they can be transferred more easily and so this program uses only one startup
+	 * argument instead of 4.
+	 */
 	public static void main(String[] args){
-		begin(args[0], args[1]);
+		begin(args[0], args[1], args[2], args[3]);
 	}
 	
 	/**
 	 * Method that loads everything and starts the GUI.
 	 * @param db_path Path to the main database file
-	 * @param b_db_path Path and name of the second database file
+	 * @param b_db_path Path to the of the second database file
+	 * @param c_db_path Path to the class database file
+	 * @param wob_path Path to the settings file
 	 */
-	public static void begin(String db_path, String b_db_path){
+	private static void begin(String db_path, String b_db_path, String c_db_path, String wob_path){
 		splashProgress(0);
 		splashText("Pre-Initialisation");
 		
 		DATABASE_PATH = db_path;
 		B_DATABASE_PATH = b_db_path;
+		C_DATABASE_PATH = c_db_path;
+		WEBCAM_OPTIMIZE_PATH = wob_path;
 		
 		TermUtils.init();
 		if(System.console() == null){
@@ -108,6 +142,7 @@ public class Load{
 		TermUtils.println("Loading databases");
 		db.load(DATABASE_PATH);
 		bdb.load(B_DATABASE_PATH);
+		cdb.load();
 		
 		splashProgress(40);
 		splashText("Initialisation");
@@ -123,6 +158,7 @@ public class Load{
 					saveDatabase();
 				}catch(InterruptedException e){
 					TermUtils.println("Autosave thread " + t.getName() + " stopped");
+					break;
 				}
 			}
 		};
@@ -131,7 +167,7 @@ public class Load{
 		as.start();
 		
 		TermUtils.println("Loading configs");
-		webcamOptimise = readBoolean(new File("data" + File.separator + "webcamSettings.ser"));
+		webcamOptimise = readBoolean(new File(WEBCAM_OPTIMIZE_PATH));
 		
 		splashProgress(60);
 		splashText("Post-Initialisation");
@@ -165,9 +201,17 @@ public class Load{
 		splashProgress(80);
 		splashText("Post-Initialisation");
 		
-		if(webcamOptimise){
-			Webcam w = Webcam.getDefault();
-			w.open();
+		try{
+			if(webcamOptimise){
+				Webcam w = Webcam.getDefault();
+				w.open();
+				w.getImage();
+			}
+			
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Pripojte webkameru.", "Chyba", JOptionPane.ERROR_MESSAGE);
+			webcamOptimise = false;
+			writeBoolean(webcamOptimise, new File(WEBCAM_OPTIMIZE_PATH));
 		}
 		
 		MainMenu.open();
@@ -181,6 +225,7 @@ public class Load{
 		try{
 			db.save(DATABASE_PATH);
 			bdb.save(B_DATABASE_PATH);
+			cdb.save();
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 		}
@@ -246,10 +291,9 @@ public class Load{
 	
 	public static void writeBoolean(boolean b, File f){
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))){
-			
 			oos.writeBoolean(b);
 		}catch(IOException e){
-			TermUtils.printerr("An IOException occured at Load.java::writeBoolean(boolean, File)");
+			TermUtils.printerr(e.toString());
 		}
 		
 	}

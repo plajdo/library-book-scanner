@@ -2,6 +2,7 @@ package io.github.shardbytes.lbs.database;
 
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Book;
+import io.github.shardbytes.lbs.objects.Group;
 import io.github.shardbytes.lbs.objects.Person;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,10 +33,7 @@ public class LBSDatabase
 	// ! Everything will be parsed when needed, wont keep common document or anything, this is pure converter from xml to Map
 
 
-	// FIELDS
-	private DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	private DocumentBuilder dBuilder;
-	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	private Transformer transformer;
 
 	// THE MAIN DATABASE MAP OBJECT REFERENCES, TO BE USED EVERYWHERE WHERE DATABASE IS NEEDED
@@ -54,7 +52,10 @@ public class LBSDatabase
 		// initialize factories and similar stuff required for parsing
 		try
 		{
+			// FIELDS
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			dBuilder = dbFactory.newDocumentBuilder();
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			transformer = transformerFactory.newTransformer();
 			
 			// set indentation so it doesn't look like shit
@@ -143,7 +144,7 @@ public class LBSDatabase
 			Person p = new Person(personid); // new person object, reference passed to db maps
 			
 			p.setID(personid);
-			p.setGroup(e.getAttribute("group"));
+			p.setGroup(Group.decodeString(e.getAttribute("group")));
 			p.setName(e.getAttribute("name"));
 			p.setBookCount(e.getAttribute("books"));
 			
@@ -193,7 +194,7 @@ public class LBSDatabase
 			
 			el_p.setAttribute("id", p.getID());
 			el_p.setAttribute("name", p.getName());
-			el_p.setAttribute("group", p.getGroup());
+			el_p.setAttribute("group", p.getGroup().encodeString());
 			el_p.setAttribute("books", p.getBookCount());
 		}
 		
@@ -212,21 +213,36 @@ public class LBSDatabase
 		
 	}
 
-	public void reset(){
-		Comparator<String> numberComparator = new Comparator<String>(){
-
-			@Override
-			public int compare(String o1, String o2) {
-				int i1 = Integer.parseInt(o1.split("/")[0]);
-				int i2 = Integer.parseInt(o2.split("/")[0]);
-				return i1 - i2;
-			}
-			
+	private void reset(){
+		Comparator<String> numberComparator = (o1, o2) -> {
+			int i1 = Integer.parseInt(o1.split("/")[0]);
+			int i2 = Integer.parseInt(o2.split("/")[0]);
+			return i1 - i2;
 		};
 		
 		books = new TreeMap<>(numberComparator);
 		persons = new TreeMap<>(numberComparator);
+		
 	}
-
+	
+	public void resetBook(){
+		Comparator<String> numberComparator = (o1, o2) -> {
+			int i1 = Integer.parseInt(o1.split("/")[0]);
+			int i2 = Integer.parseInt(o2.split("/")[0]);
+			return i1 - i2;
+		};
+		books = new TreeMap<>(numberComparator);
+		
+	}
+	
+	public void resetPerson(){
+		Comparator<String> numberComparator = (o1, o2) -> {
+			int i1 = Integer.parseInt(o1.split("/")[0]);
+			int i2 = Integer.parseInt(o2.split("/")[0]);
+			return i1 - i2;
+		};
+		persons = new TreeMap<>(numberComparator);
+		
+	}
 
 }

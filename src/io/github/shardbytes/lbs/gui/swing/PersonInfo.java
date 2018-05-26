@@ -43,23 +43,27 @@ public class PersonInfo extends JInternalFrame {
 		
 		textField_2 = new JTextField();
 		textField_2.setEditable(false);
-		textField_2.setText(p.getGroup());
+		textField_2.setText(p.getGroup().getName());
 		getContentPane().add(textField_2, "cell 1 1,growx");
 		textField_2.setColumns(10);
 		
 		JLabel lblVypoianKnihy = new JLabel("Vypo\u017Ei\u010Dan\u00E9 knihy (" + p.getBookCount() + "):");
 		getContentPane().add(lblVypoianKnihy, "cell 0 2,alignx trailing");
 		
-		JList<String> list = new JList<String>();
-		DefaultListModel<String> model = new DefaultListModel<String>();
+		JList<String> list = new JList<>();
+		DefaultListModel<String> model = new DefaultListModel<>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		getContentPane().add(new JScrollPane(list), "cell 0 3 2 1,grow");
 		
-		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> {
-			refreshList(model, p, list, lblVypoianKnihy);
-		});
-		BorrowBook.addDataDialogListener((TableRefreshEventListener) -> {
-			refreshList(model, p, list, lblVypoianKnihy);
+		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> refreshList(model, p, list, lblVypoianKnihy));
+		BorrowBook.addDataDialogListener((TableRefreshEventListener) -> refreshList(model, p, list, lblVypoianKnihy));
+		MainMenu.addDataDialogListener(trel -> {
+			try{
+				refreshList(model, p, list, lblVypoianKnihy);
+			}catch(Exception e){
+				dispose();
+			}
+			
 		});
 		
 		refreshList(model, p, list, lblVypoianKnihy);

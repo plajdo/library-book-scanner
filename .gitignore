@@ -1,5 +1,6 @@
 bin/
 out/
+classes/
 *.ser
 .idea/
 *.iml
@@ -9,3 +10,5 @@ out/
 *.xls
 .DS_Store
 *.json
+resources/
+library-book-scanner-launcher/

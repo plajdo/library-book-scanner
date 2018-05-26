@@ -91,12 +91,12 @@ public class Export extends JInternalFrame{
 					}
 					if(chckbxZoznamVpoiiek.isSelected()){
 						try{
-							ArrayList<String> groupsList = new ArrayList<String>();
+							ArrayList<String> groupsList = new ArrayList<>();
 							bdb.borrowings.forEach((group, map) -> {groupsList.add(group);});
 							Object[] groups = groupsList.toArray();
 							
 							try{
-								String input = (String)JOptionPane.showInputDialog(null, "Vyberte triedu na exportovanie:", "export", JOptionPane.INFORMATION_MESSAGE, null, groups, groups[0]);
+								String input = (String)JOptionPane.showInputDialog(null, "Vyberte triedu na exportovanie:", "Export", JOptionPane.INFORMATION_MESSAGE, null, groups, groups[0]);
 								if(!(input == null)){
 									Table.createBorrowingsTable(input, textField.getText() + File.separator);							
 								}
