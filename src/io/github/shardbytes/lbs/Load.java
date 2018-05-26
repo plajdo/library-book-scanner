@@ -22,13 +22,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class Load{
 	
-	public static final String VERSION = "v1.1.2";
+	public static final String VERSION = "v1.2.0";
 	
 	public static String DATABASE_PATH;
 	public static String B_DATABASE_PATH;

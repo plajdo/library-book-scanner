@@ -1,12 +1,15 @@
 package io.github.shardbytes.lbs.database;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.TreeMap;
 
 import io.github.shardbytes.lbs.Load;
@@ -40,8 +43,27 @@ public class ClassDatabase{
 	
 	public void load(){
 		StringBuilder sb = new StringBuilder();
-		try{
-			Files.lines(new File(Load.C_DATABASE_PATH).toPath()).forEach(sb::append);
+		try(FileInputStream input = new FileInputStream(new File(Load.C_DATABASE_PATH))){
+			/*
+			 * Files.lines(new File(Load.C_DATABASE_PATH).toPath()).forEach(sb::append);
+			 * rip Java 8 streams solution
+			 */
+			
+			CharsetDecoder decoder = Charset.forName("ISO-8859-2").newDecoder();
+			decoder.onMalformedInput(CodingErrorAction.IGNORE);
+			
+			InputStreamReader reader = new InputStreamReader(input, decoder);
+			BufferedReader bufferedReader = new BufferedReader(reader);
+			
+			String temp = bufferedReader.readLine();
+			while(temp != null){
+				sb.append(temp);
+				temp = bufferedReader.readLine();
+			}
+			
+			bufferedReader.close();
+			reader.close();
+			
 			JSONObject obj = new JSONObject(sb.toString());
 			JSONArray namesArr = obj.names();
 			ArrayList<String> names = new ArrayList<>();
@@ -65,6 +87,9 @@ public class ClassDatabase{
 			TermUtils.println("Class database loaded");
 			
 		}catch(Exception e){
+			/*
+			 * TODO: remove e.printStackTrace() before releasing
+			 */
 			e.printStackTrace();
 			TermUtils.printerr("Cannot load class database");
 		}
