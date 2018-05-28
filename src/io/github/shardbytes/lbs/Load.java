@@ -160,7 +160,9 @@ public class Load{
 					TermUtils.println("Autosave thread " + t.getName() + " stopped");
 					break;
 				}
+				
 			}
+			
 		};
 		Thread as = new Thread(autosave);
 		as.setDaemon(true);

@@ -68,12 +68,17 @@ public class ClassDatabase{
 			JSONArray namesArr = obj.names();
 			ArrayList<String> names = new ArrayList<>();
 			
-			System.out.println("namesArr = " + namesArr);
+			/*
+			 * Debugging stuff to write everything out:
+			 *
+			 * System.out.println("namesArr = " + namesArr);
+			 *
+			 * for(Object o : namesArr){
+			 * 	System.out.println("o = " + o);
+			 * 	System.out.println("o.toString() = " + o.toString());
+			 * }
+			 */
 			
-			for(Object o : namesArr){
-				System.out.println("o = " + o);
-				System.out.println("o.toString() = " + o.toString());
-			}
 			namesArr.forEach((name) -> names.add(name.toString()));
 			
 			classList.clear();
@@ -87,10 +92,6 @@ public class ClassDatabase{
 			TermUtils.println("Class database loaded");
 			
 		}catch(Exception e){
-			/*
-			 * TODO: remove e.printStackTrace() before releasing
-			 */
-			e.printStackTrace();
 			TermUtils.printerr("Cannot load class database");
 		}
 		
