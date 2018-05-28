@@ -34,7 +34,10 @@ class EditClass extends JInternalFrame{
 		setIconifiable(true);
 		setResizable(true);
 		setTitle("Upravi\u0165 triedy");
-		setClosable(false);
+		/*
+		 * Set closeable to true to be able to close the GUI without saving everything.
+		 */
+		setClosable(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][grow]"));
 
