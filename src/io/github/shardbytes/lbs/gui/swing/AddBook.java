@@ -5,6 +5,7 @@ import io.github.shardbytes.lbs.datareader.Generator;
 import io.github.shardbytes.lbs.event.TableRefreshEvent;
 import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.event.TableRefreshEventOperation;
+import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Book;
 import net.miginfocom.swing.MigLayout;
 
@@ -68,7 +69,7 @@ public class AddBook extends JInternalFrame{
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(textField_2.getText().isEmpty())){
-					if(isInteger(textField.getText())){
+					if(isCorrectIDFormat(textField.getText())){
 						Book nb = new Book(textField.getText());
 						nb.setName(textField_1.getText());
 						nb.setAuthor(textField_2.getText());
@@ -100,11 +101,16 @@ public class AddBook extends JInternalFrame{
 				int r = chooser.showSaveDialog(null);
 				if(r == JFileChooser.APPROVE_OPTION){
 					try{
-						ImageIO.write(Generator.writeQRCode(textField.getText()), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
+						if(!textField.getText().isEmpty()){
+							ImageIO.write(Generator.writeQRCode(textField.getText()), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
+							btnUloiQrKd.setEnabled(false);
+						}else{
+							JOptionPane.showMessageDialog(null, "Vypl\u0148te v\u0161etky \u00FAdaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						}
+						
 					}catch(IOException e1){
 						e1.printStackTrace();
 					}
-					btnUloiQrKd.setEnabled(false);
 					
 				}
 				
@@ -114,11 +120,7 @@ public class AddBook extends JInternalFrame{
 		panel.add(btnUloiQrKd, "flowx,cell 1 0,growx");
 
 		JButton btnDokoni = new JButton("Dokon\u010Di\u0165");
-		btnDokoni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		btnDokoni.addActionListener(e -> dispose());
 		panel.add(btnDokoni, "cell 2 0,growx");
 		
 		setVisible(true);
@@ -141,12 +143,16 @@ public class AddBook extends JInternalFrame{
 		}
 	}
 	
-	private boolean isInteger(String s){
+	private boolean isCorrectIDFormat(String s){
 		try{
 			String parseString = s.split("/")[0];
 			Integer.parseInt(parseString);
+			
+			String ignore = s.split("/")[1];
+			
 			return true;
 		}catch(Exception e){
+			TermUtils.printerr("Incorrect ID format!");
 			return false;
 		}
 	

@@ -207,7 +207,7 @@ public class MainMenu{
 		mnTrieda.add(menuItemEditTriedu);
 		
 		JMenuItem menuItemAdvanceClass = new JMenuItem("Posun\u00FA\u0165 triedy");
-		menuItemAdvanceClass.addActionListener(e -> openAdvanceClass());
+		menuItemAdvanceClass.addActionListener(e -> doAdvanceClass());
 		mnTrieda.add(menuItemAdvanceClass);
 		
 		JMenu mnIn = new JMenu("In\u00E9");
@@ -435,19 +435,24 @@ public class MainMenu{
 		}
 	}
 	
-	private void openAdvanceClass(){
+	private void doAdvanceClass(){
 		if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "T\u00E1to oper\u00E1cia sa ned\u00E1 vr\u00E1ti\u0165!", "Posun\u00FA\u0165 triedy", JOptionPane.OK_CANCEL_OPTION)){
 			if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Posun\u00FA\u0165 triedy", JOptionPane.OK_CANCEL_OPTION)){
 				ArrayList<Person> arp = new ArrayList<>();
 				
 				db.persons.forEach((id, dude) -> {
-					int classesInGroupCount = cdb.getClassList().get(dude.getGroup().getCategory()).size();
-					int dudesGroup = cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1;
-					
-					if(dudesGroup > classesInGroupCount){
+					try{
+						int classesInGroupCount = cdb.getClassList().get(dude.getGroup().getCategory()).size();
+						int dudesGroup = cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1;
+						
+						if(dudesGroup > classesInGroupCount){
+							arp.add(dude);
+						}else{
+							dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
+						}
+						
+					}catch(Exception e){
 						arp.add(dude);
-					}else{
-						dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
 					}
 					
 				});
@@ -480,6 +485,7 @@ public class MainMenu{
 		if(!listeners.contains(trel)){
 			listeners.add(trel);
 		}
+		
 	}
 	
 	private static void dispatchTableRefreshEvent(TableRefreshEvent evt){

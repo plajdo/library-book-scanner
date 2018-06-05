@@ -92,6 +92,7 @@ public class ClassDatabase{
 			TermUtils.println("Class database loaded");
 			
 		}catch(Exception e){
+			classList.clear();
 			TermUtils.printerr("Cannot load class database");
 		}
 		
@@ -113,6 +114,7 @@ public class ClassDatabase{
 								}
 								
 							}
+							
 						});
 						obj.put(name, arr);
 						
