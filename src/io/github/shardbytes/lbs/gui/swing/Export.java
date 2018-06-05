@@ -77,7 +77,7 @@ public class Export extends JInternalFrame{
 						try{
 							Table.createPersonTable(textField.getText() + File.separator);
 						}catch(Exception e1){
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Chyba pri exportovan\u00ED datab\u00E1zy:\n" + e1.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 						
 					}
@@ -85,7 +85,7 @@ public class Export extends JInternalFrame{
 						try{
 							Table.createBooksTable(textField.getText() + File.separator);
 						}catch(Exception e1){
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Chyba pri exportovan\u00ED datab\u00E1zy:\n" + e1.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 						
 					}
@@ -102,11 +102,10 @@ public class Export extends JInternalFrame{
 								}
 							}catch(ArrayIndexOutOfBoundsException e1){
 								JOptionPane.showMessageDialog(null, "\u017Diadna trieda nem\u00E1 vypo\u017Ei\u010Dan\u00E9 knihy - nie je \u010Do exportova\u0165.", "Chyba", JOptionPane.ERROR_MESSAGE);
-								e1.printStackTrace();
 							}
 							
 						}catch(Exception e1){
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Chyba pri exportovan\u00ED datab\u00E1zy:\n" + e1.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 						
 					}

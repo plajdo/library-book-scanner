@@ -55,20 +55,20 @@ public class MainMenu{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 		});
+		
 	}
 	
 	private MainMenu() {
 		initialize();
 	}
 
-	private void closeWindow()
-	{
+	private void closeWindow(){
 		frmGymnziumLipany.dispatchEvent(new WindowEvent(frmGymnziumLipany, WindowEvent.WINDOW_CLOSING));
 	}
 	
 	private void initialize() {
-
 		frmGymnziumLipany = new JFrame();
 		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
@@ -118,6 +118,7 @@ public class MainMenu{
 			}catch(Exception e1){
 				JOptionPane.showMessageDialog(null, "Chyba pri ukladan\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 			}
+			
 		});
 		
 		JSeparator separator_4 = new JSeparator();
