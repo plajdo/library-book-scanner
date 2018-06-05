@@ -75,7 +75,7 @@ public class AddPerson extends JInternalFrame {
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				/*
-				 * TODO: Chyba keď nebola vybratá trieda blyat
+				 * TODO: Chyba keď nebola vybratá trieda blyat - toString().isEmpty() vyhodí NPE
 				 */
 				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(triedaField.getSelectedItem().toString().isEmpty())){
 					if(isInteger(textField.getText())){
