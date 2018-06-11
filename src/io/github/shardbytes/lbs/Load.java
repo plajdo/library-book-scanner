@@ -5,10 +5,12 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.ClassDatabase;
+import io.github.shardbytes.lbs.database.DBZipper;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
+import net.lingala.zip4j.exception.ZipException;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,6 +23,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -33,6 +37,7 @@ public class Load{
 	public static String B_DATABASE_PATH;
 	public static String C_DATABASE_PATH;
 	public static String WEBCAM_OPTIMIZE_PATH;
+	public static String ZIP_PATH;
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
@@ -112,34 +117,64 @@ public class Load{
 	 * argument instead of 4.
 	 */
 	public static void main(String[] args){
-		begin(args[0], args[1], args[2], args[3]);
+		begin(args[0]);
 	}
 	
 	/**
 	 * Method that loads everything and starts the GUI.
-	 * @param db_path Path to the main database file
-	 * @param b_db_path Path to the of the second database file
-	 * @param c_db_path Path to the class database file
-	 * @param wob_path Path to the settings file
+	 * @param zipPath Path to a zip file with everything
 	 */
-	private static void begin(String db_path, String b_db_path, String c_db_path, String wob_path){
+	private static void begin(String zipPath){
 		splashProgress(0);
 		splashText("Pre-Initialisation");
 		
-		DATABASE_PATH = db_path;
-		B_DATABASE_PATH = b_db_path;
-		C_DATABASE_PATH = c_db_path;
-		WEBCAM_OPTIMIZE_PATH = wob_path;
+		ZIP_PATH = zipPath;
 		
+		DATABASE_PATH = "data" + File.separator + "lbsdatabase.xml";
+		B_DATABASE_PATH = "data" + File.separator + "borrowdatabase.xml";
+		C_DATABASE_PATH = "data" + File.separator + "classdatabase.json";
+		WEBCAM_OPTIMIZE_PATH = "data" + File.separator + "webcamsettings.ser";
+		
+		/*
+		 * Init coloured printer
+		 */
 		TermUtils.init();
 		if(System.console() == null){
 			System.setProperty("jansi.passthrough", "true");
+		}
+		
+		/*
+		 * Check if "data" folder exists, if not, create it
+		 */
+		try{
+			if(!(new File("data").isDirectory()) ||
+					!(new File("data").exists())){
+				Files.createDirectories(Paths.get("data"));
+			}
+		}catch(IOException e){
+			TermUtils.println("Data folder already exists");
+		}
+		
+		/*
+		 * Unzip or fail when zip does not exist
+		 */
+		try{
+			if(new File(ZIP_PATH).exists()){
+				DBZipper.getInstance().unzipAll(ZIP_PATH);
+			}
+		}catch(ZipException e){
+			TermUtils.printerr(e.getMessage());
+			JOptionPane.showMessageDialog(null, "Fatal exception:\n" + e.getMessage());
+			throw new Error("Unrecoverable error");
 		}
 		
 		splashProgress(20);
 		splashText("Initialisation");
 		
 		TermUtils.println("Loading databases");
+		
+		
+		
 		db.load(DATABASE_PATH);
 		bdb.load(B_DATABASE_PATH);
 		cdb.load();
