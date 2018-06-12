@@ -2,7 +2,7 @@ package io.github.shardbytes.lbs.gui.swing;
 
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.ClassDatabase;
-import io.github.shardbytes.lbs.database.DBZipper;
+import io.github.shardbytes.lbs.database.Database;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.event.TableRefreshEvent;
@@ -10,7 +10,6 @@ import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.event.TableRefreshEventOperation;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Person;
-import net.lingala.zip4j.exception.ZipException;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
@@ -81,21 +80,8 @@ public class MainMenu{
 			public void windowClosing(WindowEvent event)
 			{
 				super.windowClosing(event);
-				TermUtils.println("Saving databases");
-				db.save(Load.DATABASE_PATH);
-				bdb.save(Load.B_DATABASE_PATH);
-				cdb.save();
 				
-				try{
-					DBZipper.getInstance().zipAll(Load.ZIP_PATH,
-							Load.DATABASE_PATH,
-							Load.B_DATABASE_PATH,
-							Load.C_DATABASE_PATH,
-							Load.WEBCAM_OPTIMIZE_PATH);
-				}catch(ZipException e){
-					TermUtils.printerr("Cannot save database");
-					JOptionPane.showMessageDialog(null, "Ukladanie zlyhalo:\n" + e.getMessage());
-				}
+				Database.saveAll();
 				
 				TermUtils.println("Exiting LBS");
 				System.exit(0);
