@@ -260,7 +260,7 @@ public class Load{
 			if(dialog2Result == JOptionPane.YES_OPTION){
 				try{
 					db.resetBook();
-					db.save(DATABASE_PATH);
+					Database.saveAll();
 				}catch (Exception e){
 					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
 					e.printStackTrace();
@@ -281,7 +281,7 @@ public class Load{
 			if(dialog2Result == JOptionPane.YES_OPTION){
 				try{
 					db.resetPerson();
-					db.save(DATABASE_PATH);
+					Database.saveAll();
 				}catch(Exception e){
 					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
 				}finally{
@@ -301,7 +301,7 @@ public class Load{
 			if(dialog2Result == JOptionPane.YES_OPTION){
 				try{
 					bdb.reset();
-					bdb.save(B_DATABASE_PATH);
+					Database.saveAll();
 				}catch (Exception e){
 					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
 					e.printStackTrace();

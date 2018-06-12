@@ -79,7 +79,7 @@ public class AddBook extends JInternalFrame{
 						
 						dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 					}else{
-						JOptionPane.showMessageDialog(null, "ID mus\u00ED by\u0165 \u010D\u00EDslo.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "ID je v nespr\u00E1vnom tvare!\nSpr\u00E1vny tvar: 1/Bp1", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
 				}else{
 					JOptionPane.showMessageDialog(null, "Vypl\u0148te v\u0161etky \u00FAdaje.", "Chyba", JOptionPane.ERROR_MESSAGE);

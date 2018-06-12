@@ -100,6 +100,8 @@ public class ClassDatabase{
 	public void save(String path){
 		JSONObject obj = new JSONObject();
 		
+		// TODO: 12. 6. 2018 FIX ľžšáýčýíáťžáčíéťč
+		
 		if(!classList.isEmpty()){
 			classList.forEach((name, arl) -> {
 				if(!arl.isEmpty()){

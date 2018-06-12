@@ -119,11 +119,19 @@ public class BorrowBook extends JInternalFrame {
 					@Override
 					public void handleDataDialogEvent(DataDialogEvent evt){
 						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							String tempid = bs.getData();
-							Book tempbook = db.books.get(tempid);
-							textField.setText(tempid);
-							textField_1.setText(tempbook.getName());
-							textField_2.setText(tempbook.getAuthor());
+							try{
+								String tempid = bs.getData();
+								Book tempbook = db.books.get(tempid);
+								textField.setText(tempid);
+								textField_1.setText(tempbook.getName());
+								textField_2.setText(tempbook.getAuthor());
+							}catch(NullPointerException e9){
+								TermUtils.printerr(e9.getMessage());
+								textField.setText("Kniha neexistuje v datab\u00E1ze");
+								textField_1.setText("Kniha neexistuje v datab\u00E1ze");
+								textField_2.setText("Kniha neexistuje v datab\u00E1ze");
+							}
+							
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
 							textField_1.setText("Chyba");
@@ -226,11 +234,19 @@ public class BorrowBook extends JInternalFrame {
 					@Override
 					public void handleDataDialogEvent(DataDialogEvent evt){
 						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							String tempid = ps.getData();
-							Person tempperson = db.persons.get(tempid);
-							textField_3.setText(tempid);
-							textField_4.setText(tempperson.getName());
-							textField_5.setText(tempperson.getGroup().getName());
+							try{
+								String tempid = ps.getData();
+								Person tempperson = db.persons.get(tempid);
+								textField_3.setText(tempid);
+								textField_4.setText(tempperson.getName());
+								textField_5.setText(tempperson.getGroup().getName());
+							}catch(NullPointerException e){
+								TermUtils.printerr(e.getMessage());
+								textField_3.setText("\u010Citate\u013E neexistuje v datab\u00E1ze");
+								textField_4.setText("\u010Citate\u013E neexistuje v datab\u00E1ze");
+								textField_5.setText("\u010Citate\u013E neexistuje v datab\u00E1ze");
+							}
+							
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField_3.setText("Chyba");
 							textField_4.setText("Chyba");
