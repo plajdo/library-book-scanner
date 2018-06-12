@@ -6,6 +6,7 @@ import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.DBZipper;
+import io.github.shardbytes.lbs.database.Database;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
@@ -38,84 +39,14 @@ public class Load{
 	public static String C_DATABASE_PATH;
 	public static String WEBCAM_OPTIMIZE_PATH;
 	public static String ZIP_PATH;
+	
+	public static boolean webcamOptimise;
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
 	private static ClassDatabase cdb = ClassDatabase.getInstance();
 	private static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
-	/*
-	 * Turn off the webcam when not in use
-	 */
-	public static boolean webcamOptimise;
-	
-	public static void resetDatabase(){
-		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
-		if(dialogResult == JOptionPane.YES_OPTION){
-			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
-			if(dialog2Result == JOptionPane.YES_OPTION){
-				try{
-					db.resetBook();
-					db.save(DATABASE_PATH);
-				}catch (Exception e){
-					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
-					e.printStackTrace();
-				}finally{
-					System.exit(0);
-				}
-				
-			}
-			
-		}
-		
-	}
-	
-	public static void resetUsers(){
-		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
-		if(dialogResult == JOptionPane.YES_OPTION){
-			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
-			if(dialog2Result == JOptionPane.YES_OPTION){
-				try{
-					db.resetPerson();
-					db.save(DATABASE_PATH);
-				}catch(Exception e){
-					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
-				}finally{
-					System.exit(0);
-				}
-				
-			}
-			
-		}
-		
-	}
-	
-	public static void resetBorrowing(){
-		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
-		if(dialogResult == JOptionPane.YES_OPTION){
-			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
-			if(dialog2Result == JOptionPane.YES_OPTION){
-				try{
-					bdb.reset();
-					bdb.save(B_DATABASE_PATH);
-				}catch (Exception e){
-					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
-					e.printStackTrace();
-				}finally{
-					System.exit(0);
-				}
-				
-			}
-			
-		}
-		
-	}
-	
-	/*
-	 * TODO: Save all databases into one file (zip maybe? unzip on startup and zip on exit),
-	 * so they can be transferred more easily and so this program uses only one startup
-	 * argument instead of 4.
-	 */
 	public static void main(String[] args){
 		begin(args[0]);
 	}
@@ -143,6 +74,11 @@ public class Load{
 			System.setProperty("jansi.passthrough", "true");
 		}
 		
+		splashProgress(20);
+		splashText("Initialisation");
+		
+		TermUtils.println("Loading databases");
+		
 		/*
 		 * Check if "data" folder exists, if not, create it
 		 */
@@ -168,16 +104,9 @@ public class Load{
 			throw new Error("Unrecoverable error");
 		}
 		
-		splashProgress(20);
-		splashText("Initialisation");
-		
-		TermUtils.println("Loading databases");
-		
-		
-		
 		db.load(DATABASE_PATH);
 		bdb.load(B_DATABASE_PATH);
-		cdb.load();
+		cdb.load(C_DATABASE_PATH);
 		
 		splashProgress(40);
 		splashText("Initialisation");
@@ -260,9 +189,7 @@ public class Load{
 	
 	private static synchronized void saveDatabase(){
 		try{
-			db.save(DATABASE_PATH);
-			bdb.save(B_DATABASE_PATH);
-			cdb.save();
+			Database.saveAll();
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 		}
@@ -324,6 +251,68 @@ public class Load{
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static void resetDatabase(){
+		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+			if(dialog2Result == JOptionPane.YES_OPTION){
+				try{
+					db.resetBook();
+					db.save(DATABASE_PATH);
+				}catch (Exception e){
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
+					e.printStackTrace();
+				}finally{
+					System.exit(0);
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	public static void resetUsers(){
+		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+			if(dialog2Result == JOptionPane.YES_OPTION){
+				try{
+					db.resetPerson();
+					db.save(DATABASE_PATH);
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
+				}finally{
+					System.exit(0);
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	public static void resetBorrowing(){
+		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+			if(dialog2Result == JOptionPane.YES_OPTION){
+				try{
+					bdb.reset();
+					bdb.save(B_DATABASE_PATH);
+				}catch (Exception e){
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
+					e.printStackTrace();
+				}finally{
+					System.exit(0);
+				}
+				
+			}
+			
+		}
+		
 	}
 	
 	public static void writeBoolean(boolean b, File f){

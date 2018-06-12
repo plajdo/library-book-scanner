@@ -17,7 +17,7 @@ public class Database{
 		
 		adb.save(Load.DATABASE_PATH);
 		bdb.save(Load.B_DATABASE_PATH);
-		cdb.save();
+		cdb.save(Load.C_DATABASE_PATH);
 		
 		try{
 			DBZipper.getInstance().zipAll(Load.ZIP_PATH,

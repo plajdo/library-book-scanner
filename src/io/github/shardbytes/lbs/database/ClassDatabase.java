@@ -12,7 +12,6 @@ import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import io.github.shardbytes.lbs.Load;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -41,9 +40,9 @@ public class ClassDatabase{
 		return classList;
 	}
 	
-	public void load(){
+	public void load(String path){
 		StringBuilder sb = new StringBuilder();
-		try(FileInputStream input = new FileInputStream(new File(Load.C_DATABASE_PATH))){
+		try(FileInputStream input = new FileInputStream(new File(path))){
 			/*
 			 * Files.lines(new File(Load.C_DATABASE_PATH).toPath()).forEach(sb::append);
 			 * rip Java 8 streams solution
@@ -98,7 +97,7 @@ public class ClassDatabase{
 		
 	}
 	
-	public void save(){
+	public void save(String path){
 		JSONObject obj = new JSONObject();
 		
 		if(!classList.isEmpty()){
@@ -126,7 +125,7 @@ public class ClassDatabase{
 			
 		}
 		
-		try(PrintWriter writer = new PrintWriter(Load.C_DATABASE_PATH)){
+		try(PrintWriter writer = new PrintWriter(path)){
 			writer.println(obj.toString());
 		}catch(IOException e){
 			TermUtils.printerr("Cannot save class database");
