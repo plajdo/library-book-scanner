@@ -1,6 +1,5 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.Database;
 import io.github.shardbytes.lbs.database.LBSDatabase;
@@ -42,7 +41,6 @@ public class MainMenu{
 	private static JDesktopPane desktopPane;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
-	private BorrowDatabase bdb = BorrowDatabase.getInstance();
 	private ClassDatabase cdb = ClassDatabase.getInstance();
 	
 	static List<TableRefreshEventListener> listeners = new ArrayList<>();
@@ -111,9 +109,7 @@ public class MainMenu{
 		mntmUloi.addActionListener(e -> {
 			TermUtils.println("Saving database");
 			try{
-				db.save(Load.DATABASE_PATH);
-				bdb.save(Load.B_DATABASE_PATH);
-				cdb.save();
+				Database.saveAll();
 				JOptionPane.showMessageDialog(null, "Ulo\u017Een\u00E9", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.INFORMATION_MESSAGE);
 			}catch(Exception e1){
 				JOptionPane.showMessageDialog(null, "Chyba pri ukladan\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
@@ -240,6 +236,7 @@ public class MainMenu{
 			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
 			Load.writeBoolean(Load.webcamOptimise, new File(Load.WEBCAM_OPTIMIZE_PATH));
 			JOptionPane.showMessageDialog(null, "LBS je potrebn\u00E9 re\u0161tartova\u0165", "Zmena nastaven\u00ED", JOptionPane.INFORMATION_MESSAGE);
+			Database.saveAll();
 			System.exit(0);
 		});
 		chckbxmntmOptimalizovaKameru.setSelected(Load.webcamOptimise);

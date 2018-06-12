@@ -14,6 +14,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
+import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.objects.Group;
 import net.miginfocom.swing.MigLayout;
@@ -97,8 +98,8 @@ class EditClass extends JInternalFrame{
 		JButton btnExit = new JButton("Dokon\u010Di\u0165");
 		btnExit.addActionListener((event) -> {
 			setVisible(false);
-			cdb.save();
-			cdb.load();
+			cdb.save(Load.C_DATABASE_PATH);
+			cdb.load(Load.C_DATABASE_PATH);
 			dispose();
 		});
 		getContentPane().add(btnExit, "cell 0 0");
