@@ -112,6 +112,10 @@ class EditClass extends JInternalFrame{
 	
 	private void addStuffToTable(){
 		cdb.getClassList().forEach((columnName, columnData) -> {
+			
+			/*
+			 * Change ArrayList<Group> to String[]
+			 */
 			String[] data = new String[columnData.size()];
 			columnData.forEach((group) -> {
 				data[num] = group.getName();
@@ -123,17 +127,24 @@ class EditClass extends JInternalFrame{
 			
 		});
 		
-		ArrayList<Object> arlo = new ArrayList<>();
+		ArrayList<Object> arlo = new ArrayList<>(tblModel.getColumnCount());
 		try{
+			/*
+			 * Get the last line in array
+			 */
 			for(int i = 0; i < tblModel.getColumnCount(); i++){
 				arlo.add(tblModel.getValueAt(tblModel.getRowCount() - 1, i));
 			}
-
+			
+			/*
+			 * If any cell in the last line contains anything, add a new row for users to edit
+			 */
 			if(arlo.stream().anyMatch(Objects::nonNull)){
 				tblModel.addRow((Object[])null);
 			}
 			
 		}catch(Exception e){
+			e.printStackTrace();
 			tblModel.addRow((Object[])null);
 		}
 		
