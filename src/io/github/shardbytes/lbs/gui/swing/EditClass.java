@@ -60,7 +60,9 @@ class EditClass extends JInternalFrame{
 			for(int i = 0; i < tblModel.getColumnCount(); i++){
 				ArrayList<Group> arls = new ArrayList<>();
 				for(int j = 0; j < tblModel.getRowCount(); j++){
-					arls.add(new Group((String) tblModel.getValueAt(j, i), tblModel.getColumnName(i)));
+					if(!(tblModel.getValueAt(j, i) == null) && !(((String)tblModel.getValueAt(j, i)).isEmpty())){
+						arls.add(new Group((String) tblModel.getValueAt(j, i), tblModel.getColumnName(i)));
+					}
 
 				}
 				cdb.getClassList().put(tblModel.getColumnName(i), arls);
@@ -144,7 +146,6 @@ class EditClass extends JInternalFrame{
 			}
 			
 		}catch(Exception e){
-			e.printStackTrace();
 			tblModel.addRow((Object[])null);
 		}
 		

@@ -109,29 +109,19 @@ public class ClassDatabase{
 	public void save(String path){
 		JSONObject obj = new JSONObject();
 		
-		// TODO: 12. 6. 2018 FIX ľžšáýčýíáťžáčíéťč
-		
 		System.out.println("classList = " + classList);
 		
+		/*
+		 * A shit ton of checks because I'm a paranoid programmer
+		 * UPDATE: Actually not, not needed anymore
+		 */
 		if(!classList.isEmpty()){
 			classList.forEach((name, arl) -> {
 				if(!arl.isEmpty()){
-					if(!arl.stream().allMatch(ClassDatabase::isGroupNullOrEmpty)){
-						JSONArray arr = new JSONArray();
-						arl.forEach((group) -> {
-							if(!(group.getName() == null)){
-								if(!group.getName().isEmpty()){
-									arr.put(group.getName());
-									
-								}
-								
-							}
-							
-						});
-						obj.put(name, arr);
-						
-					}
-				
+					JSONArray arr = new JSONArray();
+					arl.forEach((group) -> arr.put(group.getName()));
+					obj.put(name, arr);
+					
 				}
 				
 			});
@@ -148,11 +138,6 @@ public class ClassDatabase{
 		
 		TermUtils.println("Class database saved");
 		
-	}
-	
-	private static boolean isGroupNullOrEmpty(Object o){
-		Group test = (Group)o;
-		return test == null || test.getName() == null || test.getName().isEmpty();
 	}
 	
 }
