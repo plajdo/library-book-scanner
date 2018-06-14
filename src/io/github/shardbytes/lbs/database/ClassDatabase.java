@@ -152,7 +152,7 @@ public class ClassDatabase{
 	
 	private static boolean isGroupNullOrEmpty(Object o){
 		Group test = (Group)o;
-		return test.getName() == null || test.getName().isEmpty() || test == null;
+		return test == null || test.getName() == null || test.getName().isEmpty();
 	}
 	
 }
