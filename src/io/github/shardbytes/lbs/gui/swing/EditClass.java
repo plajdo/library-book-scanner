@@ -14,6 +14,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
+import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.objects.Group;
 import net.miginfocom.swing.MigLayout;
@@ -34,7 +35,10 @@ class EditClass extends JInternalFrame{
 		setIconifiable(true);
 		setResizable(true);
 		setTitle("Upravi\u0165 triedy");
-		setClosable(false);
+		/*
+		 * Set closeable to true to be able to close the GUI without saving everything.
+		 */
+		setClosable(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[grow]", "[][grow]"));
 
@@ -56,7 +60,9 @@ class EditClass extends JInternalFrame{
 			for(int i = 0; i < tblModel.getColumnCount(); i++){
 				ArrayList<Group> arls = new ArrayList<>();
 				for(int j = 0; j < tblModel.getRowCount(); j++){
-					arls.add(new Group((String) tblModel.getValueAt(j, i), tblModel.getColumnName(i)));
+					if(!(tblModel.getValueAt(j, i) == null) && !(((String)tblModel.getValueAt(j, i)).isEmpty())){
+						arls.add(new Group((String) tblModel.getValueAt(j, i), tblModel.getColumnName(i)));
+					}
 
 				}
 				cdb.getClassList().put(tblModel.getColumnName(i), arls);
@@ -94,8 +100,8 @@ class EditClass extends JInternalFrame{
 		JButton btnExit = new JButton("Dokon\u010Di\u0165");
 		btnExit.addActionListener((event) -> {
 			setVisible(false);
-			cdb.save();
-			cdb.load();
+			cdb.save(Load.C_DATABASE_PATH);
+			cdb.load(Load.C_DATABASE_PATH);
 			dispose();
 		});
 		getContentPane().add(btnExit, "cell 0 0");
@@ -108,6 +114,10 @@ class EditClass extends JInternalFrame{
 	
 	private void addStuffToTable(){
 		cdb.getClassList().forEach((columnName, columnData) -> {
+			
+			/*
+			 * Change ArrayList<Group> to String[]
+			 */
 			String[] data = new String[columnData.size()];
 			columnData.forEach((group) -> {
 				data[num] = group.getName();
@@ -119,12 +129,18 @@ class EditClass extends JInternalFrame{
 			
 		});
 		
-		ArrayList<Object> arlo = new ArrayList<>();
+		ArrayList<Object> arlo = new ArrayList<>(tblModel.getColumnCount());
 		try{
+			/*
+			 * Get the last line in array
+			 */
 			for(int i = 0; i < tblModel.getColumnCount(); i++){
 				arlo.add(tblModel.getValueAt(tblModel.getRowCount() - 1, i));
 			}
-
+			
+			/*
+			 * If any cell in the last line contains anything, add a new row for users to edit
+			 */
 			if(arlo.stream().anyMatch(Objects::nonNull)){
 				tblModel.addRow((Object[])null);
 			}

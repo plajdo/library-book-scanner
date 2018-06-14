@@ -5,14 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import io.github.shardbytes.lbs.Load;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -41,9 +42,9 @@ public class ClassDatabase{
 		return classList;
 	}
 	
-	public void load(){
+	public void load(String path){
 		StringBuilder sb = new StringBuilder();
-		try(FileInputStream input = new FileInputStream(new File(Load.C_DATABASE_PATH))){
+		try(FileInputStream input = new FileInputStream(new File(path))){
 			/*
 			 * Files.lines(new File(Load.C_DATABASE_PATH).toPath()).forEach(sb::append);
 			 * rip Java 8 streams solution
@@ -68,18 +69,30 @@ public class ClassDatabase{
 			JSONArray namesArr = obj.names();
 			ArrayList<String> names = new ArrayList<>();
 			
-			System.out.println("namesArr = " + namesArr);
+			/*
+			 * Debugging stuff to write everything out:
+			 *
+			 * System.out.println("namesArr = " + namesArr);
+			 *
+			 * for(Object o : namesArr){
+			 * 	System.out.println("o = " + o);
+			 * 	System.out.println("o.toString() = " + o.toString());
+			 * }
+			 */
 			
-			for(Object o : namesArr){
-				System.out.println("o = " + o);
-				System.out.println("o.toString() = " + o.toString());
-			}
+			/*
+			 * Change JSONArray (Object) to ArrayList<String>
+			 */
 			namesArr.forEach((name) -> names.add(name.toString()));
 			
+			/*
+			 * Clear classList to remove duplicates
+			 */
 			classList.clear();
 			
 			names.forEach((name) -> {
 				ArrayList<Group> arg = new ArrayList<>();
+				
 				obj.getJSONArray(name).forEach((group) -> arg.add(new Group(group.toString(), name)));
 				classList.put(name, arg);
 				
@@ -87,55 +100,44 @@ public class ClassDatabase{
 			TermUtils.println("Class database loaded");
 			
 		}catch(Exception e){
-			/*
-			 * TODO: remove e.printStackTrace() before releasing
-			 */
-			e.printStackTrace();
+			classList.clear();
 			TermUtils.printerr("Cannot load class database");
 		}
 		
 	}
 	
-	public void save(){
+	public void save(String path){
 		JSONObject obj = new JSONObject();
 		
+		System.out.println("classList = " + classList);
+		
+		/*
+		 * A shit ton of checks because I'm a paranoid programmer
+		 * UPDATE: Actually not, not needed anymore
+		 */
 		if(!classList.isEmpty()){
 			classList.forEach((name, arl) -> {
 				if(!arl.isEmpty()){
-					if(!arl.stream().allMatch(ClassDatabase::isGroupNullOrEmpty)){
-						JSONArray arr = new JSONArray();
-						arl.forEach((group) -> {
-							if(!(group.getName() == null)){
-								if(!group.getName().isEmpty()){
-									arr.put(group.getName());
-									
-								}
-								
-							}
-						});
-						obj.put(name, arr);
-						
-					}
-				
+					JSONArray arr = new JSONArray();
+					arl.forEach((group) -> arr.put(group.getName()));
+					obj.put(name, arr);
+					
 				}
 				
 			});
 			
 		}
 		
-		try(PrintWriter writer = new PrintWriter(Load.C_DATABASE_PATH)){
-			writer.println(obj.toString());
+		try{
+			Path p = Paths.get(path);
+			Files.write(p, obj.toString().getBytes(Charset.forName("ISO-8859-2")));
 		}catch(IOException e){
 			TermUtils.printerr("Cannot save class database");
-			e.printStackTrace();
+			TermUtils.printerr(e.getMessage());
 		}
+		
 		TermUtils.println("Class database saved");
 		
-	}
-	
-	private static boolean isGroupNullOrEmpty(Object o){
-		Group test = (Group)o;
-		return test.getName() == null || test.getName().isEmpty();
 	}
 	
 }

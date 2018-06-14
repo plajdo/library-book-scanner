@@ -1,7 +1,7 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.ClassDatabase;
+import io.github.shardbytes.lbs.database.Database;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.event.TableRefreshEvent;
@@ -41,7 +41,6 @@ public class MainMenu{
 	private static JDesktopPane desktopPane;
 	
 	private LBSDatabase db = LBSDatabase.getInstance();
-	private BorrowDatabase bdb = BorrowDatabase.getInstance();
 	private ClassDatabase cdb = ClassDatabase.getInstance();
 	
 	static List<TableRefreshEventListener> listeners = new ArrayList<>();
@@ -55,20 +54,20 @@ public class MainMenu{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 		});
+		
 	}
 	
 	private MainMenu() {
 		initialize();
 	}
 
-	private void closeWindow()
-	{
+	private void closeWindow(){
 		frmGymnziumLipany.dispatchEvent(new WindowEvent(frmGymnziumLipany, WindowEvent.WINDOW_CLOSING));
 	}
 	
 	private void initialize() {
-
 		frmGymnziumLipany = new JFrame();
 		frmGymnziumLipany.setTitle("ShardBytes Library Book Scanner - [" + Load.VERSION + "] [SK]");
 		frmGymnziumLipany.setBounds(100, 100, 1280, 720);
@@ -79,15 +78,14 @@ public class MainMenu{
 			public void windowClosing(WindowEvent event)
 			{
 				super.windowClosing(event);
-				TermUtils.println("Saving databases");
-				db.save(Load.DATABASE_PATH);
-				bdb.save(Load.B_DATABASE_PATH);
-				cdb.save();
-
+				
+				Database.saveAll();
+				
 				TermUtils.println("Exiting LBS");
 				System.exit(0);
 					
 			}
+			
 		});
 		frmGymnziumLipany.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -111,13 +109,12 @@ public class MainMenu{
 		mntmUloi.addActionListener(e -> {
 			TermUtils.println("Saving database");
 			try{
-				db.save(Load.DATABASE_PATH);
-				bdb.save(Load.B_DATABASE_PATH);
-				cdb.save();
+				Database.saveAll();
 				JOptionPane.showMessageDialog(null, "Ulo\u017Een\u00E9", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.INFORMATION_MESSAGE);
 			}catch(Exception e1){
 				JOptionPane.showMessageDialog(null, "Chyba pri ukladan\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
 			}
+			
 		});
 		
 		JSeparator separator_4 = new JSeparator();
@@ -206,7 +203,7 @@ public class MainMenu{
 		mnTrieda.add(menuItemEditTriedu);
 		
 		JMenuItem menuItemAdvanceClass = new JMenuItem("Posun\u00FA\u0165 triedy");
-		menuItemAdvanceClass.addActionListener(e -> openAdvanceClass());
+		menuItemAdvanceClass.addActionListener(e -> doAdvanceClass());
 		mnTrieda.add(menuItemAdvanceClass);
 		
 		JMenu mnIn = new JMenu("In\u00E9");
@@ -239,6 +236,7 @@ public class MainMenu{
 			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
 			Load.writeBoolean(Load.webcamOptimise, new File(Load.WEBCAM_OPTIMIZE_PATH));
 			JOptionPane.showMessageDialog(null, "LBS je potrebn\u00E9 re\u0161tartova\u0165", "Zmena nastaven\u00ED", JOptionPane.INFORMATION_MESSAGE);
+			Database.saveAll();
 			System.exit(0);
 		});
 		chckbxmntmOptimalizovaKameru.setSelected(Load.webcamOptimise);
@@ -432,21 +430,27 @@ public class MainMenu{
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}
+		
 	}
 	
-	private void openAdvanceClass(){
+	private void doAdvanceClass(){
 		if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "T\u00E1to oper\u00E1cia sa ned\u00E1 vr\u00E1ti\u0165!", "Posun\u00FA\u0165 triedy", JOptionPane.OK_CANCEL_OPTION)){
 			if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Posun\u00FA\u0165 triedy", JOptionPane.OK_CANCEL_OPTION)){
 				ArrayList<Person> arp = new ArrayList<>();
 				
 				db.persons.forEach((id, dude) -> {
-					int classesInGroupCount = cdb.getClassList().get(dude.getGroup().getCategory()).size();
-					int dudesGroup = cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1;
-					
-					if(dudesGroup > classesInGroupCount){
+					try{
+						int classesInGroupCount = cdb.getClassList().get(dude.getGroup().getCategory()).size();
+						int dudesGroup = cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1;
+						
+						if(dudesGroup > classesInGroupCount){
+							arp.add(dude);
+						}else{
+							dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
+						}
+						
+					}catch(Exception e){
 						arp.add(dude);
-					}else{
-						dude.setGroup(cdb.getClassList().get(dude.getGroup().getCategory()).get(cdb.getClassList().get(dude.getGroup().getCategory()).indexOf(dude.getGroup()) + 1));
 					}
 					
 				});
@@ -479,6 +483,7 @@ public class MainMenu{
 		if(!listeners.contains(trel)){
 			listeners.add(trel);
 		}
+		
 	}
 	
 	private static void dispatchTableRefreshEvent(TableRefreshEvent evt){

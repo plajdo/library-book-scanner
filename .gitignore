@@ -12,3 +12,4 @@ classes/
 *.json
 resources/
 library-book-scanner-launcher/
+*.dat

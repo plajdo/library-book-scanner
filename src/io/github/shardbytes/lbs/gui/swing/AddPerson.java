@@ -74,22 +74,24 @@ public class AddPerson extends JInternalFrame {
 		JButton btnPotvrdiAPrida = new JButton("Ulo\u017Ei\u0165 a prida\u0165 \u010Ditate\u013Ea do datab\u00E1zy");
 		btnPotvrdiAPrida.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				/*
-				 * TODO: Chyba keď nebola vybratá trieda blyat
-				 */
-				if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(triedaField.getSelectedItem().toString().isEmpty())){
-					if(isInteger(textField.getText())){
-						Person np = new Person(textField.getText());
-						np.setName(textField_1.getText());
-						np.setGroup(Group.fromString((String)triedaField.getSelectedItem()));
-						db.persons.put(textField.getText(), np);
-						btnPotvrdiAPrida.setEnabled(false);
-						
-						dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+				try{
+					if(!(textField.getText().isEmpty()) && !(textField_1.getText().isEmpty()) && !(triedaField.getSelectedItem().toString().isEmpty())){
+						if(isInteger(textField.getText())){
+							Person np = new Person(textField.getText());
+							np.setName(textField_1.getText());
+							np.setGroup(Group.fromString((String)triedaField.getSelectedItem()));
+							db.persons.put(textField.getText(), np);
+							btnPotvrdiAPrida.setEnabled(false);
+							
+							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+						}else{
+							JOptionPane.showMessageDialog(null, "ID mus\u00ED by\u0165 \u010D\u00EDslo.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						}
 					}else{
-						JOptionPane.showMessageDialog(null, "ID mus\u00ED by\u0165 \u010D\u00EDslo.", "Chyba", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Vypl\u0148te v\u0161etky \u00FAdaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
-				}else{
+					
+				}catch(NullPointerException e1){
 					JOptionPane.showMessageDialog(null, "Vypl\u0148te v\u0161etky \u00FAdaje.", "Chyba", JOptionPane.ERROR_MESSAGE);
 				}
 				

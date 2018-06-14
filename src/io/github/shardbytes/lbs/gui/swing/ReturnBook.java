@@ -10,6 +10,7 @@ import io.github.shardbytes.lbs.event.DataDialogEventOperation;
 import io.github.shardbytes.lbs.event.TableRefreshEvent;
 import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.event.TableRefreshEventOperation;
+import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Book;
 import io.github.shardbytes.lbs.objects.Person;
 import net.miginfocom.swing.MigLayout;
@@ -77,11 +78,19 @@ public class ReturnBook extends JInternalFrame{
 					@Override
 					public void handleDataDialogEvent(DataDialogEvent evt){
 						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							String tempid = bs.getData();
-							Book tempbook = db.books.get(tempid);
-							textField.setText(tempid);
-							textField_1.setText(tempbook.getAuthor());
-							textField_2.setText(tempbook.getName());
+							try{
+								String tempid = bs.getData();
+								Book tempbook = db.books.get(tempid);
+								textField.setText(tempid);
+								textField_1.setText(tempbook.getAuthor());
+								textField_2.setText(tempbook.getName());
+							}catch(NullPointerException e9){
+								TermUtils.printerr(e9.getMessage());
+								textField.setText("Kniha neexistuje v datab\u00E1ze");
+								textField_1.setText("Kniha neexistuje v datab\u00E1ze");
+								textField_2.setText("Kniha neexistuje v datab\u00E1ze");
+							}
+							
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
 							textField_1.setText("Chyba");

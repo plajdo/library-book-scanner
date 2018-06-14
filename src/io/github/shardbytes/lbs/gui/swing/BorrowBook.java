@@ -119,11 +119,19 @@ public class BorrowBook extends JInternalFrame {
 					@Override
 					public void handleDataDialogEvent(DataDialogEvent evt){
 						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							String tempid = bs.getData();
-							Book tempbook = db.books.get(tempid);
-							textField.setText(tempid);
-							textField_1.setText(tempbook.getName());
-							textField_2.setText(tempbook.getAuthor());
+							try{
+								String tempid = bs.getData();
+								Book tempbook = db.books.get(tempid);
+								textField.setText(tempid);
+								textField_1.setText(tempbook.getName());
+								textField_2.setText(tempbook.getAuthor());
+							}catch(NullPointerException e9){
+								TermUtils.printerr(e9.getMessage());
+								textField.setText("Kniha neexistuje v datab\u00E1ze");
+								textField_1.setText("Kniha neexistuje v datab\u00E1ze");
+								textField_2.setText("Kniha neexistuje v datab\u00E1ze");
+							}
+							
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField.setText("Chyba");
 							textField_1.setText("Chyba");
@@ -162,48 +170,55 @@ public class BorrowBook extends JInternalFrame {
 			public void actionPerformed(ActionEvent e){
 				try{
 					if(textField.getText().length() > 0 && textField_3.getText().length() > 0 && datePicker1.getModel().getValue() != null && datePicker2.getModel().getValue() != null){
-						if(db.books.containsKey(textField.getText())){
-							if(db.persons.containsKey(textField_3.getText())){
-								
-								Person per = db.persons.get(textField_3.getText());
-								Book b = db.books.get(textField.getText());
-								
-								Date d1 = (Date)datePicker2.getModel().getValue();
-								Date d2 = (Date)datePicker1.getModel().getValue();
-								
-								if(d1.getTime() < d2.getTime()){
-									if(b.getTakerID().isEmpty()){
-										b.setTakerID(per.getID());
-										per.addBookCount();
-										b.setBorrowedTime(((Date)datePicker2.getModel().getValue()).getTime());
-										b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
-
-										BorrowEntry tempentry = bdb.safeAdd(per.getGroup().getName());
-										tempentry.setBorrowDate(b.getBorrowedTime());
-										tempentry.setBookID(b.getID());
-										tempentry.setBorrowerCompleteName(per.getName() + " - " + per.getID());
-										tempentry.setBookName(b.getAuthor() + " - " + b.getName());
-										b.setCurrentBorrowEntryID(tempentry.getId());
-										
-										dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
-										dispose();
+						if(!textField.getText().equals("Zrušené") && !textField_3.getText().equals("Zrušené")){
+							if(db.books.containsKey(textField.getText())){
+								if(db.persons.containsKey(textField_3.getText())){
+									
+									Person per = db.persons.get(textField_3.getText());
+									Book b = db.books.get(textField.getText());
+									
+									Date d1 = (Date)datePicker2.getModel().getValue();
+									Date d2 = (Date)datePicker1.getModel().getValue();
+									
+									if(d1.getTime() < d2.getTime()){
+										if(b.getTakerID().isEmpty()){
+											b.setTakerID(per.getID());
+											per.addBookCount();
+											b.setBorrowedTime(((Date)datePicker2.getModel().getValue()).getTime());
+											b.setBorrowedUntilTime(((Date)datePicker1.getModel().getValue()).getTime());
+											
+											BorrowEntry tempentry = bdb.safeAdd(per.getGroup().getName());
+											tempentry.setBorrowDate(b.getBorrowedTime());
+											tempentry.setBookID(b.getID());
+											tempentry.setBorrowerCompleteName(per.getName() + " - " + per.getID());
+											tempentry.setBookName(b.getAuthor() + " - " + b.getName());
+											b.setCurrentBorrowEntryID(tempentry.getId());
+											
+											dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
+											dispose();
+										}else{
+											JOptionPane.showMessageDialog(null, "Kniha je u\u017E vypo\u017Ei\u010Dan\u00E1 \u010Ditate\u013Eom s ID" + b.getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
+										}
 									}else{
-										JOptionPane.showMessageDialog(null, "Kniha je u\u017E vypo\u017Ei\u010Dan\u00E1 \u010Ditate\u013Eom s ID" + b.getTakerID() + ".", "Chyba", JOptionPane.ERROR_MESSAGE);
+										JOptionPane.showMessageDialog(null, "Neplatn\u00FD d\u00E1tum.", "Chyba", JOptionPane.ERROR_MESSAGE);
 									}
 								}else{
-									JOptionPane.showMessageDialog(null, "Neplatn\u00FD d\u00E1tum.", "Chyba", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(null, "\u010Citate\u013E neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 								}
 							}else{
-								JOptionPane.showMessageDialog(null, "\u010Citate\u013E neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
 							}
 						}else{
-							JOptionPane.showMessageDialog(null, "Kniha neexistuje v datab\u00E1ze.", "Chyba", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID \u010Ditate\u013Ea a d\u00E1tumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 						}
 					}else{
 						JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID \u010Ditate\u013Ea a d\u00E1tumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 					}
-				}catch(NullPointerException ignored){
+				}catch(NullPointerException e1){
 					TermUtils.printerr("NullPointerException at #1");
+				}catch(NumberFormatException e2){
+					TermUtils.printerr("NumberFormatException at #1");
+					JOptionPane.showMessageDialog(null, "Zadajte ID knihy, ID \u010Ditate\u013Ea a d\u00E1tumy.", "Chyba", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -219,11 +234,19 @@ public class BorrowBook extends JInternalFrame {
 					@Override
 					public void handleDataDialogEvent(DataDialogEvent evt){
 						if(evt.getOperation() == DataDialogEventOperation.EVENT_SUCCEEDED){
-							String tempid = ps.getData();
-							Person tempperson = db.persons.get(tempid);
-							textField_3.setText(tempid);
-							textField_4.setText(tempperson.getName());
-							textField_5.setText(tempperson.getGroup().getName());
+							try{
+								String tempid = ps.getData();
+								Person tempperson = db.persons.get(tempid);
+								textField_3.setText(tempid);
+								textField_4.setText(tempperson.getName());
+								textField_5.setText(tempperson.getGroup().getName());
+							}catch(NullPointerException e){
+								TermUtils.printerr(e.getMessage());
+								textField_3.setText("\u010Citate\u013E neexistuje v datab\u00E1ze");
+								textField_4.setText("\u010Citate\u013E neexistuje v datab\u00E1ze");
+								textField_5.setText("\u010Citate\u013E neexistuje v datab\u00E1ze");
+							}
+							
 						}else if(evt.getOperation() == DataDialogEventOperation.EVENT_FAILED){
 							textField_3.setText("Chyba");
 							textField_4.setText("Chyba");
