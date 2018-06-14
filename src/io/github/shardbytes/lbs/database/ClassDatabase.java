@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -78,12 +80,19 @@ public class ClassDatabase{
 			 * }
 			 */
 			
+			/*
+			 * Change JSONArray (Object) to ArrayList<String>
+			 */
 			namesArr.forEach((name) -> names.add(name.toString()));
 			
+			/*
+			 * Clear classList to remove duplicates
+			 */
 			classList.clear();
 			
 			names.forEach((name) -> {
 				ArrayList<Group> arg = new ArrayList<>();
+				
 				obj.getJSONArray(name).forEach((group) -> arg.add(new Group(group.toString(), name)));
 				classList.put(name, arg);
 				
@@ -101,6 +110,8 @@ public class ClassDatabase{
 		JSONObject obj = new JSONObject();
 		
 		// TODO: 12. 6. 2018 FIX ľžšáýčýíáťžáčíéťč
+		
+		System.out.println("classList = " + classList);
 		
 		if(!classList.isEmpty()){
 			classList.forEach((name, arl) -> {
@@ -127,19 +138,21 @@ public class ClassDatabase{
 			
 		}
 		
-		try(PrintWriter writer = new PrintWriter(path)){
-			writer.println(obj.toString());
+		try{
+			Path p = Paths.get(path);
+			Files.write(p, obj.toString().getBytes(Charset.forName("ISO-8859-2")));
 		}catch(IOException e){
 			TermUtils.printerr("Cannot save class database");
-			e.printStackTrace();
+			TermUtils.printerr(e.getMessage());
 		}
+		
 		TermUtils.println("Class database saved");
 		
 	}
 	
 	private static boolean isGroupNullOrEmpty(Object o){
 		Group test = (Group)o;
-		return test.getName() == null || test.getName().isEmpty();
+		return test.getName() == null || test.getName().isEmpty() || test == null;
 	}
 	
 }
