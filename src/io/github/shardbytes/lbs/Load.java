@@ -262,8 +262,7 @@ public class Load{
 					db.resetBook();
 					Database.saveAll();
 				}catch (Exception e){
-					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy:\n" + e.getMessage());
 				}finally{
 					System.exit(0);
 				}
@@ -283,7 +282,7 @@ public class Load{
 					db.resetPerson();
 					Database.saveAll();
 				}catch(Exception e){
-					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy:\n" + e.getMessage());
 				}finally{
 					System.exit(0);
 				}
@@ -303,8 +302,27 @@ public class Load{
 					bdb.reset();
 					Database.saveAll();
 				}catch (Exception e){
-					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy.");
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy:\n" + e.getMessage());
+				}finally{
+					System.exit(0);
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	public static void resetClasses(){
+		int dialogResult = JOptionPane.showConfirmDialog(null, "Naozaj vymaza\u0165 datab\u00E1zu? Tento krok sa ned\u00E1 vr\u00E1ti\u0165!","Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			int dialog2Result = JOptionPane.showConfirmDialog(null, "Ste si ist\u00FD/\u00E1?", "Vymaza\u0165 datab\u00E1zu", JOptionPane.YES_NO_OPTION);
+			if(dialog2Result == JOptionPane.YES_OPTION){
+				try{
+					cdb.getClassList().clear();
+					Database.saveAll();
+				}catch (Exception e){
+					JOptionPane.showMessageDialog(null, "Chyba pri mazan\u00ED datab\u00E1zy:\n" + e.getMessage());
 				}finally{
 					System.exit(0);
 				}

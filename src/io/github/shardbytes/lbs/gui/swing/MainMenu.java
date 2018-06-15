@@ -1,9 +1,9 @@
 package io.github.shardbytes.lbs.gui.swing;
 
+import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.Database;
 import io.github.shardbytes.lbs.database.LBSDatabase;
-import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.event.TableRefreshEvent;
 import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.event.TableRefreshEventOperation;
@@ -224,6 +224,10 @@ public class MainMenu{
 		
 		mnVymaza.add(mntmVymazaDatabzuVpoiiek);
 		mntmVymazatDatabazu.addActionListener(e -> Load.resetDatabase());
+		
+		JMenuItem mntmVymazatTriedy = new JMenuItem("Vymaza\u0165 datab\u00E1zu tried");
+		mnVymaza.add(mntmVymazatTriedy);
+		mntmVymazatTriedy.addActionListener(e -> Load.resetClasses());
 		
 		JSeparator separator = new JSeparator();
 		mnIn.add(separator);
