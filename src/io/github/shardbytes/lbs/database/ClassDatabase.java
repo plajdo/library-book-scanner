@@ -109,12 +109,6 @@ public class ClassDatabase{
 	public void save(String path){
 		JSONObject obj = new JSONObject();
 		
-		System.out.println("classList = " + classList);
-		
-		/*
-		 * A shit ton of checks because I'm a paranoid programmer
-		 * UPDATE: Actually not, not needed anymore
-		 */
 		if(!classList.isEmpty()){
 			classList.forEach((name, arl) -> {
 				if(!arl.isEmpty()){
