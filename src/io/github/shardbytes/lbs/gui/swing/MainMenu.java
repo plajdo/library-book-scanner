@@ -99,7 +99,7 @@ public class MainMenu{
 		JMenu mnSbor = new JMenu("S\u00FAbor");
 		menuBar.add(mnSbor);
 		
-		JMenuItem mntmUkoni = new JMenuItem("Ukon\u010Di\u0165");
+		JMenuItem mntmUkoni = new JMenuItem("Ulo\u017Ei\u0165 a ukon\u010Di\u0165");
 		mntmUkoni.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
 		mntmUkoni.addActionListener(e -> closeWindow());
 		mnSbor.add(mntmUkoni);
