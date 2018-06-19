@@ -32,7 +32,7 @@ import javax.swing.UIManager;
 
 public class Load{
 	
-	public static final String VERSION = "v1.2.1";
+	public static final String VERSION = "v1.2.2";
 	
 	public static String DATABASE_PATH;
 	public static String B_DATABASE_PATH;
