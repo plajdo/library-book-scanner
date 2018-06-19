@@ -20,7 +20,7 @@ public class BookScanner extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-	volatile BufferedImage webcamImage;
+	private volatile BufferedImage webcamImage;
 	private String data = "";
 	
 	List<DDEventListener> listeners = new ArrayList<>();
@@ -29,9 +29,9 @@ public class BookScanner extends JInternalFrame {
 		return data;
 	}
 	
-	public BookScanner(){
-		ImageIcon ic = null;
-		Webcam webcam = null;
+	BookScanner(){
+		ImageIcon ic;
+		Webcam webcam;
 		try{
 			webcam = Webcam.getDefault();
 			if(!Load.webcamOptimise){

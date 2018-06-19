@@ -20,7 +20,7 @@ public class PersonScanner extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-	volatile BufferedImage webcamImage;
+	private volatile BufferedImage webcamImage;
 	private String data = "";
 	
 	List<DDEventListener> listeners = new ArrayList<>();
@@ -29,9 +29,9 @@ public class PersonScanner extends JInternalFrame {
 		return data;
 	}
 	
-	public PersonScanner(){
-		ImageIcon ic = null;
-		Webcam webcam = null;
+	PersonScanner(){
+		ImageIcon ic;
+		Webcam webcam;
 		try{
 			webcam = Webcam.getDefault();
 			if(!Load.webcamOptimise){
@@ -93,7 +93,9 @@ public class PersonScanner extends JInternalFrame {
 					e1.printStackTrace();
 					dispose();
 				}
+				
 			}
+			
 		});
 		panel.add(btnPotvrdi, "cell 0 0,alignx left,aligny top");
 		btnPotvrdi.setPreferredSize(new Dimension(75, 25));
@@ -114,7 +116,9 @@ public class PersonScanner extends JInternalFrame {
 					e1.printStackTrace();
 					dispose();
 				}
+				
 			}
+			
 		});
 		btnZrui.setMinimumSize(new Dimension(75, 25));
 		btnZrui.setMaximumSize(new Dimension(75, 25));
@@ -127,6 +131,7 @@ public class PersonScanner extends JInternalFrame {
 		if(!listeners.contains(ddel)){
 			listeners.add(ddel);
 		}
+		
 	}
 	
 	public void removeDataDialogListener(DDEventListener ddel){
@@ -137,6 +142,7 @@ public class PersonScanner extends JInternalFrame {
 		for(DDEventListener ddl: listeners){
 			ddl.handleDataDialogEvent(evt);
 		}
+		
 	}
 
 }

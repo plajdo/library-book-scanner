@@ -123,12 +123,15 @@ class ListAllPersons extends JInternalFrame{
 	private void addSearchToTable(String search){
 		db.persons.keySet().forEach((key) -> {
 			Person p = db.persons.get(key);
-			if(p.getName().contains(search)){
+			if(p.getName().toLowerCase().contains(search.toLowerCase())){
 				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
-			}else if(p.getGroup().getName().contains(search)){
+				
+			}else if(p.getGroup().getName().toLowerCase().contains(search.toLowerCase())){
 				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
-			}else if(p.getID().contains(search)){
+				
+			}else if(p.getID().toLowerCase().contains(search.toLowerCase())){
 				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
+				
 			}
 		});
 	}

@@ -1,15 +1,18 @@
 package io.github.shardbytes.lbs.gui.swing;
 
 import io.github.shardbytes.lbs.database.LBSDatabase;
-
-import io.github.shardbytes.lbs.event.TableRefreshEvent;
-import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.objects.Book;
 
-import javax.swing.*;
+import javax.swing.JInternalFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ComponentEvent;
@@ -19,10 +22,8 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class BooksToReturn extends JInternalFrame{
+class BooksToReturn extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTable table;
@@ -32,7 +33,7 @@ public class BooksToReturn extends JInternalFrame{
 	private LBSDatabase db = LBSDatabase.getInstance();
 	private JTextField textField;
 	
-	public BooksToReturn(){
+	BooksToReturn(){
 		setIconifiable(true);
 		setClosable(true);
 		setResizable(true);
@@ -91,54 +92,17 @@ public class BooksToReturn extends JInternalFrame{
 		table.setModel(tblModel);
 		
 		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				refreshTable(textField.getText());
-			}
-		});
+		textField.addActionListener(e -> refreshTable(textField.getText()));
 		getContentPane().add(textField, BorderLayout.NORTH);
 		textField.setColumns(10);
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		
-		AddBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		RemoveBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		BorrowBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		ReturnBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		MainMenu.addDataDialogListener(trel -> {
-			refreshTable();
-		});
+		AddBook.addDataDialogListener(evt -> refreshTable());
+		RemoveBook.addDataDialogListener(evt -> refreshTable());
+		BorrowBook.addDataDialogListener(evt -> refreshTable());
+		ReturnBook.addDataDialogListener(evt -> refreshTable());
+		MainMenu.addDataDialogListener(trel -> refreshTable());
+		
 		this.addComponentListener(new ComponentListener(){
 			
 			@Override
@@ -180,19 +144,19 @@ public class BooksToReturn extends JInternalFrame{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		db.books.keySet().forEach((key) -> {
 			Book b = db.books.get(key);
-			if(b.getAuthor().contains(search)){
+			if(b.getAuthor().toLowerCase().contains(search.toLowerCase())){
 				if(!b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 				}
-			}else if(b.getName().contains(search)){
+			}else if(b.getName().toLowerCase().contains(search.toLowerCase())){
 				if(!b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 				}
-			}else if(b.getID().contains(search)){
+			}else if(b.getID().toLowerCase().contains(search.toLowerCase())){
 				if(!b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 				}
-			}else if(dateFormat.format(b.getBorrowedUntilTime()).contains(search)){
+			}else if(dateFormat.format(b.getBorrowedUntilTime()).toLowerCase().contains(search.toLowerCase())){
 				if(b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
 				}else{

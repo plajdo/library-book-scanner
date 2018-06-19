@@ -1,32 +1,24 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import java.text.SimpleDateFormat;
-
-import javax.swing.JInternalFrame;
-
-import io.github.shardbytes.lbs.event.TableRefreshEventListener;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import io.github.shardbytes.lbs.database.LBSDatabase;
-
 import io.github.shardbytes.lbs.objects.Book;
 import io.github.shardbytes.lbs.objects.Person;
+import net.miginfocom.swing.MigLayout;
 
-public class BookInfo extends JInternalFrame{
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.text.SimpleDateFormat;
+
+class BookInfo extends JInternalFrame{
 	
 	LBSDatabase db = LBSDatabase.getInstance();
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private JLabel lblIdKnihy;
 	private JTextField textField;
-	private JLabel lblVypoian;
 	private JTextField textField_3;
-	private JLabel lblOsoba;
-	private JLabel lblTrieda;
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JLabel lblOd;
@@ -40,8 +32,8 @@ public class BookInfo extends JInternalFrame{
 		setTitle("Inform\u00E1cie o knihe - " + b.getID());
 		setBounds(120, 120, 450, 300);
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]"));
-
-		lblIdKnihy = new JLabel("ID knihy:");
+		
+		JLabel lblIdKnihy = new JLabel("ID knihy:");
 		getContentPane().add(lblIdKnihy, "cell 0 0,alignx trailing");
 
 		textField = new JTextField();
@@ -64,24 +56,24 @@ public class BookInfo extends JInternalFrame{
 		textField_2.setEditable(false);
 		getContentPane().add(textField_2, "cell 1 2,growx");
 		textField_2.setColumns(10);
-
-		lblVypoian = new JLabel("Vypo\u017Ei\u010Dan\u00E1:");
+		
+		JLabel lblVypoian = new JLabel("Vypo\u017Ei\u010Dan\u00E1:");
 		getContentPane().add(lblVypoian, "cell 0 3,alignx trailing");
 
 		textField_3 = new JTextField();
 		textField_3.setEditable(false);
 		getContentPane().add(textField_3, "cell 1 3,growx");
 		textField_3.setColumns(10);
-
-		lblOsoba = new JLabel("Osoba:");
+		
+		JLabel lblOsoba = new JLabel("Osoba:");
 		getContentPane().add(lblOsoba, "cell 0 4,alignx trailing");
 
 		textField_4 = new JTextField();
 		textField_4.setEditable(false);
 		getContentPane().add(textField_4, "cell 1 4,growx");
 		textField_4.setColumns(10);
-
-		lblTrieda = new JLabel("Trieda:");
+		
+		JLabel lblTrieda = new JLabel("Trieda:");
 		getContentPane().add(lblTrieda, "cell 0 5,alignx trailing");
 
 		textField_5 = new JTextField();
