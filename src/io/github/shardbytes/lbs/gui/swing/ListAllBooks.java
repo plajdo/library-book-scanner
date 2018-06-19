@@ -183,25 +183,25 @@ public class ListAllBooks extends JInternalFrame{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		db.books.keySet().forEach((key) -> {
 			Book b = db.books.get(key);
-			if(b.getAuthor().contains(search)){
+			if(b.getAuthor().toLowerCase().contains(search.toLowerCase())){
 				if(b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
 				}else{
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 				}
-			}else if(b.getName().contains(search)){
+			}else if(b.getName().toLowerCase().contains(search.toLowerCase())){
 				if(b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
 				}else{
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 				}
-			}else if(b.getID().contains(search)){
+			}else if(b.getID().toLowerCase().contains(search.toLowerCase())){
 				if(b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
 				}else{
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 				}
-			}else if(dateFormat.format(b.getBorrowedUntilTime()).contains(search)){
+			}else if(dateFormat.format(b.getBorrowedUntilTime()).toLowerCase().contains(search.toLowerCase())){
 				if(b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
 				}else{
