@@ -16,7 +16,6 @@ class RefreshImage extends Thread{
 	private volatile ImageIcon ic;
 	private volatile Webcam webcam;
 	private volatile JTextField textField;
-	private long sleepTime;
 	
 	private static byte inUse = 0;
 	
@@ -28,7 +27,7 @@ class RefreshImage extends Thread{
 		this.textField = t1;
 	}
 	
-	public void terminate(){
+	void terminate(){
 		running = false;
 	}
 	
@@ -45,7 +44,7 @@ class RefreshImage extends Thread{
 		inUse++;
 		
 		while(running){
-			sleepTime = calculateSleepFromFps(webcam.getFPS());
+			long sleepTime = calculateSleepFromFps(webcam.getFPS());
 			webcamImage = webcam.getImage();
 			redrawImage(lblObrzok, webcamImage, ic);
 			
