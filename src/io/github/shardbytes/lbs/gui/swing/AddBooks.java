@@ -110,7 +110,7 @@ public class AddBooks extends JInternalFrame {
 				StringBuilder qrName = new StringBuilder();
 				qrName.append(prir_int);
 				qrName.append(sig.getText());
-				qrName.append(prir_int);
+				qrName.append(sign_int);
 				
 				Book nb = new Book(bookID.toString());
 				nb.setName(name.getText());
