@@ -138,6 +138,11 @@ public class Load{
 		splashProgress(60);
 		splashText("Post-Initialisation");
 		
+		Database.flagTemp(DATABASE_PATH,
+				B_DATABASE_PATH,
+				C_DATABASE_PATH,
+				WEBCAM_OPTIMIZE_PATH);
+		
 		switch(LAF){
 		case MCWIN:
 			try{
