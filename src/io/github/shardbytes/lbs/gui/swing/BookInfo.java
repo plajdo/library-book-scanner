@@ -21,12 +21,10 @@ class BookInfo extends JInternalFrame{
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-	private JLabel lblOd;
-	private JLabel lblDo;
 	private JTextField textField_6;
 	private JTextField textField_7;
 
-	public BookInfo(Book b) {
+	BookInfo(Book b) {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Inform\u00E1cie o knihe - " + b.getID());
@@ -80,16 +78,16 @@ class BookInfo extends JInternalFrame{
 		textField_5.setEditable(false);
 		getContentPane().add(textField_5, "cell 1 5,growx");
 		textField_5.setColumns(10);
-
-		lblOd = new JLabel("Od:");
+		
+		JLabel lblOd = new JLabel("Od:");
 		getContentPane().add(lblOd, "cell 0 6,alignx trailing");
 
 		textField_6 = new JTextField();
 		textField_6.setEditable(false);
 		getContentPane().add(textField_6, "cell 1 6,growx");
 		textField_6.setColumns(10);
-
-		lblDo = new JLabel("Do:");
+		
+		JLabel lblDo = new JLabel("Do:");
 		getContentPane().add(lblDo, "cell 0 7,alignx trailing");
 
 		textField_7 = new JTextField();
@@ -97,15 +95,9 @@ class BookInfo extends JInternalFrame{
 		getContentPane().add(textField_7, "cell 1 7,growx");
 		textField_7.setColumns(10);
 
-		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> {
-			refresh(b);
-		});
-		BorrowBook.addDataDialogListener((TableRefreshEventListener) -> {
-			refresh(b);
-		});
-		MainMenu.addDataDialogListener((TableRefreshEventListener) -> {
-			refresh(b);
-		});
+		ReturnBook.addDataDialogListener((TableRefreshEventListener) -> refresh(b));
+		BorrowBook.addDataDialogListener((TableRefreshEventListener) -> refresh(b));
+		MainMenu.addDataDialogListener((TableRefreshEventListener) -> refresh(b));
 
 		refresh(b);
 

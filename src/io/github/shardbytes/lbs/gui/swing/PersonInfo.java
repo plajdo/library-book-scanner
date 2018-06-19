@@ -14,15 +14,13 @@ import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.objects.Book;
 import io.github.shardbytes.lbs.objects.Person;
 
-public class PersonInfo extends JInternalFrame {
+class PersonInfo extends JInternalFrame {
 	
 	LBSDatabase db = LBSDatabase.getInstance();
 	
 	private static final long serialVersionUID = 1L;
-	private JTextField textField_1;
-	private JTextField textField_2;
-
-	public PersonInfo(Person p) {
+	
+	PersonInfo(Person p) {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Inform\u00E1cie o pou\u017E\u00EDvate\u013Eovi - " + p.getID());
@@ -32,7 +30,7 @@ public class PersonInfo extends JInternalFrame {
 		JLabel lblMenoAPriezvisko = new JLabel("Meno a priezvisko:");
 		getContentPane().add(lblMenoAPriezvisko, "cell 0 0,alignx trailing");
 		
-		textField_1 = new JTextField();
+		JTextField textField_1 = new JTextField();
 		textField_1.setEditable(false);
 		textField_1.setText(p.getName());
 		getContentPane().add(textField_1, "cell 1 0,growx");
@@ -41,7 +39,7 @@ public class PersonInfo extends JInternalFrame {
 		JLabel lblTrieda = new JLabel("Trieda:");
 		getContentPane().add(lblTrieda, "cell 0 1,alignx trailing");
 		
-		textField_2 = new JTextField();
+		JTextField textField_2 = new JTextField();
 		textField_2.setEditable(false);
 		textField_2.setText(p.getGroup().getName());
 		getContentPane().add(textField_2, "cell 1 1,growx");

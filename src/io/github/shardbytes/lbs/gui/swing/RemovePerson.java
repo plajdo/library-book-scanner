@@ -22,7 +22,7 @@ public class RemovePerson extends JInternalFrame {
 	
 	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
-	public RemovePerson() {
+	RemovePerson() {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Odstr\u00E1ni\u0165 \u010Ditate\u013Ea");
