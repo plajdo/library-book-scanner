@@ -34,16 +34,13 @@ public class WebDB{
 			toServer = new ObjectOutputStream(socket.getOutputStream());
 			fromServer = new ObjectInputStream(socket.getInputStream());
 			
-			toServer.writeByte(0);
-			if(fromServer.readByte() == 0){
-				return true;
-			}
+			toServer.writeByte(1);
+			return fromServer.readByte() == 1;
 			
 		}catch(IOException e){
 			TermUtils.printerr(e.getMessage());
 			return false;
 		}
-		return false;
 		
 	}
 	
@@ -60,7 +57,7 @@ public class WebDB{
 	
 	public Map<String, Book> getBooks(){
 		try{
-			toServer.writeByte(1);
+			toServer.writeByte(2);
 			return (Map<String, Book>) fromServer.readObject();
 			
 		}catch(IOException | ClassNotFoundException e){
