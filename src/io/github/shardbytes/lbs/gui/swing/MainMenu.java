@@ -246,6 +246,17 @@ public class MainMenu{
 		chckbxmntmOptimalizovaKameru.setSelected(Load.webcamOptimise);
 		mnNastavenia.add(chckbxmntmOptimalizovaKameru);
 		
+		JCheckBoxMenuItem checkBoxShareOnNetwork = new JCheckBoxMenuItem("Zdie\u013Ea\u0165 datab\u00E1zu");
+		checkBoxShareOnNetwork.addActionListener(e -> {
+			Load.shareDatabase = checkBoxShareOnNetwork.isSelected();
+			Load.writeBoolean(Load.shareDatabase, new File(Load.SHARE_BOOLEAN_PATH));
+			JOptionPane.showMessageDialog(null, "LBS je potrebn\u00E9 re\u0161tartova\u0165", "Zmena nastaven\u00ED", JOptionPane.INFORMATION_MESSAGE);
+			Database.saveAll();
+			System.exit(0);
+		});
+		checkBoxShareOnNetwork.setSelected(Load.shareDatabase);
+		mnNastavenia.add(checkBoxShareOnNetwork);
+		
 		JSeparator separator_5 = new JSeparator();
 		mnIn.add(separator_5);
 		

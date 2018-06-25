@@ -8,6 +8,7 @@ import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.DBZipper;
 import io.github.shardbytes.lbs.database.Database;
 import io.github.shardbytes.lbs.database.LBSDatabase;
+import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
@@ -38,9 +39,11 @@ public class Load{
 	public static String B_DATABASE_PATH;
 	public static String C_DATABASE_PATH;
 	public static String WEBCAM_OPTIMIZE_PATH;
+	public static String SHARE_BOOLEAN_PATH;
 	public static String ZIP_PATH;
 	
 	public static boolean webcamOptimise;
+	public static boolean shareDatabase;
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
@@ -65,6 +68,7 @@ public class Load{
 		B_DATABASE_PATH = "data" + File.separator + "borrowdatabase.xml";
 		C_DATABASE_PATH = "data" + File.separator + "classdatabase.json";
 		WEBCAM_OPTIMIZE_PATH = "data" + File.separator + "webcamsettings.ser";
+		SHARE_BOOLEAN_PATH = "data" + File.separator + "sharingsettings.ser";
 		
 		/*
 		 * Init coloured printer
@@ -134,6 +138,7 @@ public class Load{
 		
 		TermUtils.println("Loading configs");
 		webcamOptimise = readBoolean(new File(WEBCAM_OPTIMIZE_PATH));
+		shareDatabase = readBoolean(new File(SHARE_BOOLEAN_PATH));
 		
 		splashProgress(60);
 		splashText("Post-Initialisation");
@@ -141,7 +146,12 @@ public class Load{
 		Database.flagTemp(DATABASE_PATH,
 				B_DATABASE_PATH,
 				C_DATABASE_PATH,
-				WEBCAM_OPTIMIZE_PATH);
+				WEBCAM_OPTIMIZE_PATH,
+				SHARE_BOOLEAN_PATH);
+		
+		if(shareDatabase){
+			WebDB.getInstance().host(4000);
+		}
 		
 		switch(LAF){
 		case MCWIN:
