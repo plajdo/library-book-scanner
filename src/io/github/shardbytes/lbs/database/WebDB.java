@@ -32,7 +32,8 @@ public class WebDB{
 			
 			byte requestByte;
 			
-			while((requestByte = fromClient.readByte()) != 0){
+			while(true){
+				requestByte = fromClient.readByte();
 				
 				/*
 				 * Respond to "ping"
