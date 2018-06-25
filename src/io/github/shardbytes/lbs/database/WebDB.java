@@ -35,9 +35,16 @@ public class WebDB{
 			while((requestByte = fromClient.readByte()) != 0){
 				
 				/*
-				 * Book list request
+				 * Respond to "ping"
 				 */
 				if(requestByte == 1){
+					toClient.writeByte(1);
+				}
+				
+				/*
+				 * Book list request
+				 */
+				if(requestByte == 2){
 					toClient.writeObject(LBSDatabase.getInstance().books);
 				}
 				
