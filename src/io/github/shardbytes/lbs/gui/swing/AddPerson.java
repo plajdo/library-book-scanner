@@ -32,7 +32,7 @@ public class AddPerson extends JInternalFrame {
 	
 	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 	
-	public AddPerson() {
+	AddPerson() {
 		setClosable(true);
 		setIconifiable(true);
 		setTitle("Prida\u0165 \u010Ditate\u013Ea");
@@ -58,7 +58,7 @@ public class AddPerson extends JInternalFrame {
 		JLabel lblAutorKnihy = new JLabel("Trieda:");
 		getContentPane().add(lblAutorKnihy, "cell 0 2,alignx trailing");
 		
-		triedaField = new JComboBox<String>();
+		triedaField = new JComboBox<>();
 		getContentPane().add(triedaField, "cell 1 2,growx");
 		ClassDatabase.getInstance().getClassList().forEach((name, group) -> {
 			group.forEach(groupButActuallyClassBecauseJavaKeywordsSuckInThisCase -> {
@@ -108,23 +108,19 @@ public class AddPerson extends JInternalFrame {
 		panel.add(btnPotvrdiAPrida, "flowy,cell 0 0,growx");
 		
 		JButton btnUloiQrKd = new JButton("Ulo\u017Ei\u0165 QR k\u00F3d na disk");
-		btnUloiQrKd.addActionListener(new ActionListener() {
-			@SuppressWarnings("unused")
-			public void actionPerformed(ActionEvent arg0) {
-				FileSystemView fs = FileSystemView.getFileSystemView();
-				File[] roots = fs.getRoots();
-				JFileChooser chooser = new JFileChooser();
-				chooser.setCurrentDirectory(fs.getHomeDirectory());
-				int r = chooser.showSaveDialog(null);
-				if(r == JFileChooser.APPROVE_OPTION){
-					try{
-						ImageIO.write(Generator.writeQRCode(textField.getText()), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
-					}catch(IOException e1){
-						e1.printStackTrace();
-					}
-					btnUloiQrKd.setEnabled(false);
-					
+		btnUloiQrKd.addActionListener(arg0 -> {
+			FileSystemView fs = FileSystemView.getFileSystemView();
+			File[] roots = fs.getRoots();
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(fs.getHomeDirectory());
+			int r = chooser.showSaveDialog(null);
+			if(r == JFileChooser.APPROVE_OPTION){
+				try{
+					ImageIO.write(Generator.writeQRCode(textField.getText()), "jpg", new File(chooser.getSelectedFile() + ".jpg"));
+				}catch(IOException e1){
+					e1.printStackTrace();
 				}
+				btnUloiQrKd.setEnabled(false);
 				
 			}
 			
@@ -132,11 +128,7 @@ public class AddPerson extends JInternalFrame {
 		panel.add(btnUloiQrKd, "flowx,cell 1 0,growx");
 
 		JButton btnDokoni = new JButton("Dokon\u010Di\u0165");
-		btnDokoni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		btnDokoni.addActionListener(e -> dispose());
 		panel.add(btnDokoni, "cell 2 0,growx");
 		
 		setVisible(true);

@@ -8,6 +8,7 @@ import io.github.shardbytes.lbs.event.TableRefreshEvent;
 import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.event.TableRefreshEventOperation;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
+import io.github.shardbytes.lbs.objects.Group;
 import io.github.shardbytes.lbs.objects.Person;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -470,17 +471,35 @@ public class MainMenu{
 					
 				});
 				
-				arp.forEach(typek -> {
+				int dudesWithBooks = 0;
+				
+				for(Person typek : arp){
 					String[] keys = getKeys(db.persons, typek).toArray(new String[0]);
 					
 					if(keys.length > 0){
 						for(String key : keys){
-							db.persons.remove(key);
+							if(db.persons.get(key).getNumBookCount() == 0){
+								db.persons.remove(key);
+							}else{
+								dudesWithBooks++;
+								db.persons.get(key).setGroup(new Group("~~CHYBA~~", "ec"));
+							}
+							
 						}
 						
 					}
 					
-				});
+				}
+				
+				if(dudesWithBooks == 0){
+					JOptionPane.showMessageDialog(null, "V\u0161etky triedy boli posunut\u00E9.", "Hotovo", JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(null, "V\u0161etky triedy boli posunut\u00E9. " + dudesWithBooks + " " +
+									(dudesWithBooks == 1 ? "\u017Eiak m\u00E1 e\u0161te vypo\u017Ei\u010Dan\u00E9 knihy." : (dudesWithBooks > 1 && dudesWithBooks < 5 ? "\u017Eiaci maj\u00FA e\u0161te vypo\u017Ei\u010Dan\u00E9 knihy." : "\u017Eiakov m\u00E1 e\u0161te vypo\u017Ei\u010Dan\u00E9 knihy.")) + "\n" +
+									(dudesWithBooks == 1 ? "Mus\u00ED by\u0165 vymazan\u00FD z datab\u00E1zy manu\u00E1lne." : "Musia by\u0165 vymazan\u00ED z datab\u00E1zy manu\u00E1lne."),
+							"Hotovo", JOptionPane.WARNING_MESSAGE);
+				}
+				
 				TermUtils.println("All classes advanced");
 				dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 				

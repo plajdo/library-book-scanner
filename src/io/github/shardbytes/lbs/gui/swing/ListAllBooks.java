@@ -1,9 +1,6 @@
 package io.github.shardbytes.lbs.gui.swing;
 
 import io.github.shardbytes.lbs.database.LBSDatabase;
-
-import io.github.shardbytes.lbs.event.TableRefreshEvent;
-import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.objects.Book;
 
 import javax.swing.*;
@@ -11,17 +8,15 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.util.Date;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.util.Date;
 
-public class ListAllBooks extends JInternalFrame{
+class ListAllBooks extends JInternalFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JTable table;
@@ -31,7 +26,7 @@ public class ListAllBooks extends JInternalFrame{
 	private LBSDatabase db = LBSDatabase.getInstance();
 	private JTextField txtA;
 	
-	public ListAllBooks(){
+	ListAllBooks(){
 		setIconifiable(true);
 		setClosable(true);
 		setResizable(true);
@@ -89,57 +84,17 @@ public class ListAllBooks extends JInternalFrame{
 		table.setModel(tblModel);
 		
 		txtA = new JTextField();
-		txtA.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				refreshTable(txtA.getText());
-			}
-		});
+		txtA.addActionListener(e -> refreshTable(txtA.getText()));
 		getContentPane().add(txtA, BorderLayout.NORTH);
 		txtA.setColumns(10);
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		
-		AddBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		AddBooks.addDataDialogListener((TableRefreshEvent) -> {
-			refreshTable();
-		});	
-		RemoveBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		BorrowBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		ReturnBook.addDataDialogListener(new TableRefreshEventListener(){
-
-			@Override
-			public void handleTableRefreshEvent(TableRefreshEvent evt) {
-				refreshTable();
-				
-			}
-			
-		});
-		MainMenu.addDataDialogListener(trel -> {
-			refreshTable();
-		});
+		AddBook.addDataDialogListener(evt -> refreshTable());
+		AddBooks.addDataDialogListener(evt -> refreshTable());
+		RemoveBook.addDataDialogListener(evt -> refreshTable());
+		BorrowBook.addDataDialogListener(evt -> refreshTable());
+		ReturnBook.addDataDialogListener(evt -> refreshTable());
+		MainMenu.addDataDialogListener(trel -> refreshTable());
 		this.addComponentListener(new ComponentListener(){
 			
 			@Override
