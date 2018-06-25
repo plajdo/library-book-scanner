@@ -109,7 +109,11 @@ public class Load{
 		bdb.load(B_DATABASE_PATH);
 		cdb.load(C_DATABASE_PATH);
 		
-		WebDB.getInstance().connect("localhost", 4000);
+		try{
+			WebDB.getInstance().connect("localhost", 4000);
+		}catch(IOException e){
+			TermUtils.printerr(e.getMessage());
+		}
 		
 		splashProgress(40);
 		splashText("Initialisation");

@@ -1,5 +1,6 @@
 package io.github.shardbytes.lbs.database;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Book;
 
@@ -28,19 +29,13 @@ public class WebDB{
 	 * @param port Port to connect to
 	 * @return True when connection was succesful, otherwise false
 	 */
-	public boolean connect(String host, int port){
-		try{
-			socket = new Socket(host, port);
-			toServer = new ObjectOutputStream(socket.getOutputStream());
-			fromServer = new ObjectInputStream(socket.getInputStream());
-			
-			toServer.writeByte(1);
-			return fromServer.readByte() == 1;
-			
-		}catch(IOException e){
-			TermUtils.printerr(e.getMessage());
-			return false;
-		}
+	public boolean connect(String host, int port) throws IOException{
+		socket = new Socket(host, port);
+		toServer = new ObjectOutputStream(socket.getOutputStream());
+		fromServer = new ObjectInputStream(socket.getInputStream());
+		
+		toServer.writeByte(1);
+		return fromServer.readByte() == 1;
 		
 	}
 	
