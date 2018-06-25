@@ -8,11 +8,11 @@ import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.DBZipper;
 import io.github.shardbytes.lbs.database.Database;
 import io.github.shardbytes.lbs.database.LBSDatabase;
-import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import net.lingala.zip4j.exception.ZipException;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,17 +33,19 @@ import javax.swing.UIManager;
 
 public class Load{
 	
-	public static final String VERSION = "v1.2.2";
+	public static final String VERSION = "v1.2.3";
 	
 	public static String DATABASE_PATH;
 	public static String B_DATABASE_PATH;
 	public static String C_DATABASE_PATH;
 	public static String WEBCAM_OPTIMIZE_PATH;
 	public static String SHARE_BOOLEAN_PATH;
+	public static String PEOPLE_COUNT_PATH;
 	public static String ZIP_PATH;
 	
 	public static boolean webcamOptimise;
 	public static boolean shareDatabase;
+	public static long peopleCount;
 
 	private static LBSDatabase db = LBSDatabase.getInstance();
 	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
@@ -69,6 +71,8 @@ public class Load{
 		C_DATABASE_PATH = "data" + File.separator + "classdatabase.json";
 		WEBCAM_OPTIMIZE_PATH = "data" + File.separator + "webcamsettings.ser";
 		SHARE_BOOLEAN_PATH = "data" + File.separator + "sharingsettings.ser";
+		PEOPLE_COUNT_PATH = "data" + File.separator + "peoplenum.ser";
+		
 		
 		/*
 		 * Init coloured printer
@@ -139,6 +143,7 @@ public class Load{
 		TermUtils.println("Loading configs");
 		webcamOptimise = readBoolean(new File(WEBCAM_OPTIMIZE_PATH));
 		shareDatabase = readBoolean(new File(SHARE_BOOLEAN_PATH));
+		peopleCount = readLong(new File(PEOPLE_COUNT_PATH));
 		
 		splashProgress(60);
 		splashText("Post-Initialisation");
@@ -147,12 +152,16 @@ public class Load{
 				B_DATABASE_PATH,
 				C_DATABASE_PATH,
 				WEBCAM_OPTIMIZE_PATH,
-				SHARE_BOOLEAN_PATH);
+				SHARE_BOOLEAN_PATH,
+				PEOPLE_COUNT_PATH);
 		
 		if(shareDatabase){
-			Thread serverThread = new Thread(() -> WebDB.getInstance().host(4000));
-			serverThread.setDaemon(true);
-			serverThread.start();
+			shareDatabase = false;
+			writeBoolean(shareDatabase, new File(SHARE_BOOLEAN_PATH));
+			throw new NotImplementedException();
+			//Thread serverThread = new Thread(() -> WebDB.getInstance().host(4000));
+			//serverThread.setDaemon(true);
+			//serverThread.start();
 		}
 		
 		switch(LAF){
@@ -363,7 +372,27 @@ public class Load{
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))){
 			return ois.readBoolean();
 		}catch(IOException e){
+			TermUtils.printerr(e.toString());
 			return false;
+		}
+		
+	}
+	
+	public static void writeLong(long l, File f){
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))){
+			oos.writeLong(l);
+		}catch(IOException e){
+			TermUtils.printerr(e.toString());
+		}
+		
+	}
+	
+	public static long readLong(File f){
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))){
+			return ois.readLong();
+		}catch(IOException e){
+			TermUtils.printerr(e.toString());
+			return 0L;
 		}
 		
 	}

@@ -1,5 +1,6 @@
 package io.github.shardbytes.lbs.gui.swing;
 
+import io.github.shardbytes.lbs.Load;
 import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.datareader.Generator;
@@ -44,6 +45,8 @@ public class AddPerson extends JInternalFrame {
 		textField = new JTextField();
 		getContentPane().add(textField, "cell 1 0,growx");
 		textField.setColumns(10);
+		textField.setEditable(false);
+		textField.setText(String.valueOf(Load.peopleCount));
 
 		JLabel lblNzovKnihy = new JLabel("Meno:");
 		getContentPane().add(lblNzovKnihy, "cell 0 1,alignx trailing");
@@ -82,6 +85,10 @@ public class AddPerson extends JInternalFrame {
 							np.setGroup(Group.fromString((String)triedaField.getSelectedItem()));
 							db.persons.put(textField.getText(), np);
 							btnPotvrdiAPrida.setEnabled(false);
+							
+							Load.peopleCount++;
+							Load.writeLong(Load.peopleCount, new File(Load.PEOPLE_COUNT_PATH));
+							textField.setText(String.valueOf(Load.peopleCount));
 							
 							dispatchTableRefreshEvent(new TableRefreshEvent(this, TableRefreshEventOperation.REFRESH));
 						}else{

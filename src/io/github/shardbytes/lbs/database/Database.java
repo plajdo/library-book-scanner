@@ -26,7 +26,8 @@ public class Database{
 					Load.B_DATABASE_PATH, 
 					Load.C_DATABASE_PATH, 
 					Load.WEBCAM_OPTIMIZE_PATH,
-					Load.SHARE_BOOLEAN_PATH);
+					Load.SHARE_BOOLEAN_PATH,
+					Load.PEOPLE_COUNT_PATH);
 		}catch(ZipException e){
 			TermUtils.printerr("Cannot save database");
 			JOptionPane.showMessageDialog(null, "Ukladanie zlyhalo:\n" + e.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
