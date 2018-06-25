@@ -1,6 +1,5 @@
 package io.github.shardbytes.lbs.database;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import io.github.shardbytes.lbs.objects.Book;
 
@@ -10,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Map;
 
-public class WebDB{
+public class WebDB implements AutoCloseable{
 	
 	private Socket socket;
 	private ObjectOutputStream toServer;
@@ -39,15 +38,11 @@ public class WebDB{
 		
 	}
 	
-	public void disconnect(){
-		try{
-			fromServer.close();
-			toServer.close();
-			socket.close();
-		}catch(IOException e){
-			TermUtils.printerr(e.getMessage());
-		}
-		
+	@Override
+	public void close() throws IOException{
+		fromServer.close();
+		toServer.close();
+		socket.close();
 	}
 	
 	public Map<String, Book> getBooks(){
