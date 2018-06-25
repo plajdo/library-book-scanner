@@ -150,7 +150,9 @@ public class Load{
 				SHARE_BOOLEAN_PATH);
 		
 		if(shareDatabase){
-			WebDB.getInstance().host(4000);
+			Thread serverThread = new Thread(() -> WebDB.getInstance().host(4000));
+			serverThread.setDaemon(true);
+			serverThread.start();
 		}
 		
 		switch(LAF){
