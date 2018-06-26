@@ -157,9 +157,12 @@ public class Load{
 				PEOPLE_COUNT_PATH);
 		
 		if(shareDatabase){
-			Thread serverThread = new Thread(() -> WebDB.getInstance().host(16360));
-			serverThread.setDaemon(true);
-			serverThread.start();
+			shareDatabase = false;
+			writeBoolean(false, new File(SHARE_BOOLEAN_PATH));
+			throw new NotImplementedException();
+			//Thread serverThread = new Thread(() -> WebDB.getInstance().host(16360));
+			//serverThread.setDaemon(true);
+			//serverThread.start();
 		}
 		
 		switch(LAF){
