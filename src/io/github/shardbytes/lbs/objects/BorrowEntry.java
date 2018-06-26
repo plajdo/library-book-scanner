@@ -1,6 +1,8 @@
-package io.github.shardbytes.lbs.document;
+package io.github.shardbytes.lbs.objects;
 
-public class BorrowEntry {
+import java.io.Serializable;
+
+public class BorrowEntry implements Serializable{
 
 	// let the indentification be done by borrowDate !
 

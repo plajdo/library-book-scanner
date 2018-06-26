@@ -1,11 +1,18 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import io.github.shardbytes.lbs.database.LBSDatabase;
+import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.objects.Person;
 
-import javax.swing.*;
+import javax.swing.JInternalFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ComponentEvent;
@@ -13,6 +20,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.util.Map;
 
 class ListAllPersons extends JInternalFrame{
 	
@@ -21,7 +29,6 @@ class ListAllPersons extends JInternalFrame{
 	private JScrollPane scrollPane;
 	private DefaultTableModel tblModel;
 	
-	private LBSDatabase db = LBSDatabase.getInstance();
 	private JTextField textField;
 	
 	ListAllPersons(){
@@ -41,7 +48,7 @@ class ListAllPersons extends JInternalFrame{
 				Point point = e.getPoint();
 				int row = table.rowAtPoint(point);
 				if(e.getClickCount() == 2 && row != -1){
-					PersonInfo pi = new PersonInfo(db.persons.get(table.getModel().getValueAt(row, 0))); //TODO: test .toString as suspicious call
+					PersonInfo pi = new PersonInfo(WebDB.getInstance().getPersons().get(table.getModel().getValueAt(row, 0))); //TODO: test .toString as suspicious call
 					MainMenu.getDesktopPane().add(pi);
 					try{
 						pi.setSelected(true);
@@ -78,11 +85,7 @@ class ListAllPersons extends JInternalFrame{
 		getContentPane().add(textField, BorderLayout.NORTH);
 		textField.setColumns(10);
 		
-		AddBook.addDataDialogListener(evt -> refreshTable());
-		RemoveBook.addDataDialogListener(evt -> refreshTable());
 		BorrowBook.addDataDialogListener(evt -> refreshTable());
-		RemovePerson.addDataDialogListener(evt -> refreshTable());
-		AddPerson.addDataDialogListener(evt -> refreshTable());
 		ReturnBook.addDataDialogListener(evt -> refreshTable());
 		MainMenu.addDataDialogListener(trel -> refreshTable());
 		
@@ -113,16 +116,18 @@ class ListAllPersons extends JInternalFrame{
 	}
 	
 	private void addStuffToTable(){
-		db.persons.keySet().forEach((key) -> {
-			Person p = db.persons.get(key);
+		final Map<String, Person> persons = WebDB.getInstance().getPersons();
+		persons.keySet().forEach((key) -> {
+			Person p = persons.get(key);
 			tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
 		});
 		
 	}
 	
 	private void addSearchToTable(String search){
-		db.persons.keySet().forEach((key) -> {
-			Person p = db.persons.get(key);
+		final Map<String, Person> persons = WebDB.getInstance().getPersons();
+		persons.keySet().forEach((key) -> {
+			Person p = persons.get(key);
 			if(p.getName().toLowerCase().contains(search.toLowerCase())){
 				tblModel.addRow(new Object[]{p.getID(), p.getName(), p.getGroup().getName(), p.getBookCount()});
 				

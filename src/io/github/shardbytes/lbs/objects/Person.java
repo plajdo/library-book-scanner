@@ -1,6 +1,8 @@
 package io.github.shardbytes.lbs.objects;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable{
 	
 	private String ID, name; // group is for example class or teachers or sum shit
 	private int bookCount;

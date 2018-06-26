@@ -1,29 +1,27 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import javax.swing.JInternalFrame;
-
+import io.github.shardbytes.lbs.database.WebDB;
+import io.github.shardbytes.lbs.objects.BorrowEntry;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
 
-import java.util.ArrayList;
-import java.util.Date;
-
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-
-import io.github.shardbytes.lbs.database.BorrowDatabase;
 import java.text.SimpleDateFormat;
-import javax.swing.DefaultComboBoxModel;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 class BorrowingsList extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
-	
-	private BorrowDatabase bdb = BorrowDatabase.getInstance();
+	private final Map<String, Map<Long, BorrowEntry>> borrowings = WebDB.getInstance().getBorrowings();
 
 	BorrowingsList(){
 		setClosable(true);
@@ -34,7 +32,7 @@ class BorrowingsList extends JInternalFrame {
 		getContentPane().setLayout(new MigLayout("", "[][grow]", "[][grow]"));
 		
 		ArrayList<String> arr = new ArrayList<>();
-		bdb.borrowings.forEach((group, map) -> arr.add(group));
+		borrowings.forEach((group, map) -> arr.add(group));
 		
 		JLabel lblTrieda = new JLabel("Trieda: ");
 		getContentPane().add(lblTrieda, "cell 0 0,alignx trailing");
@@ -68,7 +66,7 @@ class BorrowingsList extends JInternalFrame {
 	
 	private void addStuffToList(DefaultListModel<String> model, String group){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		bdb.borrowings.get(group).forEach((id, entry) -> model.addElement(dateFormat.format(new Date(entry.getBorrowDate())) + " - " + entry.getBookID() + " " + entry.getBookName() + ", " + entry.getBorrowerCompleteName()));
+		borrowings.get(group).forEach((id, entry) -> model.addElement(dateFormat.format(new Date(entry.getBorrowDate())) + " - " + entry.getBookID() + " " + entry.getBookName() + ", " + entry.getBorrowerCompleteName()));
 		
 	}
 	

@@ -1,6 +1,6 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import io.github.shardbytes.lbs.database.LBSDatabase;
+import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.objects.Book;
 
 import javax.swing.JInternalFrame;
@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 class BooksToReturn extends JInternalFrame{
 	
@@ -30,7 +31,6 @@ class BooksToReturn extends JInternalFrame{
 	private JScrollPane scrollPane;
 	private DefaultTableModel tblModel;
 	
-	private LBSDatabase db = LBSDatabase.getInstance();
 	private JTextField textField;
 	
 	BooksToReturn(){
@@ -50,7 +50,7 @@ class BooksToReturn extends JInternalFrame{
 				Point point = e.getPoint();
 				int row = table.rowAtPoint(point);
 				if(e.getClickCount() == 2 && row != -1){
-					BookInfo bi = new BookInfo(db.books.get(table.getModel().getValueAt(row, 0)));
+					BookInfo bi = new BookInfo(WebDB.getInstance().getBooks().get(table.getModel().getValueAt(row, 0)));
 					MainMenu.getDesktopPane().add(bi);
 					try{
 						bi.setSelected(true);
@@ -97,8 +97,6 @@ class BooksToReturn extends JInternalFrame{
 		textField.setColumns(10);
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		
-		AddBook.addDataDialogListener(evt -> refreshTable());
-		RemoveBook.addDataDialogListener(evt -> refreshTable());
 		BorrowBook.addDataDialogListener(evt -> refreshTable());
 		ReturnBook.addDataDialogListener(evt -> refreshTable());
 		MainMenu.addDataDialogListener(trel -> refreshTable());
@@ -130,8 +128,9 @@ class BooksToReturn extends JInternalFrame{
 	}
 	
 	private void addStuffToTable(){
-		db.books.keySet().forEach((key) -> {
-			Book b = db.books.get(key);
+		final Map<String, Book> books = WebDB.getInstance().getBooks();
+		books.keySet().forEach((key) -> {
+			Book b = books.get(key);
 			if(!b.getTakerID().isEmpty()){
 				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});
 			}
@@ -142,8 +141,9 @@ class BooksToReturn extends JInternalFrame{
 	
 	private void addSearchToTable(String search){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		db.books.keySet().forEach((key) -> {
-			Book b = db.books.get(key);
+		final Map<String, Book> books = WebDB.getInstance().getBooks();
+		books.keySet().forEach((key) -> {
+			Book b = books.get(key);
 			if(b.getAuthor().toLowerCase().contains(search.toLowerCase())){
 				if(!b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), new Date(b.getBorrowedUntilTime())});

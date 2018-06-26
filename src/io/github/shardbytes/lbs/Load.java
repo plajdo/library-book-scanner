@@ -3,17 +3,14 @@ package io.github.shardbytes.lbs;
 import com.github.sarxos.webcam.Webcam;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
-import io.github.shardbytes.lbs.database.BorrowDatabase;
-import io.github.shardbytes.lbs.database.ClassDatabase;
-import io.github.shardbytes.lbs.database.DBZipper;
 import io.github.shardbytes.lbs.database.Database;
-import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
-import net.lingala.zip4j.exception.ZipException;
 
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -25,51 +22,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 public class Load{
 	
-	public static final String VERSION = "v1.2.2";
+	public static final String VERSION = "v1.2.3";
 	
-	public static String DATABASE_PATH;
-	public static String B_DATABASE_PATH;
-	public static String C_DATABASE_PATH;
 	public static String WEBCAM_OPTIMIZE_PATH;
-	public static String ZIP_PATH;
-	
 	public static boolean webcamOptimise;
-
-	private static LBSDatabase db = LBSDatabase.getInstance();
-	private static BorrowDatabase bdb = BorrowDatabase.getInstance();
-	private static ClassDatabase cdb = ClassDatabase.getInstance();
 	private static LookAndFeelSettingsList LAF = LookAndFeelSettingsList.GRAPHITE;
 	
-	public static void main(String[] args){
-		begin(args[0]);
-	}
-	
-	/**
-	 * Method that loads everything and starts the GUI.
-	 * @param zipPath Path to a zip file with everything
-	 */
-	private static void begin(String zipPath){
+	public static void main(String[] args){ 
 		splashProgress(0);
 		splashText("Pre-Initialisation");
 		
-		ZIP_PATH = zipPath;
-		
-		DATABASE_PATH = "data" + File.separator + "lbsdatabase.xml";
-		B_DATABASE_PATH = "data" + File.separator + "borrowdatabase.xml";
-		C_DATABASE_PATH = "data" + File.separator + "classdatabase.json";
 		WEBCAM_OPTIMIZE_PATH = "data" + File.separator + "webcamsettings.ser";
 		
-		/*
-		 * Init coloured printer
-		 */
 		TermUtils.init();
 		if(System.console() == null){
 			System.setProperty("jansi.passthrough", "true");
@@ -78,66 +45,13 @@ public class Load{
 		splashProgress(20);
 		splashText("Initialisation");
 		
-		TermUtils.println("Loading databases");
+		TermUtils.println("Connecting to remote database");
 		
-		/*
-		 * Check if "data" folder exists, if not, create it
-		 */
-		try{
-			if(!(new File("data").isDirectory()) ||
-					!(new File("data").exists())){
-				Files.createDirectories(Paths.get("data"));
-			}
-		}catch(IOException e){
-			TermUtils.println("Data folder already exists");
-		}
-		
-		/*
-		 * Unzip or fail when zip does not exist
-		 */
-		try{
-			if(new File(ZIP_PATH).exists()){
-				DBZipper.getInstance().unzipAll(ZIP_PATH);
-			}
-		}catch(ZipException e){
-			TermUtils.printerr(e.getMessage());
-			JOptionPane.showMessageDialog(null, "Fatal exception:\n" + e.getMessage());
-			throw new Error("Unrecoverable error");
-		}
-		
-		db.load(DATABASE_PATH);
-		bdb.load(B_DATABASE_PATH);
-		cdb.load(C_DATABASE_PATH);
-		
-		try{
-			WebDB.getInstance().connect("localhost", 4000);
-		}catch(IOException e){
-			TermUtils.printerr(e.getMessage());
-		}
+		WebDB webDB = WebDB.getInstance();
+		webDB.connect("192.168.100.166", 16360);
 		
 		splashProgress(40);
 		splashText("Initialisation");
-		
-		Runnable autosave = () -> {
-			Thread t = Thread.currentThread();
-			t.setName("Thread-Autosave");
-			TermUtils.println("Autosave running");
-			while(1 < 2){
-				try{
-					Thread.sleep(300000);
-					TermUtils.println("Saving database");
-					saveDatabase();
-				}catch(InterruptedException e){
-					TermUtils.println("Autosave thread " + t.getName() + " stopped");
-					break;
-				}
-				
-			}
-			
-		};
-		Thread as = new Thread(autosave);
-		as.setDaemon(true);
-		as.start();
 		
 		TermUtils.println("Loading configs");
 		webcamOptimise = readBoolean(new File(WEBCAM_OPTIMIZE_PATH));
@@ -145,10 +59,7 @@ public class Load{
 		splashProgress(60);
 		splashText("Post-Initialisation");
 		
-		Database.flagTemp(DATABASE_PATH,
-				B_DATABASE_PATH,
-				C_DATABASE_PATH,
-				WEBCAM_OPTIMIZE_PATH);
+		Database.flagTemp(WEBCAM_OPTIMIZE_PATH);
 		
 		switch(LAF){
 		case MCWIN:
@@ -189,22 +100,13 @@ public class Load{
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Pripojte webkameru.", "Chyba", JOptionPane.ERROR_MESSAGE);
 			webcamOptimise = false;
-			writeBoolean(webcamOptimise, new File(WEBCAM_OPTIMIZE_PATH));
+			writeBoolean(false, new File(WEBCAM_OPTIMIZE_PATH));
 		}
 		
 		MainMenu.open();
 		
 		splashProgress(100);
 		splashText("Finishing");
-		
-	}
-	
-	private static synchronized void saveDatabase(){
-		try{
-			Database.saveAll();
-		}catch(Exception e){
-			JOptionPane.showMessageDialog(null, "Chyba pri automatickom ulo\u017Een\u00ED datab\u00E1zy!", "Ulo\u017Ei\u0165 datab\u00E1zu", JOptionPane.ERROR_MESSAGE);
-		}
 		
 	}
 	
@@ -274,7 +176,7 @@ public class Load{
 		
 	}
 	
-	public static boolean readBoolean(File f){
+	private static boolean readBoolean(File f){
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))){
 			return ois.readBoolean();
 		}catch(IOException e){

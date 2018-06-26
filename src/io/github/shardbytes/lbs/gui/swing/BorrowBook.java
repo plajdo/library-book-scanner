@@ -1,9 +1,6 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import io.github.shardbytes.lbs.database.BorrowDatabase;
-import io.github.shardbytes.lbs.database.LBSDatabase;
-
-import io.github.shardbytes.lbs.document.BorrowEntry;
+import io.github.shardbytes.lbs.objects.BorrowEntry;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
 import io.github.shardbytes.lbs.event.DataDialogEventOperation;
@@ -35,9 +32,6 @@ public class BorrowBook extends JInternalFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-
-	private LBSDatabase db = LBSDatabase.getInstance();
-	private BorrowDatabase bdb = BorrowDatabase.getInstance();
 
 	static List<TableRefreshEventListener> listeners = new ArrayList<>();
 

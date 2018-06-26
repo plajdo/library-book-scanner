@@ -1,6 +1,5 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import io.github.shardbytes.lbs.database.LBSDatabase;
 import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.objects.Book;
 
@@ -16,8 +15,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
@@ -25,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 public class ListAllBooks extends JInternalFrame{
 	
@@ -33,7 +31,6 @@ public class ListAllBooks extends JInternalFrame{
 	private JScrollPane scrollPane;
 	private DefaultTableModel tblModel;
 	
-	private LBSDatabase db = LBSDatabase.getInstance();
 	private JTextField txtA;
 	
 	public ListAllBooks(){
@@ -99,9 +96,6 @@ public class ListAllBooks extends JInternalFrame{
 		txtA.setColumns(10);
 		table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 		
-		AddBook.addDataDialogListener(evt -> refreshTable());
-		AddBooks.addDataDialogListener(evt -> refreshTable());	
-		RemoveBook.addDataDialogListener(evt -> refreshTable());
 		BorrowBook.addDataDialogListener(evt -> refreshTable());
 		ReturnBook.addDataDialogListener(evt -> refreshTable());
 		MainMenu.addDataDialogListener(trel -> refreshTable());
@@ -133,8 +127,9 @@ public class ListAllBooks extends JInternalFrame{
 	}
 	
 	private void addStuffToTable(){
-		WebDB.getInstance().getBooks().keySet().forEach((key) -> {
-			Book b = WebDB.getInstance().getBooks().get(key);
+		final Map<String, Book> books = WebDB.getInstance().getBooks();
+		books.keySet().forEach((key) -> {
+			Book b = books.get(key);
 			if(b.getTakerID().isEmpty()){
 				tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});
 			}else{
@@ -147,8 +142,9 @@ public class ListAllBooks extends JInternalFrame{
 	
 	private void addSearchToTable(String search){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		WebDB.getInstance().getBooks().keySet().forEach((key) -> {
-			Book b = WebDB.getInstance().getBooks().get(key);
+		final Map<String, Book> books = WebDB.getInstance().getBooks();
+		books.keySet().forEach((key) -> {
+			Book b = books.get(key);
 			if(b.getAuthor().toLowerCase().contains(search.toLowerCase())){
 				if(b.getTakerID().isEmpty()){
 					tblModel.addRow(new Object[]{b.getID(), b.getName(), b.getAuthor(), null});

@@ -1,22 +1,20 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import javax.swing.JInternalFrame;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.DefaultListModel;
-import javax.swing.ListSelectionModel;
-
-import io.github.shardbytes.lbs.database.LBSDatabase;
-
+import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.objects.Book;
 import io.github.shardbytes.lbs.objects.Person;
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import java.util.Map;
 
 class PersonInfo extends JInternalFrame {
-	
-	LBSDatabase db = LBSDatabase.getInstance();
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -72,8 +70,9 @@ class PersonInfo extends JInternalFrame {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void addStuffToList(DefaultListModel model, Person p){
-		db.books.keySet().forEach((s) -> {
-			Book tempBook = db.books.get(s);
+		final Map<String, Book> books = WebDB.getInstance().getBooks();
+		books.keySet().forEach((s) -> {
+			Book tempBook = books.get(s);
 			if(tempBook.getTakerID().equals(p.getID())){
 				model.addElement("[" + tempBook.getID() + "] " + tempBook.getAuthor() + ": " + tempBook.getName());
 			}

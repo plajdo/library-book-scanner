@@ -1,6 +1,6 @@
 package io.github.shardbytes.lbs.gui.swing;
 
-import io.github.shardbytes.lbs.database.LBSDatabase;
+import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.objects.Book;
 import io.github.shardbytes.lbs.objects.Person;
 import net.miginfocom.swing.MigLayout;
@@ -11,8 +11,6 @@ import javax.swing.JTextField;
 import java.text.SimpleDateFormat;
 
 class BookInfo extends JInternalFrame{
-	
-	LBSDatabase db = LBSDatabase.getInstance();
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField_1;
@@ -121,7 +119,7 @@ class BookInfo extends JInternalFrame{
 			textField_6.setText("");
 			textField_7.setText("");
 		}else{
-			Person p = db.persons.get(b.getTakerID());
+			Person p = WebDB.getInstance().getPersons().get(b.getTakerID());
 			SimpleDateFormat sdf = new SimpleDateFormat("dd. MMM yyyy");
 
 			textField_4.setEnabled(true);

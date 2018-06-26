@@ -1,9 +1,9 @@
 package io.github.shardbytes.lbs.objects;
 
-import java.util.Base64;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Group{
+public class Group implements Serializable{
 	
 	private String groupName;
 	private String groupGroup;

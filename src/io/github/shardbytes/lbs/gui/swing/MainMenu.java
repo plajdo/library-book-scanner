@@ -1,7 +1,7 @@
 package io.github.shardbytes.lbs.gui.swing;
 
 import io.github.shardbytes.lbs.Load;
-import io.github.shardbytes.lbs.database.Database;
+import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.event.TableRefreshEventListener;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 
@@ -63,11 +63,10 @@ public class MainMenu{
 		frmGymnziumLipany.setMinimumSize(new Dimension(650, 365));
 		frmGymnziumLipany.addWindowListener(new WindowAdapter(){
 			@Override
-			public void windowClosing(WindowEvent event)
-			{
+			public void windowClosing(WindowEvent event){
 				super.windowClosing(event);
 				
-				Database.saveAll();
+				WebDB.getInstance().close();
 				
 				TermUtils.println("Exiting LBS");
 				System.exit(0);
@@ -88,7 +87,6 @@ public class MainMenu{
 		menuBar.add(mnSbor);
 		
 		JMenuItem mntmUkoni = new JMenuItem("Ukon\u010Di\u0165");
-		mntmUkoni.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
 		mntmUkoni.addActionListener(e -> closeWindow());
 		mnSbor.add(mntmUkoni);
 		
@@ -121,19 +119,6 @@ public class MainMenu{
 		JMenu mntudent = new JMenu("\u010Citate\u013E");
 		menuBar.add(mntudent);
 		
-		JMenuItem mntmPridaiaka = new JMenuItem("Prida\u0165 \u010Ditate\u013Ea");
-		mntudent.add(mntmPridaiaka);
-		mntmPridaiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
-		mntmPridaiaka.addActionListener(e -> openAddStudent());
-		
-		JMenuItem mntmOdstrniiaka = new JMenuItem("Odstr\u00E1ni\u0165 \u010Ditate\u013Ea");
-		mntmOdstrniiaka.addActionListener(e -> openRemovePerson());
-		mntudent.add(mntmOdstrniiaka);
-		mntmOdstrniiaka.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
-		
-		JSeparator separator_3 = new JSeparator();
-		mntudent.add(separator_3);
-		
 		JMenuItem mntmZoznamtudentov = new JMenuItem("Zoznam \u010Ditate\u013Eov");
 		mntmZoznamtudentov.addActionListener(e -> openListAllStudents());
 		mntmZoznamtudentov.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
@@ -147,7 +132,7 @@ public class MainMenu{
 			Load.webcamOptimise = chckbxmntmOptimalizovaKameru.isSelected();
 			Load.writeBoolean(Load.webcamOptimise, new File(Load.WEBCAM_OPTIMIZE_PATH));
 			JOptionPane.showMessageDialog(null, "LBS je potrebn\u00E9 re\u0161tartova\u0165", "Zmena nastaven\u00ED", JOptionPane.INFORMATION_MESSAGE);
-			Database.saveAll();
+			WebDB.getInstance().close();
 			System.exit(0);
 		});
 		chckbxmntmOptimalizovaKameru.setSelected(Load.webcamOptimise);
@@ -159,17 +144,6 @@ public class MainMenu{
 		JMenuItem mntmZoznamVpoiiek = new JMenuItem("Zoznam výpožičiek");
 		mntmZoznamVpoiiek.addActionListener(e -> openBorrowingsList());
 		mnIn.add(mntmZoznamVpoiiek);
-		
-	}
-	
-	private void openAddStudent(){
-		AddPerson as = new AddPerson();
-		desktopPane.add(as);
-		try{
-			as.setSelected(true);
-		}catch(PropertyVetoException e1) {
-			e1.printStackTrace();
-		}
 		
 	}
 	
@@ -225,16 +199,7 @@ public class MainMenu{
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}
-	}
-	
-	private void openRemovePerson(){
-		RemovePerson rp = new RemovePerson();
-		desktopPane.add(rp);
-		try{
-			rp.setSelected(true);
-		}catch(PropertyVetoException e1){
-			e1.printStackTrace();
-		}
+		
 	}
 	
 	private void openBorrowingsList(){
@@ -245,6 +210,7 @@ public class MainMenu{
 		}catch(PropertyVetoException e1){
 			e1.printStackTrace();
 		}
+		
 	}
 
 	static JDesktopPane getDesktopPane() {
