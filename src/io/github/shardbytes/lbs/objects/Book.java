@@ -1,6 +1,8 @@
 package io.github.shardbytes.lbs.objects;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable{
 	
 	// FIELDS
 	

@@ -8,6 +8,7 @@ import io.github.shardbytes.lbs.database.ClassDatabase;
 import io.github.shardbytes.lbs.database.DBZipper;
 import io.github.shardbytes.lbs.database.Database;
 import io.github.shardbytes.lbs.database.LBSDatabase;
+import io.github.shardbytes.lbs.database.WebDB;
 import io.github.shardbytes.lbs.gui.swing.LookAndFeelSettingsList;
 import io.github.shardbytes.lbs.gui.swing.MainMenu;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
@@ -156,12 +157,9 @@ public class Load{
 				PEOPLE_COUNT_PATH);
 		
 		if(shareDatabase){
-			shareDatabase = false;
-			writeBoolean(shareDatabase, new File(SHARE_BOOLEAN_PATH));
-			throw new NotImplementedException();
-			//Thread serverThread = new Thread(() -> WebDB.getInstance().host(4000));
-			//serverThread.setDaemon(true);
-			//serverThread.start();
+			Thread serverThread = new Thread(() -> WebDB.getInstance().host(16360));
+			serverThread.setDaemon(true);
+			serverThread.start();
 		}
 		
 		switch(LAF){
@@ -372,7 +370,6 @@ public class Load{
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))){
 			return ois.readBoolean();
 		}catch(IOException e){
-			TermUtils.printerr(e.toString());
 			return false;
 		}
 		
@@ -391,7 +388,6 @@ public class Load{
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))){
 			return ois.readLong();
 		}catch(IOException e){
-			TermUtils.printerr(e.toString());
 			return 0L;
 		}
 		

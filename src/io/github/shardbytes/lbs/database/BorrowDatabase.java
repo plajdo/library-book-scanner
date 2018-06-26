@@ -1,6 +1,6 @@
 package io.github.shardbytes.lbs.database;
 
-import io.github.shardbytes.lbs.document.BorrowEntry;
+import io.github.shardbytes.lbs.objects.BorrowEntry;
 import io.github.shardbytes.lbs.gui.terminal.TermUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

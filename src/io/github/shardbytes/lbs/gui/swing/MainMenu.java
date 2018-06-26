@@ -101,7 +101,6 @@ public class MainMenu{
 		menuBar.add(mnSbor);
 		
 		JMenuItem mntmUkoni = new JMenuItem("Ulo\u017Ei\u0165 a ukon\u010Di\u0165");
-		mntmUkoni.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
 		mntmUkoni.addActionListener(e -> closeWindow());
 		mnSbor.add(mntmUkoni);
 		

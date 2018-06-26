@@ -139,6 +139,7 @@ public class AddPerson extends JInternalFrame {
 		if(!listeners.contains(trel)){
 			listeners.add(trel);
 		}
+		
 	}
 	
 	public static void removeDataDialogListener(TableRefreshEventListener trel){
@@ -149,6 +150,7 @@ public class AddPerson extends JInternalFrame {
 		for(TableRefreshEventListener trel: listeners){
 			trel.handleTableRefreshEvent(evt);
 		}
+		
 	}
 	
 	private boolean isInteger(String s){

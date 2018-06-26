@@ -3,7 +3,7 @@ package io.github.shardbytes.lbs.gui.swing;
 import io.github.shardbytes.lbs.database.BorrowDatabase;
 import io.github.shardbytes.lbs.database.LBSDatabase;
 
-import io.github.shardbytes.lbs.document.BorrowEntry;
+import io.github.shardbytes.lbs.objects.BorrowEntry;
 import io.github.shardbytes.lbs.event.DDEventListener;
 import io.github.shardbytes.lbs.event.DataDialogEvent;
 import io.github.shardbytes.lbs.event.DataDialogEventOperation;
